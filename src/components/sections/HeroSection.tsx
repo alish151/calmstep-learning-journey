@@ -1,8 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { Sparkles, ArrowRight } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import heroIllustration from "@/assets/hero-illustration.png";
 
 const HeroSection = () => {
+  const { toast } = useToast();
+
+  const handleStartLearning = () => {
+    toast({
+      title: "Welcome to CalmStep! 🌟",
+      description: "Learning modules coming soon. Take your time exploring!",
+    });
+  };
+
+  const handleLearnMore = () => {
+    document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <section id="home" className="relative min-h-screen flex items-center pt-20 overflow-hidden gradient-hero">
       {/* Background decorative elements */}
@@ -47,11 +61,11 @@ const HeroSection = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center animate-fade-in-up animation-delay-300">
-              <Button variant="hero" size="xl" className="group">
+              <Button variant="hero" size="xl" className="group" onClick={handleStartLearning}>
                 Start Learning
                 <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
               </Button>
-              <Button variant="outline" size="lg">
+              <Button variant="outline" size="lg" onClick={handleLearnMore}>
                 Learn How It Works
               </Button>
             </div>
