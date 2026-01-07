@@ -1,16 +1,24 @@
 import { MessageCircle, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const VirtualAssistantSection = () => {
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const { t } = useLanguage();
 
   const supportivePhrases = [
-    "You can try again whenever you're ready 💙",
-    "Let's take a little break together",
-    "Everything is okay, you're doing great",
-    "There's no rush — we have all the time we need",
-    "Would you like to try something different?",
+    t("assistant.phrase1"),
+    t("assistant.phrase2"),
+    t("assistant.phrase3"),
+    t("assistant.phrase4"),
+  ];
+
+  const features = [
+    t("assistant.feature1"),
+    t("assistant.feature2"),
+    t("assistant.feature3"),
+    t("assistant.feature4"),
   ];
 
   return (
@@ -26,14 +34,13 @@ const VirtualAssistantSection = () => {
             {/* Left content */}
             <div>
               <span className="inline-block px-4 py-1.5 bg-accent-light text-accent-foreground rounded-full text-sm font-medium mb-4">
-                Virtual Assistant
+                {t("assistant.badge")}
               </span>
               <h2 className="text-heading text-foreground mb-6">
-                A calm friend by your side
+                {t("assistant.title")}
               </h2>
               <p className="text-body-lg text-muted-foreground mb-8">
-                Meet your child's supportive companion — a gentle virtual assistant 
-                that uses calming, reassuring language and never pressures or judges.
+                {t("assistant.subtitle")}
               </p>
 
               {/* Sound toggle */}
@@ -52,23 +59,18 @@ const VirtualAssistantSection = () => {
                 </Button>
                 <div>
                   <p className="font-medium text-foreground">
-                    Sound {soundEnabled ? "enabled" : "disabled"}
+                    {soundEnabled ? t("assistant.soundEnabled") : t("assistant.soundDisabled")}
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    Sounds can be turned off at any time
+                    {t("assistant.soundOff")}
                   </p>
                 </div>
               </div>
 
               <div className="space-y-3">
-                <p className="text-sm font-medium text-foreground">Key features:</p>
+                <p className="text-sm font-medium text-foreground">{t("assistant.keyFeatures")}</p>
                 <ul className="space-y-2">
-                  {[
-                    "Neutral, supportive phrases only",
-                    "Never uses negative language",
-                    "Encourages breaks when needed",
-                    "Celebrates effort, not just results",
-                  ].map((feature) => (
+                  {features.map((feature) => (
                     <li key={feature} className="flex items-center gap-3 text-muted-foreground">
                       <div className="w-2 h-2 rounded-full bg-primary" />
                       {feature}
@@ -90,7 +92,7 @@ const VirtualAssistantSection = () => {
               {/* Chat bubbles */}
               <div className="pt-12 p-6 bg-card rounded-3xl shadow-card border border-border/50">
                 <div className="space-y-4">
-                  {supportivePhrases.slice(0, 4).map((phrase, index) => (
+                  {supportivePhrases.map((phrase, index) => (
                     <div
                       key={phrase}
                       className={`flex ${index % 2 === 0 ? "justify-start" : "justify-end"}`}
@@ -118,7 +120,7 @@ const VirtualAssistantSection = () => {
                 <div className="mt-6 pt-4 border-t border-border/50">
                   <div className="flex items-center gap-3 p-3 bg-muted rounded-xl">
                     <div className="flex-1 text-sm text-muted-foreground">
-                      Your child can respond at their own pace...
+                      {t("assistant.inputPlaceholder")}
                     </div>
                     <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
                       <MessageCircle className="w-4 h-4 text-primary-foreground" />

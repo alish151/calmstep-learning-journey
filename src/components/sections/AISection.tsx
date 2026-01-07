@@ -1,23 +1,32 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Brain, Activity, Route, Sparkles } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const AISection = () => {
+  const { t } = useLanguage();
+
   const aiFeatures = [
     {
       icon: Activity,
-      title: "Adaptive Difficulty",
-      description: "Automatically adjusts lesson complexity based on your child's responses and comfort level.",
+      titleKey: "ai.adaptiveDifficulty",
+      descKey: "ai.adaptiveDifficultyDesc",
     },
     {
       icon: Brain,
-      title: "Overload Detection",
-      description: "Recognizes signs of cognitive or sensory overload and suggests calming breaks.",
+      titleKey: "ai.overloadDetection",
+      descKey: "ai.overloadDetectionDesc",
     },
     {
       icon: Route,
-      title: "Personalized Paths",
-      description: "Creates unique learning journeys tailored to each child's interests and learning style.",
+      titleKey: "ai.personalizedPaths",
+      descKey: "ai.personalizedPathsDesc",
     },
+  ];
+
+  const howAIHelps = [
+    { emoji: "👁️", labelKey: "ai.observes" },
+    { emoji: "🎯", labelKey: "ai.adapts" },
+    { emoji: "💚", labelKey: "ai.supports" },
   ];
 
   return (
@@ -37,31 +46,29 @@ const AISection = () => {
                 <div className="w-10 h-10 rounded-xl bg-primary-light flex items-center justify-center">
                   <Sparkles className="w-5 h-5 text-primary" />
                 </div>
-                <span className="text-sm font-medium text-primary">Powered by AI</span>
+                <span className="text-sm font-medium text-primary">{t("ai.badge")}</span>
               </div>
               
               <h2 className="text-heading text-foreground mb-6">
-                Smart support, gentle guidance
+                {t("ai.title")}
               </h2>
               <p className="text-body-lg text-muted-foreground mb-8">
-                Our AI works quietly in the background, making learning smoother 
-                and more comfortable — always supporting, never replacing, 
-                the care of teachers and parents.
+                {t("ai.subtitle")}
               </p>
 
               {/* AI features list */}
               <div className="space-y-4">
                 {aiFeatures.map((feature) => (
                   <div 
-                    key={feature.title}
+                    key={feature.titleKey}
                     className="flex items-start gap-4 p-4 bg-card rounded-2xl shadow-soft"
                   >
                     <div className="w-10 h-10 rounded-xl bg-primary-light flex items-center justify-center flex-shrink-0">
                       <feature.icon className="w-5 h-5 text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-foreground mb-1">{feature.title}</h3>
-                      <p className="text-sm text-muted-foreground">{feature.description}</p>
+                      <h3 className="font-semibold text-foreground mb-1">{t(feature.titleKey)}</h3>
+                      <p className="text-sm text-muted-foreground">{t(feature.descKey)}</p>
                     </div>
                   </div>
                 ))}
@@ -78,21 +85,17 @@ const AISection = () => {
                   </div>
 
                   <h3 className="text-xl font-semibold text-foreground mb-4">
-                    How AI Helps
+                    {t("ai.howAIHelps")}
                   </h3>
 
                   {/* Connection lines */}
                   <div className="grid grid-cols-3 gap-4 mt-8">
-                    {[
-                      { emoji: "👁️", label: "Observes" },
-                      { emoji: "🎯", label: "Adapts" },
-                      { emoji: "💚", label: "Supports" },
-                    ].map((item) => (
-                      <div key={item.label} className="text-center">
+                    {howAIHelps.map((item) => (
+                      <div key={item.labelKey} className="text-center">
                         <div className="w-14 h-14 mx-auto mb-2 rounded-xl bg-card shadow-soft flex items-center justify-center">
                           <span className="text-2xl">{item.emoji}</span>
                         </div>
-                        <p className="text-sm font-medium text-foreground">{item.label}</p>
+                        <p className="text-sm font-medium text-foreground">{t(item.labelKey)}</p>
                       </div>
                     ))}
                   </div>
@@ -100,7 +103,7 @@ const AISection = () => {
                   {/* Trust message */}
                   <div className="mt-8 p-4 bg-card rounded-xl">
                     <p className="text-sm text-muted-foreground italic">
-                      "AI as a supportive assistant, not a replacement for human connection"
+                      {t("ai.trustMessage")}
                     </p>
                   </div>
                 </div>

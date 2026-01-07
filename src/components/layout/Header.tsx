@@ -2,16 +2,19 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Heart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   const navLinks = [
-    { label: "Home", href: "#home" },
-    { label: "How It Works", href: "#how-it-works" },
-    { label: "Learning", href: "#learning" },
-    { label: "For Parents", href: "#parents" },
+    { label: t("nav.home"), href: "#home" },
+    { label: t("nav.howItWorks"), href: "#how-it-works" },
+    { label: t("nav.learning"), href: "#learning" },
+    { label: t("nav.forParents"), href: "#parents" },
   ];
 
   const handleNavClick = (href: string) => {
@@ -22,8 +25,8 @@ const Header = () => {
 
   const handleStartLearning = () => {
     toast({
-      title: "Welcome to CalmStep! 🌟",
-      description: "Learning modules coming soon. Take your time exploring!",
+      title: t("toast.welcome"),
+      description: t("toast.welcomeDesc"),
     });
   };
 
@@ -55,25 +58,29 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* CTA Button & Language Switcher */}
+          <div className="hidden md:flex items-center gap-2">
+            <LanguageSwitcher />
             <Button variant="hero" size="default" onClick={handleStartLearning}>
-              Start Learning
+              {t("btn.startLearning")}
             </Button>
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 rounded-xl hover:bg-primary-light transition-calm"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          >
-            {isMenuOpen ? (
-              <X className="w-6 h-6 text-foreground" />
-            ) : (
-              <Menu className="w-6 h-6 text-foreground" />
-            )}
-          </button>
+          <div className="md:hidden flex items-center gap-2">
+            <LanguageSwitcher />
+            <button
+              className="p-2 rounded-xl hover:bg-primary-light transition-calm"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            >
+              {isMenuOpen ? (
+                <X className="w-6 h-6 text-foreground" />
+              ) : (
+                <Menu className="w-6 h-6 text-foreground" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -91,7 +98,7 @@ const Header = () => {
               ))}
               <div className="pt-4">
                 <Button variant="hero" size="lg" className="w-full" onClick={handleStartLearning}>
-                  Start Learning
+                  {t("btn.startLearning")}
                 </Button>
               </div>
             </nav>
