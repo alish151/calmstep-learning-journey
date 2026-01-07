@@ -1,26 +1,28 @@
 import { Heart, Mail, MessageCircle } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { t } = useLanguage();
 
   const footerLinks = {
     product: [
-      { label: "How It Works", href: "#how-it-works" },
-      { label: "Learning Modules", href: "#learning" },
-      { label: "For Parents", href: "#parents" },
-      { label: "Accessibility", href: "#" },
+      { labelKey: "footer.howItWorks", href: "#how-it-works" },
+      { labelKey: "footer.learningModules", href: "#learning" },
+      { labelKey: "footer.forParents", href: "#parents" },
+      { labelKey: "footer.accessibility", href: "#" },
     ],
     resources: [
-      { label: "Getting Started", href: "#" },
-      { label: "Tips for Parents", href: "#" },
-      { label: "Educator Guide", href: "#" },
-      { label: "FAQ", href: "#" },
+      { labelKey: "footer.gettingStarted", href: "#" },
+      { labelKey: "footer.tipsForParents", href: "#" },
+      { labelKey: "footer.educatorGuide", href: "#" },
+      { labelKey: "footer.faq", href: "#" },
     ],
     company: [
-      { label: "About Us", href: "#" },
-      { label: "Our Mission", href: "#" },
-      { label: "Privacy Policy", href: "#" },
-      { label: "Contact", href: "#" },
+      { labelKey: "footer.aboutUs", href: "#" },
+      { labelKey: "footer.ourMission", href: "#" },
+      { labelKey: "footer.privacyPolicy", href: "#" },
+      { labelKey: "footer.contact", href: "#" },
     ],
   };
 
@@ -37,8 +39,7 @@ const Footer = () => {
               <span className="text-xl font-bold text-foreground">CalmStep</span>
             </a>
             <p className="text-muted-foreground max-w-sm mb-6">
-              A gentle learning space designed for children with autism. 
-              Learning at your own pace, without pressure.
+              {t("footer.description")}
             </p>
             <div className="flex items-center gap-4">
               <a 
@@ -60,15 +61,15 @@ const Footer = () => {
 
           {/* Product links */}
           <div>
-            <h3 className="font-semibold text-foreground mb-4">Product</h3>
+            <h3 className="font-semibold text-foreground mb-4">{t("footer.product")}</h3>
             <ul className="space-y-3">
               {footerLinks.product.map((link) => (
-                <li key={link.label}>
+                <li key={link.labelKey}>
                   <a 
                     href={link.href}
                     className="text-muted-foreground hover:text-foreground transition-calm"
                   >
-                    {link.label}
+                    {t(link.labelKey)}
                   </a>
                 </li>
               ))}
@@ -77,15 +78,15 @@ const Footer = () => {
 
           {/* Resources links */}
           <div>
-            <h3 className="font-semibold text-foreground mb-4">Resources</h3>
+            <h3 className="font-semibold text-foreground mb-4">{t("footer.resources")}</h3>
             <ul className="space-y-3">
               {footerLinks.resources.map((link) => (
-                <li key={link.label}>
+                <li key={link.labelKey}>
                   <a 
                     href={link.href}
                     className="text-muted-foreground hover:text-foreground transition-calm"
                   >
-                    {link.label}
+                    {t(link.labelKey)}
                   </a>
                 </li>
               ))}
@@ -94,15 +95,15 @@ const Footer = () => {
 
           {/* Company links */}
           <div>
-            <h3 className="font-semibold text-foreground mb-4">Company</h3>
+            <h3 className="font-semibold text-foreground mb-4">{t("footer.company")}</h3>
             <ul className="space-y-3">
               {footerLinks.company.map((link) => (
-                <li key={link.label}>
+                <li key={link.labelKey}>
                   <a 
                     href={link.href}
                     className="text-muted-foreground hover:text-foreground transition-calm"
                   >
-                    {link.label}
+                    {t(link.labelKey)}
                   </a>
                 </li>
               ))}
@@ -114,12 +115,12 @@ const Footer = () => {
         <div className="pt-8 border-t border-border/50">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-muted-foreground">
-              © {currentYear} CalmStep. Made with care for every child.
+              © {currentYear} {t("footer.copyright")}
             </p>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span>Designed with</span>
+              <span>{t("footer.designedFor")}</span>
               <Heart className="w-4 h-4 text-warm fill-warm" />
-              <span>for neurodiversity</span>
+              <span>{t("footer.neurodiversity")}</span>
             </div>
           </div>
         </div>

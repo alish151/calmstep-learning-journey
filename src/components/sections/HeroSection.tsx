@@ -1,15 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 import heroIllustration from "@/assets/hero-illustration.png";
 
 const HeroSection = () => {
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   const handleStartLearning = () => {
     toast({
-      title: "Welcome to CalmStep! 🌟",
-      description: "Learning modules coming soon. Take your time exploring!",
+      title: t("toast.welcome"),
+      description: t("toast.welcomeDesc"),
     });
   };
 
@@ -39,14 +41,14 @@ const HeroSection = () => {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-light border border-primary/20 rounded-full mb-8 animate-fade-in-up">
               <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-primary-foreground">Safe & Supportive Learning</span>
+              <span className="text-sm font-medium text-primary-foreground">{t("hero.badge")}</span>
             </div>
 
             {/* Main heading */}
             <h1 className="text-4xl sm:text-5xl lg:text-display font-bold text-foreground mb-6 animate-fade-in-up animation-delay-100 leading-tight">
-              Calm steps toward{" "}
+              {t("hero.title1")}{" "}
               <span className="text-primary relative inline-block">
-                learning
+                {t("hero.title2")}
                 <svg className="absolute -bottom-1 left-0 w-full" viewBox="0 0 200 12" fill="none">
                   <path d="M2 8C50 2 150 2 198 8" stroke="currentColor" strokeWidth="3" strokeLinecap="round" className="text-primary/40" />
                 </svg>
@@ -55,36 +57,35 @@ const HeroSection = () => {
 
             {/* Subheading */}
             <p className="text-body-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-10 animate-fade-in-up animation-delay-200">
-              A gentle learning space designed for children with autism. 
-              No timers, no pressure, no grades — just learning at your own comfortable pace.
+              {t("hero.subtitle")}
             </p>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center animate-fade-in-up animation-delay-300">
               <Button variant="hero" size="xl" className="group" onClick={handleStartLearning}>
-                Start Learning
+                {t("btn.startLearning")}
                 <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
               </Button>
               <Button variant="outline" size="lg" onClick={handleLearnMore}>
-                Learn How It Works
+                {t("hero.learnHow")}
               </Button>
             </div>
 
             {/* Trust indicators */}
             <div className="mt-12 pt-8 border-t border-border/30 animate-fade-in-up animation-delay-400">
-              <p className="text-sm text-muted-foreground mb-4">Trusted by families and educators</p>
+              <p className="text-sm text-muted-foreground mb-4">{t("hero.trustedBy")}</p>
               <div className="flex flex-wrap justify-center lg:justify-start gap-6 items-center opacity-70">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-lg bg-primary/20" />
-                  <span className="font-medium text-foreground text-sm">1000+ Families</span>
+                  <span className="font-medium text-foreground text-sm">{t("hero.families")}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-lg bg-secondary/30" />
-                  <span className="font-medium text-foreground text-sm">200+ Educators</span>
+                  <span className="font-medium text-foreground text-sm">{t("hero.educators")}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-lg bg-accent/30" />
-                  <span className="font-medium text-foreground text-sm">Child-First</span>
+                  <span className="font-medium text-foreground text-sm">{t("hero.childFirst")}</span>
                 </div>
               </div>
             </div>

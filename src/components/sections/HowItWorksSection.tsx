@@ -1,30 +1,33 @@
 import { User, Clock, Trophy, Palette } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const HowItWorksSection = () => {
+  const { t } = useLanguage();
+
   const features = [
     {
       icon: User,
-      title: "Personal Profile",
-      description: "Create a unique profile with preferred colors, sounds, and learning pace that feels just right.",
+      titleKey: "how.personalProfile",
+      descKey: "how.personalProfileDesc",
       color: "primary",
     },
     {
       icon: Clock,
-      title: "Micro-Lessons",
-      description: "Short 1-2 minute lessons that fit naturally into any routine without feeling overwhelming.",
+      titleKey: "how.microLessons",
+      descKey: "how.microLessonsDesc",
       color: "secondary",
     },
     {
       icon: Trophy,
-      title: "No Pressure",
-      description: "No grades, no comparisons, no timers. Just gentle encouragement and celebrating small wins.",
+      titleKey: "how.noPressure",
+      descKey: "how.noPressureDesc",
       color: "accent",
     },
     {
       icon: Palette,
-      title: "Adaptive Learning",
-      description: "AI-powered adjustments that respond to comfort levels and learning preferences in real-time.",
+      titleKey: "how.adaptiveLearning",
+      descKey: "how.adaptiveLearningDesc",
       color: "calm",
     },
   ];
@@ -50,14 +53,13 @@ const HowItWorksSection = () => {
         {/* Section header */}
         <div className="max-w-2xl mx-auto text-center mb-16">
           <span className="inline-block px-4 py-1.5 bg-secondary-light text-secondary-foreground rounded-full text-sm font-medium mb-4">
-            How It Works
+            {t("how.badge")}
           </span>
           <h2 className="text-heading text-foreground mb-4">
-            Learning designed with care
+            {t("how.title")}
           </h2>
           <p className="text-body-lg text-muted-foreground">
-            Every aspect of CalmStep is thoughtfully created to provide a safe, 
-            comfortable, and effective learning experience.
+            {t("how.subtitle")}
           </p>
         </div>
 
@@ -65,7 +67,7 @@ const HowItWorksSection = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((feature, index) => (
             <Card 
-              key={feature.title} 
+              key={feature.titleKey} 
               className="group border-none bg-card hover:bg-card/80"
               style={{ animationDelay: `${index * 100}ms` }}
             >
@@ -74,10 +76,10 @@ const HowItWorksSection = () => {
                   <feature.icon className="w-7 h-7" />
                 </div>
                 <h3 className="text-lg font-semibold text-foreground mb-2">
-                  {feature.title}
+                  {t(feature.titleKey)}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  {feature.description}
+                  {t(feature.descKey)}
                 </p>
               </CardContent>
             </Card>
@@ -92,12 +94,10 @@ const HowItWorksSection = () => {
             </div>
             <div className="text-center md:text-left">
               <h3 className="text-xl font-semibold text-foreground mb-2">
-                Every child learns differently
+                {t("how.everyChild")}
               </h3>
               <p className="text-muted-foreground max-w-2xl">
-                CalmStep adapts to each child's unique needs. Our AI gently adjusts difficulty, 
-                detects signs of overload, and creates personalized learning paths — 
-                always supporting, never replacing, the guidance of teachers and parents.
+                {t("how.everyChildDesc")}
               </p>
             </div>
           </div>
