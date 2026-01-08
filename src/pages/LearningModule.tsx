@@ -2,11 +2,15 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Send, Calculator, BookOpen, Puzzle, Heart, MessageCircle, Loader2 } from "lucide-react";
+import { ArrowLeft, Send, Calculator, BookOpen, Puzzle, Heart, MessageCircle, Loader2, X } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAIChat } from "@/hooks/useAIChat";
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
+import MathTask from "@/components/tasks/MathTask";
+import ReadingTask from "@/components/tasks/ReadingTask";
+import LogicTask from "@/components/tasks/LogicTask";
+import EmotionsTask from "@/components/tasks/EmotionsTask";
 
 const moduleData = {
   math: {
@@ -60,6 +64,7 @@ const LearningModule = () => {
   const navigate = useNavigate();
   const { language, t } = useLanguage();
   const [inputValue, setInputValue] = useState("");
+  const [activeActivity, setActiveActivity] = useState<number | null>(null);
 
   const module = moduleData[moduleId as keyof typeof moduleData];
   
@@ -128,26 +133,70 @@ const LearningModule = () => {
             {/* Activities Section */}
             <div>
               <h2 className="text-lg font-semibold text-foreground mb-4">{t("module.activities")}</h2>
-              <div className="space-y-3">
-                {module.activities.map((activity, index) => (
-                  <Card 
-                    key={index}
-                    className={`${module.bgColor} border-2 border-${module.color}/20 cursor-pointer hover:border-${module.color}/40 transition-calm`}
-                  >
-                    <CardContent className="p-4 flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-card flex items-center justify-center">
-                        <span className="text-2xl">{activity.emoji}</span>
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-medium text-foreground">
-                          {activity.title[language]}
-                        </h3>
-                        <p className="text-sm text-muted-foreground">{t("module.tryActivity")}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+              
+              {activeActivity !== null ? (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-medium text-foreground">
+                      {module.activities[activeActivity].title[language]}
+                    </h3>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setActiveActivity(null)}
+                    >
+                      <X className="w-5 h-5" />
+                    </Button>
+                  </div>
+                  
+                  {moduleId === "math" && (
+                    <MathTask 
+                      activityIndex={activeActivity} 
+                      onComplete={() => {}} 
+                    />
+                  )}
+                  {moduleId === "reading" && (
+                    <ReadingTask 
+                      activityIndex={activeActivity} 
+                      onComplete={() => {}} 
+                    />
+                  )}
+                  {moduleId === "logic" && (
+                    <LogicTask 
+                      activityIndex={activeActivity} 
+                      onComplete={() => {}} 
+                    />
+                  )}
+                  {moduleId === "emotions" && (
+                    <EmotionsTask 
+                      activityIndex={activeActivity} 
+                      onComplete={() => {}} 
+                    />
+                  )}
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {module.activities.map((activity, index) => (
+                    <Card 
+                      key={index}
+                      className={`${module.bgColor} border-2 border-${module.color}/20 cursor-pointer hover:border-${module.color}/40 transition-calm`}
+                      onClick={() => setActiveActivity(index)}
+                    >
+                      <CardContent className="p-4 flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-card flex items-center justify-center">
+                          <span className="text-2xl">{activity.emoji}</span>
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-medium text-foreground">
+                            {activity.title[language]}
+                          </h3>
+                          <p className="text-sm text-muted-foreground">{t("module.tryActivity")}</p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* AI Chat Section */}
