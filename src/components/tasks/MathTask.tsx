@@ -15,6 +15,16 @@ const countingTasks = [
   { items: ["🌸", "🌸"], answer: 2 },
   { items: ["🦋", "🦋", "🦋", "🦋"], answer: 4 },
   { items: ["🌈"], answer: 1 },
+  { items: ["🐶", "🐶", "🐶", "🐶", "🐶", "🐶"], answer: 6 },
+  { items: ["🎈", "🎈", "🎈", "🎈", "🎈", "🎈", "🎈"], answer: 7 },
+  { items: ["🐱", "🐱", "🐱", "🐱", "🐱", "🐱", "🐱", "🐱"], answer: 8 },
+  { items: ["🍪", "🍪", "🍪", "🍪", "🍪", "🍪", "🍪", "🍪", "🍪"], answer: 9 },
+  { items: ["🌟", "🌟", "🌟", "🌟", "🌟", "🌟", "🌟", "🌟", "🌟", "🌟"], answer: 10 },
+  { items: ["🚗"], answer: 1 },
+  { items: ["🎁", "🎁", "🎁"], answer: 3 },
+  { items: ["🍭", "🍭", "🍭", "🍭", "🍭", "🍭"], answer: 6 },
+  { items: ["🎵", "🎵", "🎵", "🎵"], answer: 4 },
+  { items: ["🌻", "🌻", "🌻", "🌻", "🌻", "🌻", "🌻", "🌻"], answer: 8 },
 ];
 
 const shapeTasks = [
@@ -22,6 +32,17 @@ const shapeTasks = [
   { shape: "🔷", shapeName: { en: "Diamond", ru: "Ромб" }, options: ["🔵", "🔷", "🔺", "⬛"], answer: "🔷" },
   { shape: "🔺", shapeName: { en: "Triangle", ru: "Треугольник" }, options: ["🔵", "🔷", "🔺", "⬛"], answer: "🔺" },
   { shape: "⬛", shapeName: { en: "Square", ru: "Квадрат" }, options: ["🔵", "🔷", "🔺", "⬛"], answer: "⬛" },
+  { shape: "⬜", shapeName: { en: "White Square", ru: "Белый квадрат" }, options: ["⬜", "🔷", "🔺", "🔵"], answer: "⬜" },
+  { shape: "🟢", shapeName: { en: "Green Circle", ru: "Зелёный круг" }, options: ["🔵", "🟢", "🟡", "🔴"], answer: "🟢" },
+  { shape: "🟡", shapeName: { en: "Yellow Circle", ru: "Жёлтый круг" }, options: ["🔵", "🟢", "🟡", "🔴"], answer: "🟡" },
+  { shape: "🔴", shapeName: { en: "Red Circle", ru: "Красный круг" }, options: ["🔵", "🟢", "🟡", "🔴"], answer: "🔴" },
+  { shape: "🟣", shapeName: { en: "Purple Circle", ru: "Фиолетовый круг" }, options: ["🟣", "🟢", "🟡", "🔴"], answer: "🟣" },
+  { shape: "🟠", shapeName: { en: "Orange Circle", ru: "Оранжевый круг" }, options: ["🟠", "🟢", "🟡", "🔴"], answer: "🟠" },
+  { shape: "⭐", shapeName: { en: "Star", ru: "Звезда" }, options: ["⭐", "🔷", "🔺", "⬛"], answer: "⭐" },
+  { shape: "❤️", shapeName: { en: "Heart", ru: "Сердце" }, options: ["❤️", "⭐", "🔺", "🔵"], answer: "❤️" },
+  { shape: "🌙", shapeName: { en: "Moon", ru: "Луна" }, options: ["🌙", "⭐", "☀️", "🔵"], answer: "🌙" },
+  { shape: "☀️", shapeName: { en: "Sun", ru: "Солнце" }, options: ["🌙", "⭐", "☀️", "🔵"], answer: "☀️" },
+  { shape: "💎", shapeName: { en: "Gem", ru: "Драгоценный камень" }, options: ["💎", "🔷", "🔺", "⬛"], answer: "💎" },
 ];
 
 const numberTasks = [
@@ -29,6 +50,17 @@ const numberTasks = [
   { target: 5, options: [3, 4, 5, 6] },
   { target: 7, options: [5, 6, 7, 8] },
   { target: 2, options: [1, 2, 3, 4] },
+  { target: 1, options: [1, 2, 3, 4] },
+  { target: 8, options: [6, 7, 8, 9] },
+  { target: 4, options: [2, 3, 4, 5] },
+  { target: 6, options: [4, 5, 6, 7] },
+  { target: 9, options: [7, 8, 9, 10] },
+  { target: 10, options: [8, 9, 10, 11] },
+  { target: 0, options: [0, 1, 2, 3] },
+  { target: 11, options: [9, 10, 11, 12] },
+  { target: 12, options: [10, 11, 12, 13] },
+  { target: 15, options: [13, 14, 15, 16] },
+  { target: 20, options: [18, 19, 20, 21] },
 ];
 
 const MathTask = ({ activityIndex, onComplete }: MathTaskProps) => {
@@ -99,7 +131,7 @@ const MathTask = ({ activityIndex, onComplete }: MathTaskProps) => {
       <Card className="bg-gradient-to-br from-primary-light to-secondary-light border-primary/20">
         <CardContent className="p-8 text-center">
           <div className="flex justify-center gap-1 mb-4">
-            {Array.from({ length: score }).map((_, i) => (
+            {Array.from({ length: Math.min(score, 10) }).map((_, i) => (
               <Star key={i} className="w-8 h-8 text-yellow-500 fill-yellow-500" />
             ))}
           </div>
@@ -119,24 +151,29 @@ const MathTask = ({ activityIndex, onComplete }: MathTaskProps) => {
   // Counting Task
   if (activityIndex === 0) {
     const task = countingTasks[currentTask];
+    const maxAnswer = Math.max(task.answer + 2, 5);
+    const minAnswer = Math.max(1, task.answer - 2);
+    const answerOptions = Array.from({ length: maxAnswer - minAnswer + 1 }, (_, i) => minAnswer + i);
+    
     return (
       <Card className="bg-card border-primary/20">
         <CardContent className="p-6">
           <div className="text-center mb-6">
             <h3 className="text-lg font-semibold text-foreground mb-2">{t.countStars[language]}</h3>
             <p className="text-sm text-muted-foreground">{t.howMany[language]}</p>
+            <p className="text-xs text-muted-foreground mt-1">{currentTask + 1} / {countingTasks.length}</p>
           </div>
 
-          <div className="flex justify-center gap-4 mb-8 py-6 bg-primary-light/50 rounded-2xl">
+          <div className="flex flex-wrap justify-center gap-3 mb-8 py-6 bg-primary-light/50 rounded-2xl">
             {task.items.map((item, i) => (
-              <span key={i} className="text-5xl animate-bounce" style={{ animationDelay: `${i * 0.1}s` }}>
+              <span key={i} className="text-4xl animate-bounce" style={{ animationDelay: `${i * 0.1}s` }}>
                 {item}
               </span>
             ))}
           </div>
 
           <div className="grid grid-cols-5 gap-3 mb-6">
-            {[1, 2, 3, 4, 5].map((num) => (
+            {answerOptions.map((num) => (
               <Button
                 key={num}
                 variant={selected === num ? (num === task.answer ? "default" : "destructive") : "outline"}
@@ -182,6 +219,7 @@ const MathTask = ({ activityIndex, onComplete }: MathTaskProps) => {
             <p className="text-sm text-muted-foreground">
               {t.findShape[language]} <span className="font-bold">{task.shapeName[language]}</span>
             </p>
+            <p className="text-xs text-muted-foreground mt-1">{currentTask + 1} / {shapeTasks.length}</p>
           </div>
 
           <div className="grid grid-cols-2 gap-4 mb-6">
@@ -230,6 +268,7 @@ const MathTask = ({ activityIndex, onComplete }: MathTaskProps) => {
           <p className="text-sm text-muted-foreground">
             {t.findNumber[language]} <span className="font-bold text-2xl text-primary">{task.target}</span>
           </p>
+          <p className="text-xs text-muted-foreground mt-1">{currentTask + 1} / {numberTasks.length}</p>
         </div>
 
         <div className="grid grid-cols-2 gap-4 mb-6">

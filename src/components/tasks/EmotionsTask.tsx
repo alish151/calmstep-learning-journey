@@ -15,6 +15,16 @@ const feelingsTasks = [
   { face: "😠", emotion: { en: "Angry", ru: "Злой" }, options: { en: ["Happy", "Sad", "Angry", "Tired"], ru: ["Счастливый", "Грустный", "Злой", "Уставший"] } },
   { face: "😨", emotion: { en: "Scared", ru: "Испуганный" }, options: { en: ["Excited", "Sad", "Scared", "Happy"], ru: ["Взволнованный", "Грустный", "Испуганный", "Счастливый"] } },
   { face: "😮", emotion: { en: "Surprised", ru: "Удивлённый" }, options: { en: ["Surprised", "Sad", "Angry", "Tired"], ru: ["Удивлённый", "Грустный", "Злой", "Уставший"] } },
+  { face: "😴", emotion: { en: "Tired", ru: "Уставший" }, options: { en: ["Happy", "Tired", "Angry", "Scared"], ru: ["Счастливый", "Уставший", "Злой", "Испуганный"] } },
+  { face: "🤗", emotion: { en: "Loving", ru: "Любящий" }, options: { en: ["Loving", "Sad", "Angry", "Tired"], ru: ["Любящий", "Грустный", "Злой", "Уставший"] } },
+  { face: "😤", emotion: { en: "Frustrated", ru: "Раздосадованный" }, options: { en: ["Happy", "Frustrated", "Scared", "Tired"], ru: ["Счастливый", "Раздосадованный", "Испуганный", "Уставший"] } },
+  { face: "🥳", emotion: { en: "Excited", ru: "Взволнованный" }, options: { en: ["Excited", "Sad", "Angry", "Scared"], ru: ["Взволнованный", "Грустный", "Злой", "Испуганный"] } },
+  { face: "😔", emotion: { en: "Disappointed", ru: "Разочарованный" }, options: { en: ["Happy", "Disappointed", "Angry", "Excited"], ru: ["Счастливый", "Разочарованный", "Злой", "Взволнованный"] } },
+  { face: "🤔", emotion: { en: "Curious", ru: "Любопытный" }, options: { en: ["Curious", "Sad", "Angry", "Scared"], ru: ["Любопытный", "Грустный", "Злой", "Испуганный"] } },
+  { face: "😌", emotion: { en: "Peaceful", ru: "Спокойный" }, options: { en: ["Happy", "Peaceful", "Angry", "Tired"], ru: ["Счастливый", "Спокойный", "Злой", "Уставший"] } },
+  { face: "😳", emotion: { en: "Embarrassed", ru: "Смущённый" }, options: { en: ["Embarrassed", "Sad", "Happy", "Scared"], ru: ["Смущённый", "Грустный", "Счастливый", "Испуганный"] } },
+  { face: "🥺", emotion: { en: "Pleading", ru: "Умоляющий" }, options: { en: ["Happy", "Pleading", "Angry", "Tired"], ru: ["Счастливый", "Умоляющий", "Злой", "Уставший"] } },
+  { face: "😇", emotion: { en: "Proud", ru: "Гордый" }, options: { en: ["Proud", "Sad", "Angry", "Scared"], ru: ["Гордый", "Грустный", "Злой", "Испуганный"] } },
 ];
 
 const calmingActivities = [
@@ -45,6 +55,24 @@ const calmingActivities = [
       ru: ["Закрой глаза", "Представь своё любимое место", "Что ты там видишь?", "Как ты себя чувствуешь?"]
     },
   },
+  {
+    title: { en: "5-4-3-2-1 Grounding", ru: "Заземление 5-4-3-2-1" },
+    instruction: { en: "Use your senses to calm down", ru: "Используй свои чувства для успокоения" },
+    icon: "✋",
+    steps: {
+      en: ["Name 5 things you see", "Name 4 things you can touch", "Name 3 things you hear", "Name 2 things you smell", "Name 1 thing you taste"],
+      ru: ["Назови 5 вещей, которые видишь", "Назови 4 вещи, которые можешь потрогать", "Назови 3 вещи, которые слышишь", "Назови 2 вещи, которые чувствуешь запахом", "Назови 1 вещь, которую чувствуешь на вкус"]
+    },
+  },
+  {
+    title: { en: "Butterfly Hug", ru: "Объятие бабочки" },
+    instruction: { en: "Hug yourself like a butterfly", ru: "Обними себя как бабочка" },
+    icon: "🦋",
+    steps: {
+      en: ["Cross your arms over your chest", "Tap your shoulders gently", "Left, right, left, right", "Feel calm and safe"],
+      ru: ["Скрести руки на груди", "Мягко похлопывай по плечам", "Левое, правое, левое, правое", "Почувствуй спокойствие и безопасность"]
+    },
+  },
 ];
 
 const emotionCardsTasks = [
@@ -68,6 +96,90 @@ const emotionCardsTasks = [
     options: ["😊", "😢", "😠", "😨"],
     answer: "😠",
     explanation: { en: "Angry. It's normal to feel upset, but we can talk about it calmly", ru: "Злой. Нормально расстроиться, но можно поговорить спокойно" },
+  },
+  {
+    scenario: { en: "You're about to go on your first plane ride", ru: "Ты собираешься полететь на самолёте впервые" },
+    question: { en: "How might you feel?", ru: "Что бы ты мог почувствовать?" },
+    options: ["😊", "😢", "😨", "😴"],
+    answer: "😨",
+    explanation: { en: "Nervous or scared. New experiences can be scary but also exciting!", ru: "Нервничать или бояться. Новый опыт может быть страшным, но и волнующим!" },
+  },
+  {
+    scenario: { en: "Your mom made your favorite dinner", ru: "Мама приготовила твой любимый ужин" },
+    question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" },
+    options: ["😊", "😢", "😠", "😨"],
+    answer: "😊",
+    explanation: { en: "Happy! It's lovely when someone does something nice for us", ru: "Счастливый! Приятно когда кто-то делает что-то хорошее для нас" },
+  },
+  {
+    scenario: { en: "Your pet is sick", ru: "Твой питомец заболел" },
+    question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" },
+    options: ["😊", "😢", "😠", "🥳"],
+    answer: "😢",
+    explanation: { en: "Sad or worried. It's natural to feel sad when someone we love is not well", ru: "Грустный или обеспокоенный. Естественно грустить когда тот, кого мы любим, нездоров" },
+  },
+  {
+    scenario: { en: "You won a game with your friends", ru: "Ты выиграл в игре с друзьями" },
+    question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" },
+    options: ["🥳", "😢", "😠", "😨"],
+    answer: "🥳",
+    explanation: { en: "Excited and proud! Winning feels great, but remember to be kind to others", ru: "Взволнованный и гордый! Выигрывать приятно, но помни быть добрым к другим" },
+  },
+  {
+    scenario: { en: "Someone said something mean to you", ru: "Кто-то сказал тебе что-то обидное" },
+    question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" },
+    options: ["😊", "😢", "😠", "🥳"],
+    answer: "😢",
+    explanation: { en: "Sad or hurt. It's okay to feel this way, and you can talk to a trusted adult", ru: "Грустный или обиженный. Нормально так себя чувствовать, и можно поговорить с взрослым" },
+  },
+  {
+    scenario: { en: "You're going to a birthday party", ru: "Ты идёшь на день рождения" },
+    question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" },
+    options: ["🥳", "😢", "😠", "😴"],
+    answer: "🥳",
+    explanation: { en: "Excited! Parties can be fun with friends, cake, and games", ru: "Взволнованный! Праздники могут быть весёлыми с друзьями, тортом и играми" },
+  },
+  {
+    scenario: { en: "You have to go to bed early", ru: "Тебе нужно рано лечь спать" },
+    question: { en: "How might you feel?", ru: "Что бы ты мог почувствовать?" },
+    options: ["😊", "😢", "😠", "😴"],
+    answer: "😠",
+    explanation: { en: "Frustrated. It's okay to feel upset, but rest is important for our bodies", ru: "Раздосадованный. Нормально расстроиться, но отдых важен для нашего тела" },
+  },
+  {
+    scenario: { en: "You learned to ride a bike", ru: "Ты научился кататься на велосипеде" },
+    question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" },
+    options: ["😊", "😢", "😠", "😨"],
+    answer: "😊",
+    explanation: { en: "Proud and happy! Learning new skills is amazing", ru: "Гордый и счастливый! Учиться новому — это замечательно" },
+  },
+  {
+    scenario: { en: "A thunder storm is happening outside", ru: "На улице гроза" },
+    question: { en: "How might you feel?", ru: "Что бы ты мог почувствовать?" },
+    options: ["😊", "😢", "😨", "🥳"],
+    answer: "😨",
+    explanation: { en: "Scared. Thunder can be loud and scary, but you're safe inside", ru: "Испуганный. Гром может быть громким и страшным, но ты в безопасности внутри" },
+  },
+  {
+    scenario: { en: "You helped your little brother with his homework", ru: "Ты помог младшему брату с домашним заданием" },
+    question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" },
+    options: ["😊", "😢", "😠", "😨"],
+    answer: "😊",
+    explanation: { en: "Proud and happy! Helping others feels wonderful", ru: "Гордый и счастливый! Помогать другим — это замечательно" },
+  },
+  {
+    scenario: { en: "Your friend moved to a new city", ru: "Твой друг переехал в другой город" },
+    question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" },
+    options: ["😊", "😢", "😠", "🥳"],
+    answer: "😢",
+    explanation: { en: "Sad. It's hard when friends move away, but you can still stay in touch", ru: "Грустный. Тяжело когда друзья уезжают, но вы можете оставаться на связи" },
+  },
+  {
+    scenario: { en: "You got a gold star at school", ru: "Ты получил золотую звёздочку в школе" },
+    question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" },
+    options: ["😊", "😢", "😠", "😨"],
+    answer: "😊",
+    explanation: { en: "Proud and happy! Your hard work was recognized", ru: "Гордый и счастливый! Твоя тяжёлая работа была замечена" },
   },
 ];
 
@@ -163,7 +275,7 @@ const EmotionsTask = ({ activityIndex, onComplete }: EmotionsTaskProps) => {
       <Card className="bg-gradient-to-br from-warm-light to-calm-light border-warm/20">
         <CardContent className="p-8 text-center">
           <div className="flex justify-center gap-1 mb-4">
-            {Array.from({ length: score }).map((_, i) => (
+            {Array.from({ length: Math.min(score, 10) }).map((_, i) => (
               <Star key={i} className="w-8 h-8 text-yellow-500 fill-yellow-500" />
             ))}
           </div>
@@ -189,6 +301,7 @@ const EmotionsTask = ({ activityIndex, onComplete }: EmotionsTaskProps) => {
           <div className="text-center mb-6">
             <h3 className="text-lg font-semibold text-foreground mb-2">{t.howFeel[language]}</h3>
             <p className="text-sm text-muted-foreground">{t.whatEmotion[language]}</p>
+            <p className="text-xs text-muted-foreground mt-1">{currentTask + 1} / {feelingsTasks.length}</p>
           </div>
 
           <div className="flex justify-center mb-8">
@@ -267,15 +380,15 @@ const EmotionsTask = ({ activityIndex, onComplete }: EmotionsTaskProps) => {
           </div>
 
           {/* Activity selection */}
-          <div className="flex justify-center gap-3 mb-6">
+          <div className="flex justify-center gap-2 mb-6 flex-wrap">
             {calmingActivities.map((act, i) => (
               <Button
                 key={i}
                 variant={currentTask === i ? "default" : "outline"}
-                className="flex-col h-auto py-3 px-4"
+                className="flex-col h-auto py-2 px-3"
                 onClick={() => selectCalmingActivity(i)}
               >
-                <span className="text-2xl mb-1">{act.icon}</span>
+                <span className="text-xl mb-1">{act.icon}</span>
                 <span className="text-xs">{act.title[language]}</span>
               </Button>
             ))}
@@ -313,6 +426,7 @@ const EmotionsTask = ({ activityIndex, onComplete }: EmotionsTaskProps) => {
       <CardContent className="p-6">
         <div className="text-center mb-4">
           <h3 className="text-lg font-semibold text-foreground mb-2">{t.emotionCards[language]}</h3>
+          <p className="text-xs text-muted-foreground">{currentTask + 1} / {emotionCardsTasks.length}</p>
         </div>
 
         <div className="bg-warm-light rounded-2xl p-4 mb-6">

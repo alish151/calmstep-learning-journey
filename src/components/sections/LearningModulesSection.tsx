@@ -144,7 +144,7 @@ const LearningModulesSection = () => {
                   <p className="text-muted-foreground mb-6">
                     {t("learning.socialDesc")}
                   </p>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 mb-6">
                     {socialTags.map((tagKey) => (
                       <span 
                         key={tagKey}
@@ -154,6 +154,15 @@ const LearningModulesSection = () => {
                       </span>
                     ))}
                   </div>
+                  <Button 
+                    variant="soft" 
+                    size="sm" 
+                    className="group/btn"
+                    onClick={() => navigate("/social-scenarios")}
+                  >
+                    {t("learning.explore")}
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                  </Button>
                 </div>
               </div>
             </CardContent>

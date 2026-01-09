@@ -14,6 +14,17 @@ const patternTasks = [
   { pattern: ["⭐", "⭐", "🌙", "⭐", "⭐", "?"], options: ["⭐", "🌙", "☀️", "🌈"], answer: "🌙" },
   { pattern: ["🍎", "🍌", "🍎", "🍌", "?"], options: ["🍇", "🍎", "🍌", "🍊"], answer: "🍎" },
   { pattern: ["🔺", "🔺", "⬛", "🔺", "🔺", "?"], options: ["🔺", "⬛", "🔵", "🔷"], answer: "⬛" },
+  { pattern: ["🐱", "🐶", "🐱", "🐶", "?"], options: ["🐱", "🐶", "🐟", "🐦"], answer: "🐱" },
+  { pattern: ["🟢", "🟢", "🟡", "🟢", "🟢", "?"], options: ["🟢", "🟡", "🔴", "🔵"], answer: "🟡" },
+  { pattern: ["🌸", "🌻", "🌸", "🌻", "?"], options: ["🌸", "🌻", "🌹", "🌺"], answer: "🌸" },
+  { pattern: ["1️⃣", "2️⃣", "1️⃣", "2️⃣", "?"], options: ["1️⃣", "2️⃣", "3️⃣", "4️⃣"], answer: "1️⃣" },
+  { pattern: ["🔵", "🔵", "🔴", "🔵", "🔵", "?"], options: ["🔵", "🔴", "🟢", "🟡"], answer: "🔴" },
+  { pattern: ["🚗", "🚌", "🚗", "🚌", "?"], options: ["🚗", "🚌", "✈️", "🚂"], answer: "🚗" },
+  { pattern: ["⬜", "⬛", "⬜", "⬛", "?"], options: ["⬜", "⬛", "🔲", "🔳"], answer: "⬜" },
+  { pattern: ["🌈", "☀️", "🌈", "☀️", "?"], options: ["🌈", "☀️", "🌙", "⭐"], answer: "🌈" },
+  { pattern: ["🎈", "🎈", "🎁", "🎈", "🎈", "?"], options: ["🎈", "🎁", "🎂", "🎉"], answer: "🎁" },
+  { pattern: ["🦋", "🐛", "🦋", "🐛", "?"], options: ["🦋", "🐛", "🐜", "🐝"], answer: "🦋" },
+  { pattern: ["❤️", "💛", "❤️", "💛", "?"], options: ["❤️", "💛", "💚", "💙"], answer: "❤️" },
 ];
 
 const sortingTasks = [
@@ -31,6 +42,66 @@ const sortingTasks = [
     title: { en: "Sort by speed: Slow to Fast", ru: "Сортировка по скорости: от медленного к быстрому" },
     items: ["🚀", "🐌", "🚗"],
     correctOrder: ["🐌", "🚗", "🚀"],
+  },
+  {
+    title: { en: "Sort by size: Small to Big", ru: "Сортировка по размеру: от маленького к большому" },
+    items: ["🏠", "🏰", "🏚️"],
+    correctOrder: ["🏚️", "🏠", "🏰"],
+  },
+  {
+    title: { en: "Sort by age: Young to Old", ru: "Сортировка по возрасту: от молодого к старому" },
+    items: ["👴", "👶", "👦"],
+    correctOrder: ["👶", "👦", "👴"],
+  },
+  {
+    title: { en: "Sort by temperature: Cold to Hot", ru: "Сортировка по температуре: от холодного к горячему" },
+    items: ["☀️", "❄️", "🌤️"],
+    correctOrder: ["❄️", "🌤️", "☀️"],
+  },
+  {
+    title: { en: "Sort by size: Small to Big", ru: "Сортировка по размеру: от маленького к большому" },
+    items: ["🐋", "🐟", "🦐"],
+    correctOrder: ["🦐", "🐟", "🐋"],
+  },
+  {
+    title: { en: "Sort by time: Morning to Night", ru: "Сортировка по времени: от утра к ночи" },
+    items: ["🌙", "🌅", "☀️"],
+    correctOrder: ["🌅", "☀️", "🌙"],
+  },
+  {
+    title: { en: "Sort by height: Short to Tall", ru: "Сортировка по высоте: от низкого к высокому" },
+    items: ["🌲", "🌱", "🌿"],
+    correctOrder: ["🌱", "🌿", "🌲"],
+  },
+  {
+    title: { en: "Sort by weight: Light to Heavy", ru: "Сортировка по весу: от лёгкого к тяжёлому" },
+    items: ["🪨", "🪶", "📦"],
+    correctOrder: ["🪶", "📦", "🪨"],
+  },
+  {
+    title: { en: "Sort by size: Small to Big", ru: "Сортировка по размеру: от маленького к большому" },
+    items: ["🍇", "🍉", "🍓"],
+    correctOrder: ["🍓", "🍇", "🍉"],
+  },
+  {
+    title: { en: "Sort by loudness: Quiet to Loud", ru: "Сортировка по громкости: от тихого к громкому" },
+    items: ["📢", "🔔", "🔇"],
+    correctOrder: ["🔇", "🔔", "📢"],
+  },
+  {
+    title: { en: "Sort by sweetness: Less to More", ru: "Сортировка по сладости: от менее к более" },
+    items: ["🍬", "🥒", "🍎"],
+    correctOrder: ["🥒", "🍎", "🍬"],
+  },
+  {
+    title: { en: "Sort by distance: Near to Far", ru: "Сортировка по расстоянию: от ближнего к дальнему" },
+    items: ["🌍", "🏠", "🌙"],
+    correctOrder: ["🏠", "🌍", "🌙"],
+  },
+  {
+    title: { en: "Sort by age: New to Old", ru: "Сортировка по возрасту: от нового к старому" },
+    items: ["🏛️", "🏗️", "🏠"],
+    correctOrder: ["🏗️", "🏠", "🏛️"],
   },
 ];
 
@@ -51,6 +122,78 @@ const sequenceTasks = [
     sequence: ["☀️", "🌅", "🌙", "?"], 
     question: { en: "What comes next?", ru: "Что дальше?" },
     options: ["⭐", "☀️", "🌧️", "🌈"], 
+    answer: "⭐" 
+  },
+  { 
+    sequence: ["🐛", "🐚", "🦋", "?"], 
+    question: { en: "What comes after the butterfly?", ru: "Что после бабочки?" },
+    options: ["🐛", "🥚", "🌸", "💀"], 
+    answer: "🌸" 
+  },
+  { 
+    sequence: ["❄️", "🌸", "☀️", "?"], 
+    question: { en: "What season comes next?", ru: "Какое время года следующее?" },
+    options: ["🍂", "❄️", "🌸", "☀️"], 
+    answer: "🍂" 
+  },
+  { 
+    sequence: ["👶", "👦", "👨", "?"], 
+    question: { en: "What comes next?", ru: "Что дальше?" },
+    options: ["👴", "👶", "👦", "🧒"], 
+    answer: "👴" 
+  },
+  { 
+    sequence: ["🌑", "🌓", "🌕", "?"], 
+    question: { en: "Moon phase: What comes next?", ru: "Фаза луны: Что дальше?" },
+    options: ["🌗", "🌑", "🌓", "☀️"], 
+    answer: "🌗" 
+  },
+  { 
+    sequence: ["1️⃣", "2️⃣", "3️⃣", "?"], 
+    question: { en: "What number comes next?", ru: "Какое число следующее?" },
+    options: ["4️⃣", "1️⃣", "5️⃣", "0️⃣"], 
+    answer: "4️⃣" 
+  },
+  { 
+    sequence: ["🚶", "🏃", "🚴", "?"], 
+    question: { en: "What comes next (faster)?", ru: "Что дальше (быстрее)?" },
+    options: ["🚗", "🚶", "🐌", "🦥"], 
+    answer: "🚗" 
+  },
+  { 
+    sequence: ["📕", "📗", "📘", "?"], 
+    question: { en: "What color book comes next?", ru: "Какого цвета книга следующая?" },
+    options: ["📙", "📕", "📗", "📓"], 
+    answer: "📙" 
+  },
+  { 
+    sequence: ["🌧️", "🌈", "☀️", "?"], 
+    question: { en: "Weather sequence: What next?", ru: "Последовательность погоды: Что дальше?" },
+    options: ["🌤️", "🌧️", "⛈️", "❄️"], 
+    answer: "🌤️" 
+  },
+  { 
+    sequence: ["🥛", "🧀", "🐄", "?"], 
+    question: { en: "Reverse process: What started it?", ru: "Обратный процесс: Что началo?" },
+    options: ["🌾", "🥛", "🧈", "🍦"], 
+    answer: "🌾" 
+  },
+  { 
+    sequence: ["🍞", "🥪", "😋", "?"], 
+    question: { en: "What happens after eating?", ru: "Что происходит после еды?" },
+    options: ["😴", "🍞", "🥪", "😢"], 
+    answer: "😴" 
+  },
+  { 
+    sequence: ["🧵", "👕", "👔", "?"], 
+    question: { en: "Clothing evolution: What next?", ru: "Эволюция одежды: Что дальше?" },
+    options: ["🎩", "🧵", "👗", "🩳"], 
+    answer: "🎩" 
+  },
+  { 
+    sequence: ["🌍", "🚀", "🌙", "?"], 
+    question: { en: "Space journey: What comes next?", ru: "Космическое путешествие: Что дальше?" },
+    options: ["⭐", "🌍", "🌞", "🛸"], 
     answer: "⭐" 
   },
 ];
@@ -143,7 +286,7 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
       <Card className="bg-gradient-to-br from-accent-light to-primary-light border-accent/20">
         <CardContent className="p-8 text-center">
           <div className="flex justify-center gap-1 mb-4">
-            {Array.from({ length: score }).map((_, i) => (
+            {Array.from({ length: Math.min(score, 10) }).map((_, i) => (
               <Star key={i} className="w-8 h-8 text-yellow-500 fill-yellow-500" />
             ))}
           </div>
@@ -169,9 +312,10 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
           <div className="text-center mb-6">
             <h3 className="text-lg font-semibold text-foreground mb-2">{t.findPattern[language]}</h3>
             <p className="text-sm text-muted-foreground">{t.whatNext[language]}</p>
+            <p className="text-xs text-muted-foreground mt-1">{currentTask + 1} / {patternTasks.length}</p>
           </div>
 
-          <div className="flex justify-center gap-3 mb-8 py-4 bg-accent-light/50 rounded-2xl">
+          <div className="flex justify-center gap-3 mb-8 py-4 bg-accent-light/50 rounded-2xl flex-wrap">
             {task.pattern.map((item, i) => (
               <span key={i} className={`text-4xl ${item === "?" ? "animate-pulse text-muted-foreground" : ""}`}>
                 {item}
@@ -227,6 +371,7 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
           <div className="text-center mb-6">
             <h3 className="text-lg font-semibold text-foreground mb-2">{t.sortIt[language]}</h3>
             <p className="text-sm text-muted-foreground">{task.title[language]}</p>
+            <p className="text-xs text-muted-foreground mt-1">{currentTask + 1} / {sortingTasks.length}</p>
           </div>
 
           {/* Selected order display */}
@@ -301,9 +446,10 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
         <div className="text-center mb-6">
           <h3 className="text-lg font-semibold text-foreground mb-2">{t.sequence[language]}</h3>
           <p className="text-sm text-muted-foreground">{task.question[language]}</p>
+          <p className="text-xs text-muted-foreground mt-1">{currentTask + 1} / {sequenceTasks.length}</p>
         </div>
 
-        <div className="flex justify-center gap-4 mb-8 py-4 bg-accent-light/50 rounded-2xl">
+        <div className="flex justify-center gap-4 mb-8 py-4 bg-accent-light/50 rounded-2xl flex-wrap">
           {task.sequence.map((item, i) => (
             <span key={i} className={`text-4xl ${item === "?" ? "animate-pulse text-muted-foreground" : ""}`}>
               {item}
