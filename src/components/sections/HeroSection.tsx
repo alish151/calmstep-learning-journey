@@ -1,18 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Sparkles, ArrowRight } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useNavigate } from "react-router-dom";
 import heroIllustration from "@/assets/hero-illustration.png";
 
 const HeroSection = () => {
-  const { toast } = useToast();
   const { t } = useLanguage();
+  const navigate = useNavigate();
 
   const handleStartLearning = () => {
-    toast({
-      title: t("toast.welcome"),
-      description: t("toast.welcomeDesc"),
-    });
+    navigate("/learning");
   };
 
   const handleLearnMore = () => {

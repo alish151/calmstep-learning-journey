@@ -7,6 +7,9 @@ import { HelmetProvider } from "react-helmet-async";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Index from "./pages/Index";
 import LearningModule from "./pages/LearningModule";
+import LearningModules from "./pages/LearningModules";
+import HowItWorks from "./pages/HowItWorks";
+import SocialScenarios from "./pages/SocialScenarios";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,7 +24,10 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/how-it-works" element={<HowItWorks />} />
+              <Route path="/learning" element={<LearningModules />} />
               <Route path="/learn/:moduleId" element={<LearningModule />} />
+              <Route path="/social-scenarios" element={<SocialScenarios />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
