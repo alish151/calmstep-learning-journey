@@ -12,50 +12,36 @@ import ReadingTask from "@/components/tasks/ReadingTask";
 import LogicTask from "@/components/tasks/LogicTask";
 import EmotionsTask from "@/components/tasks/EmotionsTask";
 
+import { mathActivities, readingActivities, logicActivities, emotionsActivities } from "@/data/taskData";
+
 const moduleData = {
   math: {
     icon: Calculator,
     emoji: "🔢",
     color: "primary",
     bgColor: "bg-primary-light",
-    activities: [
-      { title: { en: "Count the Stars", ru: "Посчитай звёзды" }, emoji: "⭐" },
-      { title: { en: "Shape Match", ru: "Найди фигуру" }, emoji: "🔷" },
-      { title: { en: "Number Hunt", ru: "Найди число" }, emoji: "🔍" },
-    ],
+    activities: mathActivities,
   },
   reading: {
     icon: BookOpen,
     emoji: "📖",
     color: "secondary",
     bgColor: "bg-secondary-light",
-    activities: [
-      { title: { en: "Picture Words", ru: "Картинки и слова" }, emoji: "🖼️" },
-      { title: { en: "Sound Match", ru: "Сопоставь звуки" }, emoji: "🔊" },
-      { title: { en: "Story Time", ru: "Время сказок" }, emoji: "📚" },
-    ],
+    activities: readingActivities,
   },
   logic: {
     icon: Puzzle,
     emoji: "🧩",
     color: "accent",
     bgColor: "bg-accent-light",
-    activities: [
-      { title: { en: "Find the Pattern", ru: "Найди паттерн" }, emoji: "🔄" },
-      { title: { en: "Sort It Out", ru: "Рассортируй" }, emoji: "📦" },
-      { title: { en: "What Comes Next?", ru: "Что дальше?" }, emoji: "➡️" },
-    ],
+    activities: logicActivities,
   },
   emotions: {
     icon: Heart,
     emoji: "💭",
     color: "warm",
     bgColor: "bg-warm-light",
-    activities: [
-      { title: { en: "How Do They Feel?", ru: "Что они чувствуют?" }, emoji: "😊" },
-      { title: { en: "Calm Corner", ru: "Уголок спокойствия" }, emoji: "🌿" },
-      { title: { en: "Emotion Cards", ru: "Карточки эмоций" }, emoji: "🎴" },
-    ],
+    activities: emotionsActivities,
   },
 };
 
