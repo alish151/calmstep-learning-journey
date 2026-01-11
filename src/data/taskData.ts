@@ -1,4 +1,5 @@
 // Task data organized by module, type, and difficulty level
+// Each task type has multiple groups that are randomly selected
 
 export type DifficultyLevel = 'easy' | 'medium' | 'hard';
 
@@ -9,28 +10,93 @@ export interface TaskTranslation {
 
 // ============= MATH TASKS =============
 
-export const mathCountingTasks = {
+// Multiple task groups for counting - randomly selected
+export const mathCountingTaskGroups = {
   easy: [
-    { items: ["⭐"], answer: 1 },
-    { items: ["🍎", "🍎"], answer: 2 },
-    { items: ["🌸", "🌸", "🌸"], answer: 3 },
-    { items: ["🦋", "🦋"], answer: 2 },
-    { items: ["🌈"], answer: 1 },
+    // Group 1: Basic objects
+    [
+      { items: ["⭐"], answer: 1 },
+      { items: ["🍎", "🍎"], answer: 2 },
+      { items: ["🌸", "🌸", "🌸"], answer: 3 },
+      { items: ["🦋", "🦋"], answer: 2 },
+      { items: ["🌈"], answer: 1 },
+    ],
+    // Group 2: Animals
+    [
+      { items: ["🐶"], answer: 1 },
+      { items: ["🐱", "🐱", "🐱"], answer: 3 },
+      { items: ["🐰", "🐰"], answer: 2 },
+      { items: ["🐦"], answer: 1 },
+      { items: ["🐸", "🐸", "🐸"], answer: 3 },
+    ],
+    // Group 3: Food
+    [
+      { items: ["🍕", "🍕"], answer: 2 },
+      { items: ["🍌"], answer: 1 },
+      { items: ["🍪", "🍪", "🍪"], answer: 3 },
+      { items: ["🍓", "🍓"], answer: 2 },
+      { items: ["🧁"], answer: 1 },
+    ],
   ],
   medium: [
-    { items: ["⭐", "⭐", "⭐", "⭐", "⭐"], answer: 5 },
-    { items: ["🐶", "🐶", "🐶", "🐶", "🐶", "🐶"], answer: 6 },
-    { items: ["🎈", "🎈", "🎈", "🎈", "🎈", "🎈", "🎈"], answer: 7 },
-    { items: ["🍪", "🍪", "🍪", "🍪"], answer: 4 },
-    { items: ["🚗", "🚗", "🚗", "🚗", "🚗", "🚗"], answer: 6 },
+    // Group 1
+    [
+      { items: ["⭐", "⭐", "⭐", "⭐", "⭐"], answer: 5 },
+      { items: ["🐶", "🐶", "🐶", "🐶", "🐶", "🐶"], answer: 6 },
+      { items: ["🎈", "🎈", "🎈", "🎈", "🎈", "🎈", "🎈"], answer: 7 },
+      { items: ["🍪", "🍪", "🍪", "🍪"], answer: 4 },
+      { items: ["🚗", "🚗", "🚗", "🚗", "🚗", "🚗"], answer: 6 },
+    ],
+    // Group 2
+    [
+      { items: ["🌺", "🌺", "🌺", "🌺"], answer: 4 },
+      { items: ["🎁", "🎁", "🎁", "🎁", "🎁"], answer: 5 },
+      { items: ["🎨", "🎨", "🎨", "🎨", "🎨", "🎨"], answer: 6 },
+      { items: ["🌙", "🌙", "🌙", "🌙", "🌙", "🌙", "🌙"], answer: 7 },
+      { items: ["🎵", "🎵", "🎵", "🎵"], answer: 4 },
+    ],
+    // Group 3
+    [
+      { items: ["🚀", "🚀", "🚀", "🚀", "🚀"], answer: 5 },
+      { items: ["🎯", "🎯", "🎯", "🎯"], answer: 4 },
+      { items: ["🎪", "🎪", "🎪", "🎪", "🎪", "🎪"], answer: 6 },
+      { items: ["🎭", "🎭", "🎭", "🎭", "🎭", "🎭", "🎭"], answer: 7 },
+      { items: ["🎸", "🎸", "🎸", "🎸", "🎸"], answer: 5 },
+    ],
   ],
   hard: [
-    { items: ["🐱", "🐱", "🐱", "🐱", "🐱", "🐱", "🐱", "🐱"], answer: 8 },
-    { items: ["🍪", "🍪", "🍪", "🍪", "🍪", "🍪", "🍪", "🍪", "🍪"], answer: 9 },
-    { items: ["🌟", "🌟", "🌟", "🌟", "🌟", "🌟", "🌟", "🌟", "🌟", "🌟"], answer: 10 },
-    { items: ["🍭", "🍭", "🍭", "🍭", "🍭", "🍭", "🍭"], answer: 7 },
-    { items: ["🌻", "🌻", "🌻", "🌻", "🌻", "🌻", "🌻", "🌻"], answer: 8 },
+    // Group 1
+    [
+      { items: ["🐱", "🐱", "🐱", "🐱", "🐱", "🐱", "🐱", "🐱"], answer: 8 },
+      { items: ["🍪", "🍪", "🍪", "🍪", "🍪", "🍪", "🍪", "🍪", "🍪"], answer: 9 },
+      { items: ["🌟", "🌟", "🌟", "🌟", "🌟", "🌟", "🌟", "🌟", "🌟", "🌟"], answer: 10 },
+      { items: ["🍭", "🍭", "🍭", "🍭", "🍭", "🍭", "🍭"], answer: 7 },
+      { items: ["🌻", "🌻", "🌻", "🌻", "🌻", "🌻", "🌻", "🌻"], answer: 8 },
+    ],
+    // Group 2
+    [
+      { items: ["💎", "💎", "💎", "💎", "💎", "💎", "💎", "💎", "💎"], answer: 9 },
+      { items: ["🎈", "🎈", "🎈", "🎈", "🎈", "🎈", "🎈", "🎈", "🎈", "🎈"], answer: 10 },
+      { items: ["🌸", "🌸", "🌸", "🌸", "🌸", "🌸", "🌸"], answer: 7 },
+      { items: ["🎁", "🎁", "🎁", "🎁", "🎁", "🎁", "🎁", "🎁"], answer: 8 },
+      { items: ["🦋", "🦋", "🦋", "🦋", "🦋", "🦋", "🦋", "🦋", "🦋"], answer: 9 },
+    ],
+    // Group 3
+    [
+      { items: ["🍀", "🍀", "🍀", "🍀", "🍀", "🍀", "🍀", "🍀"], answer: 8 },
+      { items: ["🌈", "🌈", "🌈", "🌈", "🌈", "🌈", "🌈"], answer: 7 },
+      { items: ["⚡", "⚡", "⚡", "⚡", "⚡", "⚡", "⚡", "⚡", "⚡", "⚡"], answer: 10 },
+      { items: ["🎯", "🎯", "🎯", "🎯", "🎯", "🎯", "🎯", "🎯", "🎯"], answer: 9 },
+      { items: ["🏆", "🏆", "🏆", "🏆", "🏆", "🏆", "🏆", "🏆"], answer: 8 },
+    ],
   ],
+};
+
+// Legacy single array format (kept for compatibility)
+export const mathCountingTasks = {
+  easy: mathCountingTaskGroups.easy[0],
+  medium: mathCountingTaskGroups.medium[0],
+  hard: mathCountingTaskGroups.hard[0],
 };
 
 export const mathShapeTasks = {
@@ -81,29 +147,92 @@ export const mathNumberTasks = {
   ],
 };
 
-// NEW: Addition tasks
-export const mathAdditionTasks = {
+// NEW: Addition tasks with multiple groups
+export const mathAdditionTaskGroups = {
   easy: [
-    { num1: 1, num2: 1, answer: 2 },
-    { num1: 1, num2: 2, answer: 3 },
-    { num1: 2, num2: 1, answer: 3 },
-    { num1: 2, num2: 2, answer: 4 },
-    { num1: 1, num2: 3, answer: 4 },
+    // Group 1
+    [
+      { num1: 1, num2: 1, answer: 2 },
+      { num1: 1, num2: 2, answer: 3 },
+      { num1: 2, num2: 1, answer: 3 },
+      { num1: 2, num2: 2, answer: 4 },
+      { num1: 1, num2: 3, answer: 4 },
+    ],
+    // Group 2
+    [
+      { num1: 0, num2: 1, answer: 1 },
+      { num1: 1, num2: 1, answer: 2 },
+      { num1: 2, num2: 0, answer: 2 },
+      { num1: 0, num2: 3, answer: 3 },
+      { num1: 3, num2: 1, answer: 4 },
+    ],
+    // Group 3
+    [
+      { num1: 2, num2: 2, answer: 4 },
+      { num1: 1, num2: 0, answer: 1 },
+      { num1: 3, num2: 0, answer: 3 },
+      { num1: 2, num2: 1, answer: 3 },
+      { num1: 1, num2: 4, answer: 5 },
+    ],
   ],
   medium: [
-    { num1: 3, num2: 2, answer: 5 },
-    { num1: 4, num2: 3, answer: 7 },
-    { num1: 2, num2: 4, answer: 6 },
-    { num1: 5, num2: 3, answer: 8 },
-    { num1: 4, num2: 4, answer: 8 },
+    // Group 1
+    [
+      { num1: 3, num2: 2, answer: 5 },
+      { num1: 4, num2: 3, answer: 7 },
+      { num1: 2, num2: 4, answer: 6 },
+      { num1: 5, num2: 3, answer: 8 },
+      { num1: 4, num2: 4, answer: 8 },
+    ],
+    // Group 2
+    [
+      { num1: 3, num2: 3, answer: 6 },
+      { num1: 5, num2: 2, answer: 7 },
+      { num1: 4, num2: 5, answer: 9 },
+      { num1: 6, num2: 2, answer: 8 },
+      { num1: 3, num2: 4, answer: 7 },
+    ],
+    // Group 3
+    [
+      { num1: 2, num2: 5, answer: 7 },
+      { num1: 6, num2: 3, answer: 9 },
+      { num1: 4, num2: 2, answer: 6 },
+      { num1: 5, num2: 4, answer: 9 },
+      { num1: 3, num2: 5, answer: 8 },
+    ],
   ],
   hard: [
-    { num1: 6, num2: 5, answer: 11 },
-    { num1: 7, num2: 4, answer: 11 },
-    { num1: 8, num2: 5, answer: 13 },
-    { num1: 9, num2: 6, answer: 15 },
-    { num1: 7, num2: 8, answer: 15 },
+    // Group 1
+    [
+      { num1: 6, num2: 5, answer: 11 },
+      { num1: 7, num2: 4, answer: 11 },
+      { num1: 8, num2: 5, answer: 13 },
+      { num1: 9, num2: 6, answer: 15 },
+      { num1: 7, num2: 8, answer: 15 },
+    ],
+    // Group 2
+    [
+      { num1: 8, num2: 7, answer: 15 },
+      { num1: 6, num2: 6, answer: 12 },
+      { num1: 9, num2: 4, answer: 13 },
+      { num1: 7, num2: 7, answer: 14 },
+      { num1: 8, num2: 6, answer: 14 },
+    ],
+    // Group 3
+    [
+      { num1: 5, num2: 8, answer: 13 },
+      { num1: 9, num2: 3, answer: 12 },
+      { num1: 6, num2: 8, answer: 14 },
+      { num1: 7, num2: 5, answer: 12 },
+      { num1: 8, num2: 8, answer: 16 },
+    ],
   ],
+};
+
+export const mathAdditionTasks = {
+  easy: mathAdditionTaskGroups.easy[0],
+  medium: mathAdditionTaskGroups.medium[0],
+  hard: mathAdditionTaskGroups.hard[0],
 };
 
 // NEW: Comparison tasks (bigger/smaller)

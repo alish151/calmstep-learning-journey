@@ -1,18 +1,21 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { CheckCircle2, XCircle, RotateCcw, Star } from "lucide-react";
+import { CheckCircle2, XCircle, RotateCcw, Star, Video } from "lucide-react";
 import { 
   DifficultyLevel, 
-  mathCountingTasks, 
+  mathCountingTaskGroups,
   mathShapeTasks, 
   mathNumberTasks,
-  mathAdditionTasks,
+  mathAdditionTaskGroups,
   mathComparisonTasks,
   difficultyLabels
 } from "@/data/taskData";
+import { getRandomElement, shuffleArray } from "@/lib/taskUtils";
 import DifficultySelector from "@/components/DifficultySelector";
+import YouTubeVideo from "@/components/YouTubeVideo";
+import { mathVideos, getRandomVideos } from "@/data/educationalVideos";
 
 interface MathTaskProps {
   activityIndex: number;
@@ -27,6 +30,36 @@ const MathTask = ({ activityIndex, onComplete }: MathTaskProps) => {
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [completed, setCompleted] = useState(false);
+  const [showVideos, setShowVideos] = useState(false);
+
+  // Get random task group when difficulty is selected
+  const tasks = useMemo(() => {
+    if (!difficulty) return [];
+    
+    switch (activityIndex) {
+      case 0: {
+        const groups = mathCountingTaskGroups[difficulty];
+        const randomGroup = getRandomElement(groups);
+        return shuffleArray(randomGroup);
+      }
+      case 1: return shuffleArray(mathShapeTasks[difficulty]);
+      case 2: return shuffleArray(mathNumberTasks[difficulty]);
+      case 3: {
+        const groups = mathAdditionTaskGroups[difficulty];
+        const randomGroup = getRandomElement(groups);
+        return shuffleArray(randomGroup);
+      }
+      case 4: return shuffleArray(mathComparisonTasks[difficulty]);
+      default: {
+        const groups = mathCountingTaskGroups[difficulty];
+        const randomGroup = getRandomElement(groups);
+        return shuffleArray(randomGroup);
+      }
+    }
+  }, [difficulty, activityIndex]);
+
+  // Get random videos for this module
+  const videos = useMemo(() => getRandomVideos(mathVideos, 2), []);
 
   const t = {
     countStars: { en: "Count the Stars", ru: "Посчитай звёзды" },
@@ -49,21 +82,9 @@ const MathTask = ({ activityIndex, onComplete }: MathTaskProps) => {
     completed: { en: "Great job!", ru: "Отлично!" },
     score: { en: "Score", ru: "Счёт" },
     changeDifficulty: { en: "Change Difficulty", ru: "Изменить сложность" },
+    watchVideos: { en: "Watch Learning Videos", ru: "Посмотреть обучающие видео" },
+    hideVideos: { en: "Hide Videos", ru: "Скрыть видео" },
   };
-
-  const getTasks = () => {
-    if (!difficulty) return [];
-    switch (activityIndex) {
-      case 0: return mathCountingTasks[difficulty];
-      case 1: return mathShapeTasks[difficulty];
-      case 2: return mathNumberTasks[difficulty];
-      case 3: return mathAdditionTasks[difficulty];
-      case 4: return mathComparisonTasks[difficulty];
-      default: return mathCountingTasks[difficulty];
-    }
-  };
-
-  const tasks = getTasks();
 
   const handleSelect = (value: number | string) => {
     if (showResult) return;
@@ -74,13 +95,13 @@ const MathTask = ({ activityIndex, onComplete }: MathTaskProps) => {
     const task = tasks[currentTask];
     
     if (activityIndex === 0) {
-      isCorrect = value === (task as typeof mathCountingTasks.easy[0]).answer;
+      isCorrect = value === (task as { items: string[]; answer: number }).answer;
     } else if (activityIndex === 1) {
       isCorrect = value === (task as typeof mathShapeTasks.easy[0]).answer;
     } else if (activityIndex === 2) {
       isCorrect = value === (task as typeof mathNumberTasks.easy[0]).target;
     } else if (activityIndex === 3) {
-      isCorrect = value === (task as typeof mathAdditionTasks.easy[0]).answer;
+      isCorrect = value === (task as { num1: number; num2: number; answer: number }).answer;
     } else if (activityIndex === 4) {
       isCorrect = value === (task as typeof mathComparisonTasks.easy[0]).answer;
     }
@@ -138,10 +159,10 @@ const MathTask = ({ activityIndex, onComplete }: MathTaskProps) => {
           <p className="text-lg text-muted-foreground mb-2">
             {t.score[language]}: {score}/{tasks.length}
           </p>
-          <p className={`text-sm mb-6 px-3 py-1 rounded-full inline-block ${difficultyLabels[difficulty].color}`}>
-            {difficultyLabels[difficulty][language]}
+          <p className={`text-sm mb-6 px-3 py-1 rounded-full inline-block ${difficultyLabels[difficulty!].color}`}>
+            {difficultyLabels[difficulty!][language]}
           </p>
-          <div className="flex gap-3 justify-center">
+          <div className="flex gap-3 justify-center flex-wrap">
             <Button onClick={handleRestart} className="gap-2">
               <RotateCcw className="w-4 h-4" />
               {t.restart[language]}
@@ -150,6 +171,25 @@ const MathTask = ({ activityIndex, onComplete }: MathTaskProps) => {
               {t.changeDifficulty[language]}
             </Button>
           </div>
+          
+          {/* Video section */}
+          <div className="mt-6">
+            <Button 
+              variant="ghost" 
+              className="gap-2 text-primary"
+              onClick={() => setShowVideos(!showVideos)}
+            >
+              <Video className="w-4 h-4" />
+              {showVideos ? t.hideVideos[language] : t.watchVideos[language]}
+            </Button>
+            {showVideos && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                {videos.map((video) => (
+                  <YouTubeVideo key={video.id} video={video} />
+                ))}
+              </div>
+            )}
+          </div>
         </CardContent>
       </Card>
     );
@@ -157,7 +197,7 @@ const MathTask = ({ activityIndex, onComplete }: MathTaskProps) => {
 
   // Counting Task
   if (activityIndex === 0) {
-    const task = tasks[currentTask] as typeof mathCountingTasks.easy[0];
+    const task = tasks[currentTask] as { items: string[]; answer: number };
     const maxAnswer = Math.max(task.answer + 2, 5);
     const minAnswer = Math.max(1, task.answer - 2);
     const answerOptions = Array.from({ length: maxAnswer - minAnswer + 1 }, (_, i) => minAnswer + i);
@@ -332,7 +372,7 @@ const MathTask = ({ activityIndex, onComplete }: MathTaskProps) => {
 
   // Addition Task
   if (activityIndex === 3) {
-    const task = tasks[currentTask] as typeof mathAdditionTasks.easy[0];
+    const task = tasks[currentTask] as { num1: number; num2: number; answer: number };
     const options = [task.answer - 1, task.answer, task.answer + 1, task.answer + 2].filter(n => n > 0);
     
     return (
