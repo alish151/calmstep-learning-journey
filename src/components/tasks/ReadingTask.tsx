@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { CheckCircle2, XCircle, RotateCcw, Star, Volume2 } from "lucide-react";
+import { CheckCircle2, XCircle, RotateCcw, Star, Volume2, Video } from "lucide-react";
 import { DifficultyLevel, readingPictureWordTasks, readingSoundMatchTasks, readingStoryTasks, readingRhymingTasks, difficultyLabels } from "@/data/taskData";
+import { shuffleArray } from "@/lib/taskUtils";
 import DifficultySelector from "@/components/DifficultySelector";
+import YouTubeVideo from "@/components/YouTubeVideo";
+import { readingVideos, getRandomVideos } from "@/data/educationalVideos";
 
 interface ReadingTaskProps {
   activityIndex: number;
@@ -19,6 +22,7 @@ const ReadingTask = ({ activityIndex, onComplete }: ReadingTaskProps) => {
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [completed, setCompleted] = useState(false);
+  const [showVideos, setShowVideos] = useState(false);
 
   const t = {
     pictureWords: { en: "Picture Words", ru: "Картинки и слова" },
@@ -35,6 +39,8 @@ const ReadingTask = ({ activityIndex, onComplete }: ReadingTaskProps) => {
     completed: { en: "Great job!", ru: "Отлично!" },
     score: { en: "Score", ru: "Счёт" },
     changeDifficulty: { en: "Change Difficulty", ru: "Изменить сложность" },
+    watchVideos: { en: "Watch Learning Videos", ru: "Посмотреть обучающие видео" },
+    hideVideos: { en: "Hide Videos", ru: "Скрыть видео" },
   };
 
   const speak = (text: string) => {
@@ -44,18 +50,20 @@ const ReadingTask = ({ activityIndex, onComplete }: ReadingTaskProps) => {
     speechSynthesis.speak(utterance);
   };
 
-  const getTasks = () => {
+  // Get randomized tasks when difficulty is selected
+  const tasks = useMemo(() => {
     if (!difficulty) return [];
     switch (activityIndex) {
-      case 0: return readingPictureWordTasks[difficulty];
-      case 1: return readingSoundMatchTasks[difficulty];
-      case 2: return readingStoryTasks[difficulty];
-      case 3: return readingRhymingTasks[difficulty];
-      default: return readingPictureWordTasks[difficulty];
+      case 0: return shuffleArray(readingPictureWordTasks[difficulty]);
+      case 1: return shuffleArray(readingSoundMatchTasks[difficulty]);
+      case 2: return shuffleArray(readingStoryTasks[difficulty]);
+      case 3: return shuffleArray(readingRhymingTasks[difficulty]);
+      default: return shuffleArray(readingPictureWordTasks[difficulty]);
     }
-  };
+  }, [difficulty, activityIndex]);
 
-  const tasks = getTasks();
+  // Get random videos for this module
+  const videos = useMemo(() => getRandomVideos(readingVideos, 2), []);
 
   const handleSelect = (value: number | string) => {
     if (showResult) return;
@@ -118,12 +126,31 @@ const ReadingTask = ({ activityIndex, onComplete }: ReadingTaskProps) => {
           </div>
           <h3 className="text-2xl font-bold text-foreground mb-2">{t.completed[language]}</h3>
           <p className="text-lg text-muted-foreground mb-2">{t.score[language]}: {score}/{tasks.length}</p>
-          <p className={`text-sm mb-6 px-3 py-1 rounded-full inline-block ${difficultyLabels[difficulty].color}`}>
-            {difficultyLabels[difficulty][language]}
+          <p className={`text-sm mb-6 px-3 py-1 rounded-full inline-block ${difficultyLabels[difficulty!].color}`}>
+            {difficultyLabels[difficulty!][language]}
           </p>
-          <div className="flex gap-3 justify-center">
+          <div className="flex gap-3 justify-center flex-wrap">
             <Button onClick={handleRestart} className="gap-2"><RotateCcw className="w-4 h-4" />{t.restart[language]}</Button>
             <Button variant="outline" onClick={() => { setDifficulty(null); handleRestart(); }}>{t.changeDifficulty[language]}</Button>
+          </div>
+          
+          {/* Video section */}
+          <div className="mt-6">
+            <Button 
+              variant="ghost" 
+              className="gap-2 text-secondary"
+              onClick={() => setShowVideos(!showVideos)}
+            >
+              <Video className="w-4 h-4" />
+              {showVideos ? t.hideVideos[language] : t.watchVideos[language]}
+            </Button>
+            {showVideos && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                {videos.map((video) => (
+                  <YouTubeVideo key={video.id} video={video} />
+                ))}
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
