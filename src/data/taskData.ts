@@ -394,23 +394,112 @@ export const readingRhymingTasks = {
 
 // ============= LOGIC TASKS =============
 
-export const logicPatternTasks = {
+// Multiple task groups for patterns - randomly selected
+export const logicPatternTaskGroups = {
   easy: [
-    { pattern: ["🔴", "🔵", "🔴", "?"], options: ["🔴", "🔵", "🟢", "🟡"], answer: "🔵" },
-    { pattern: ["🍎", "🍎", "🍌", "?"], options: ["🍇", "🍎", "🍌", "🍊"], answer: "🍎" },
-    { pattern: ["⭐", "🌙", "⭐", "?"], options: ["⭐", "🌙", "☀️", "🌈"], answer: "🌙" },
+    // Group 1
+    [
+      { pattern: ["🔴", "🔵", "🔴", "?"], options: ["🔴", "🔵", "🟢", "🟡"], answer: "🔵" },
+      { pattern: ["🍎", "🍎", "🍌", "?"], options: ["🍇", "🍎", "🍌", "🍊"], answer: "🍎" },
+      { pattern: ["⭐", "🌙", "⭐", "?"], options: ["⭐", "🌙", "☀️", "🌈"], answer: "🌙" },
+      { pattern: ["🐶", "🐱", "🐶", "?"], options: ["🐶", "🐱", "🐟", "🐦"], answer: "🐱" },
+      { pattern: ["❤️", "💙", "❤️", "?"], options: ["❤️", "💙", "💚", "💛"], answer: "💙" },
+    ],
+    // Group 2
+    [
+      { pattern: ["🌸", "🌺", "🌸", "?"], options: ["🌸", "🌺", "🌹", "🌻"], answer: "🌺" },
+      { pattern: ["🚗", "🚌", "🚗", "?"], options: ["🚗", "🚌", "✈️", "🚂"], answer: "🚌" },
+      { pattern: ["⬜", "⬛", "⬜", "?"], options: ["⬜", "⬛", "🔲", "🔳"], answer: "⬛" },
+      { pattern: ["🎈", "🎁", "🎈", "?"], options: ["🎈", "🎁", "🎂", "🎉"], answer: "🎁" },
+      { pattern: ["🌞", "🌚", "🌞", "?"], options: ["🌞", "🌚", "⭐", "🌙"], answer: "🌚" },
+    ],
   ],
   medium: [
-    { pattern: ["🔴", "🔵", "🔴", "🔵", "?"], options: ["🔴", "🔵", "🟢", "🟡"], answer: "🔴" },
-    { pattern: ["⭐", "⭐", "🌙", "⭐", "⭐", "?"], options: ["⭐", "🌙", "☀️", "🌈"], answer: "🌙" },
-    { pattern: ["🔺", "🔺", "⬛", "🔺", "🔺", "?"], options: ["🔺", "⬛", "🔵", "🔷"], answer: "⬛" },
-    { pattern: ["🐱", "🐶", "🐱", "🐶", "?"], options: ["🐱", "🐶", "🐟", "🐦"], answer: "🐱" },
+    // Group 1
+    [
+      { pattern: ["🔴", "🔵", "🔴", "🔵", "?"], options: ["🔴", "🔵", "🟢", "🟡"], answer: "🔴" },
+      { pattern: ["⭐", "⭐", "🌙", "⭐", "⭐", "?"], options: ["⭐", "🌙", "☀️", "🌈"], answer: "🌙" },
+      { pattern: ["🔺", "🔺", "⬛", "🔺", "🔺", "?"], options: ["🔺", "⬛", "🔵", "🔷"], answer: "⬛" },
+      { pattern: ["🐱", "🐶", "🐱", "🐶", "?"], options: ["🐱", "🐶", "🐟", "🐦"], answer: "🐱" },
+      { pattern: ["🍎", "🍌", "🍎", "🍌", "?"], options: ["🍇", "🍎", "🍌", "🍊"], answer: "🍎" },
+    ],
+    // Group 2
+    [
+      { pattern: ["🌈", "☀️", "🌈", "☀️", "?"], options: ["🌈", "☀️", "🌙", "⭐"], answer: "🌈" },
+      { pattern: ["🎵", "🎶", "🎵", "🎶", "?"], options: ["🎵", "🎶", "🎤", "🎸"], answer: "🎵" },
+      { pattern: ["🦋", "🐛", "🦋", "🐛", "?"], options: ["🦋", "🐛", "🐜", "🐝"], answer: "🦋" },
+      { pattern: ["🏠", "🏡", "🏠", "🏡", "?"], options: ["🏠", "🏡", "🏰", "🏢"], answer: "🏠" },
+      { pattern: ["🌻", "🌻", "🌹", "🌻", "🌻", "?"], options: ["🌻", "🌹", "🌸", "🌺"], answer: "🌹" },
+    ],
   ],
   hard: [
-    { pattern: ["🟢", "🟢", "🟡", "🟢", "🟢", "🟡", "?"], options: ["🟢", "🟡", "🔴", "🔵"], answer: "🟢" },
-    { pattern: ["🔵", "🔵", "🔴", "🔵", "🔵", "🔴", "?"], options: ["🔵", "🔴", "🟢", "🟡"], answer: "🔵" },
-    { pattern: ["🎈", "🎈", "🎁", "🎈", "🎈", "🎁", "?"], options: ["🎈", "🎁", "🎂", "🎉"], answer: "🎈" },
-    { pattern: ["❤️", "💛", "💚", "❤️", "💛", "?"], options: ["❤️", "💛", "💚", "💙"], answer: "💚" },
+    // Group 1
+    [
+      { pattern: ["🟢", "🟢", "🟡", "🟢", "🟢", "🟡", "?"], options: ["🟢", "🟡", "🔴", "🔵"], answer: "🟢" },
+      { pattern: ["🔵", "🔵", "🔴", "🔵", "🔵", "🔴", "?"], options: ["🔵", "🔴", "🟢", "🟡"], answer: "🔵" },
+      { pattern: ["🎈", "🎈", "🎁", "🎈", "🎈", "🎁", "?"], options: ["🎈", "🎁", "🎂", "🎉"], answer: "🎈" },
+      { pattern: ["❤️", "💛", "💚", "❤️", "💛", "?"], options: ["❤️", "💛", "💚", "💙"], answer: "💚" },
+      { pattern: ["🌸", "🌺", "🌻", "🌸", "🌺", "?"], options: ["🌸", "🌺", "🌻", "🌹"], answer: "🌻" },
+    ],
+    // Group 2
+    [
+      { pattern: ["🐶", "🐱", "🐦", "🐶", "🐱", "?"], options: ["🐶", "🐱", "🐦", "🐟"], answer: "🐦" },
+      { pattern: ["1️⃣", "2️⃣", "3️⃣", "1️⃣", "2️⃣", "?"], options: ["1️⃣", "2️⃣", "3️⃣", "4️⃣"], answer: "3️⃣" },
+      { pattern: ["⬜", "⬛", "⬜", "⬛", "⬜", "⬛", "?"], options: ["⬜", "⬛", "🔲", "🔳"], answer: "⬜" },
+      { pattern: ["🚗", "🚗", "🚌", "🚗", "🚗", "🚌", "?"], options: ["🚗", "🚌", "✈️", "🚂"], answer: "🚗" },
+      { pattern: ["🌙", "⭐", "⭐", "🌙", "⭐", "?"], options: ["🌙", "⭐", "☀️", "🌈"], answer: "⭐" },
+    ],
+  ],
+};
+
+export const logicPatternTasks = {
+  easy: logicPatternTaskGroups.easy[0],
+  medium: logicPatternTaskGroups.medium[0],
+  hard: logicPatternTaskGroups.hard[0],
+};
+
+export const logicSortingTaskGroups = {
+  easy: [
+    // Group 1
+    [
+      { title: { en: "Sort by size: Small to Big", ru: "Сортировка по размеру: от маленького к большому" }, items: ["🐘", "🐭"], correctOrder: ["🐭", "🐘"] },
+      { title: { en: "Sort by size: Small to Big", ru: "Сортировка по размеру: от маленького к большому" }, items: ["🍉", "🍓"], correctOrder: ["🍓", "🍉"] },
+      { title: { en: "Sort by height: Short to Tall", ru: "Сортировка по высоте: от низкого к высокому" }, items: ["🌳", "🌱"], correctOrder: ["🌱", "🌳"] },
+    ],
+    // Group 2
+    [
+      { title: { en: "Sort by size: Small to Big", ru: "Сортировка по размеру: от маленького к большому" }, items: ["🐋", "🐟"], correctOrder: ["🐟", "🐋"] },
+      { title: { en: "Sort by loudness: Quiet to Loud", ru: "Сортировка по громкости: от тихого к громкому" }, items: ["📢", "🔇"], correctOrder: ["🔇", "📢"] },
+      { title: { en: "Sort by speed: Slow to Fast", ru: "Сортировка по скорости: от медленного к быстрому" }, items: ["🐌", "🚀"], correctOrder: ["🐌", "🚀"] },
+    ],
+  ],
+  medium: [
+    // Group 1
+    [
+      { title: { en: "Sort by size: Small to Big", ru: "Сортировка по размеру: от маленького к большому" }, items: ["🐘", "🐱", "🐭"], correctOrder: ["🐭", "🐱", "🐘"] },
+      { title: { en: "Sort by speed: Slow to Fast", ru: "Сортировка по скорости: от медленного к быстрому" }, items: ["🚀", "🐌", "🚗"], correctOrder: ["🐌", "🚗", "🚀"] },
+      { title: { en: "Sort by age: Young to Old", ru: "Сортировка по возрасту: от молодого к старому" }, items: ["👴", "👶", "👦"], correctOrder: ["👶", "👦", "👴"] },
+    ],
+    // Group 2
+    [
+      { title: { en: "Sort by weight: Light to Heavy", ru: "Сортировка по весу: от лёгкого к тяжёлому" }, items: ["🪨", "🪶", "📦"], correctOrder: ["🪶", "📦", "🪨"] },
+      { title: { en: "Sort by size: Small to Big", ru: "Сортировка по размеру: от маленького к большому" }, items: ["🍇", "🍉", "🍓"], correctOrder: ["🍓", "🍇", "🍉"] },
+      { title: { en: "Sort by height: Short to Tall", ru: "Сортировка по высоте: от низкого к высокому" }, items: ["🌲", "🌱", "🌿"], correctOrder: ["🌱", "🌿", "🌲"] },
+    ],
+  ],
+  hard: [
+    // Group 1
+    [
+      { title: { en: "Sort by temperature: Cold to Hot", ru: "Сортировка по температуре: от холодного к горячему" }, items: ["☀️", "❄️", "🌤️", "🔥"], correctOrder: ["❄️", "🌤️", "☀️", "🔥"] },
+      { title: { en: "Sort by time: Morning to Night", ru: "Сортировка по времени: от утра к ночи" }, items: ["🌙", "🌅", "☀️", "🌆"], correctOrder: ["🌅", "☀️", "🌆", "🌙"] },
+      { title: { en: "Sort by weight: Light to Heavy", ru: "Сортировка по весу: от лёгкого к тяжёлому" }, items: ["🪨", "🪶", "📦", "🏠"], correctOrder: ["🪶", "📦", "🪨", "🏠"] },
+    ],
+    // Group 2
+    [
+      { title: { en: "Sort by distance: Near to Far", ru: "Сортировка по расстоянию: от ближнего к дальнему" }, items: ["🌍", "🏠", "🌙", "⭐"], correctOrder: ["🏠", "🌍", "🌙", "⭐"] },
+      { title: { en: "Sort by age: New to Old", ru: "Сортировка по возрасту: от нового к старому" }, items: ["🏛️", "🏗️", "🏠", "🏰"], correctOrder: ["🏗️", "🏠", "🏰", "🏛️"] },
+      { title: { en: "Sort by sweetness: Less to More", ru: "Сортировка по сладости: от менее к более" }, items: ["🍬", "🥒", "🍎", "🍯"], correctOrder: ["🥒", "🍎", "🍬", "🍯"] },
+    ],
   ],
 };
 
@@ -463,61 +552,56 @@ export const logicSortingTasks = {
   ],
 };
 
-export const logicSequenceTasks = {
+export const logicSequenceTaskGroups = {
   easy: [
-    { 
-      sequence: ["🥚", "🐣", "?"], 
-      question: { en: "What comes next?", ru: "Что дальше?" },
-      options: ["🐥", "🥚", "🐣", "🦆"], 
-      answer: "🐥" 
-    },
-    { 
-      sequence: ["🌱", "🌿", "?"], 
-      question: { en: "What comes next?", ru: "Что дальше?" },
-      options: ["🌱", "🌳", "🌸", "🍂"], 
-      answer: "🌳" 
-    },
+    // Group 1
+    [
+      { sequence: ["🥚", "🐣", "?"], question: { en: "What comes next?", ru: "Что дальше?" }, options: ["🐥", "🥚", "🐣", "🦆"], answer: "🐥" },
+      { sequence: ["🌱", "🌿", "?"], question: { en: "What comes next?", ru: "Что дальше?" }, options: ["🌱", "🌳", "🌸", "🍂"], answer: "🌳" },
+      { sequence: ["☀️", "🌅", "?"], question: { en: "What comes next?", ru: "Что дальше?" }, options: ["🌙", "☀️", "🌧️", "🌈"], answer: "🌙" },
+    ],
+    // Group 2
+    [
+      { sequence: ["1️⃣", "2️⃣", "?"], question: { en: "What number comes next?", ru: "Какое число следующее?" }, options: ["3️⃣", "1️⃣", "4️⃣", "0️⃣"], answer: "3️⃣" },
+      { sequence: ["🔴", "🟠", "?"], question: { en: "What color comes next?", ru: "Какой цвет следующий?" }, options: ["🟡", "🔴", "🔵", "🟢"], answer: "🟡" },
+      { sequence: ["🌑", "🌓", "?"], question: { en: "Moon phase: What comes next?", ru: "Фаза луны: Что дальше?" }, options: ["🌕", "🌑", "🌗", "☀️"], answer: "🌕" },
+    ],
   ],
   medium: [
-    { 
-      sequence: ["🥚", "🐣", "🐥", "?"], 
-      question: { en: "What comes next?", ru: "Что дальше?" },
-      options: ["🐔", "🥚", "🐣", "🦆"], 
-      answer: "🐔" 
-    },
-    { 
-      sequence: ["🌱", "🌿", "🌳", "?"], 
-      question: { en: "What comes next?", ru: "Что дальше?" },
-      options: ["🌱", "🍎", "🌸", "🍂"], 
-      answer: "🍂" 
-    },
-    { 
-      sequence: ["☀️", "🌅", "🌙", "?"], 
-      question: { en: "What comes next?", ru: "Что дальше?" },
-      options: ["⭐", "☀️", "🌧️", "🌈"], 
-      answer: "⭐" 
-    },
+    // Group 1
+    [
+      { sequence: ["🥚", "🐣", "🐥", "?"], question: { en: "What comes next?", ru: "Что дальше?" }, options: ["🐔", "🥚", "🐣", "🦆"], answer: "🐔" },
+      { sequence: ["🌱", "🌿", "🌳", "?"], question: { en: "What comes next?", ru: "Что дальше?" }, options: ["🌱", "🍎", "🌸", "🍂"], answer: "🍂" },
+      { sequence: ["☀️", "🌅", "🌙", "?"], question: { en: "What comes next?", ru: "Что дальше?" }, options: ["⭐", "☀️", "🌧️", "🌈"], answer: "⭐" },
+      { sequence: ["🐛", "🐚", "🦋", "?"], question: { en: "What comes after the butterfly?", ru: "Что после бабочки?" }, options: ["🐛", "🥚", "🌸", "💀"], answer: "🌸" },
+    ],
+    // Group 2
+    [
+      { sequence: ["1️⃣", "2️⃣", "3️⃣", "?"], question: { en: "What number comes next?", ru: "Какое число следующее?" }, options: ["4️⃣", "1️⃣", "5️⃣", "0️⃣"], answer: "4️⃣" },
+      { sequence: ["🚶", "🏃", "🚴", "?"], question: { en: "What comes next (faster)?", ru: "Что дальше (быстрее)?" }, options: ["🚗", "🚶", "🐌", "🦥"], answer: "🚗" },
+      { sequence: ["📕", "📗", "📘", "?"], question: { en: "What color book comes next?", ru: "Какого цвета книга следующая?" }, options: ["📙", "📕", "📗", "📓"], answer: "📙" },
+    ],
   ],
   hard: [
-    { 
-      sequence: ["❄️", "🌸", "☀️", "?"], 
-      question: { en: "What season comes next?", ru: "Какое время года следующее?" },
-      options: ["🍂", "❄️", "🌸", "☀️"], 
-      answer: "🍂" 
-    },
-    { 
-      sequence: ["👶", "👦", "👨", "?"], 
-      question: { en: "What comes next?", ru: "Что дальше?" },
-      options: ["👴", "👶", "👦", "🧒"], 
-      answer: "👴" 
-    },
-    { 
-      sequence: ["🌑", "🌓", "🌕", "?"], 
-      question: { en: "Moon phase: What comes next?", ru: "Фаза луны: Что дальше?" },
-      options: ["🌗", "🌑", "🌓", "☀️"], 
-      answer: "🌗" 
-    },
+    // Group 1
+    [
+      { sequence: ["❄️", "🌸", "☀️", "?"], question: { en: "What season comes next?", ru: "Какое время года следующее?" }, options: ["🍂", "❄️", "🌸", "☀️"], answer: "🍂" },
+      { sequence: ["👶", "👦", "👨", "?"], question: { en: "What comes next?", ru: "Что дальше?" }, options: ["👴", "👶", "👦", "🧒"], answer: "👴" },
+      { sequence: ["🌑", "🌓", "🌕", "?"], question: { en: "Moon phase: What comes next?", ru: "Фаза луны: Что дальше?" }, options: ["🌗", "🌑", "🌓", "☀️"], answer: "🌗" },
+    ],
+    // Group 2
+    [
+      { sequence: ["🌍", "🚀", "🌙", "?"], question: { en: "Space journey: What comes next?", ru: "Космическое путешествие: Что дальше?" }, options: ["⭐", "🌍", "🌞", "🛸"], answer: "⭐" },
+      { sequence: ["🧵", "👕", "👔", "?"], question: { en: "Clothing evolution: What next?", ru: "Эволюция одежды: Что дальше?" }, options: ["🎩", "🧵", "👗", "🩳"], answer: "🎩" },
+      { sequence: ["🥛", "🧀", "🐄", "?"], question: { en: "Reverse process: What started it?", ru: "Обратный процесс: Что началo?" }, options: ["🌾", "🥛", "🧈", "🍦"], answer: "🌾" },
+    ],
   ],
+};
+
+export const logicSequenceTasks = {
+  easy: logicSequenceTaskGroups.easy[0],
+  medium: logicSequenceTaskGroups.medium[0],
+  hard: logicSequenceTaskGroups.hard[0],
 };
 
 // NEW: Odd one out task
@@ -557,25 +641,64 @@ export const logicMemoryTasks = {
 
 // ============= EMOTIONS TASKS =============
 
-export const emotionsFeelingsTasks = {
+// Multiple task groups for feelings - randomly selected
+export const emotionsFeelingsTaskGroups = {
   easy: [
-    { face: "😊", emotion: { en: "Happy", ru: "Счастливый" }, options: { en: ["Happy", "Sad", "Angry", "Scared"], ru: ["Счастливый", "Грустный", "Злой", "Испуганный"] } },
-    { face: "😢", emotion: { en: "Sad", ru: "Грустный" }, options: { en: ["Happy", "Sad", "Angry", "Surprised"], ru: ["Счастливый", "Грустный", "Злой", "Удивлённый"] } },
-    { face: "😠", emotion: { en: "Angry", ru: "Злой" }, options: { en: ["Happy", "Sad", "Angry", "Tired"], ru: ["Счастливый", "Грустный", "Злой", "Уставший"] } },
+    // Group 1: Basic emotions
+    [
+      { face: "😊", emotion: { en: "Happy", ru: "Счастливый" }, options: { en: ["Happy", "Sad", "Angry", "Scared"], ru: ["Счастливый", "Грустный", "Злой", "Испуганный"] } },
+      { face: "😢", emotion: { en: "Sad", ru: "Грустный" }, options: { en: ["Happy", "Sad", "Angry", "Surprised"], ru: ["Счастливый", "Грустный", "Злой", "Удивлённый"] } },
+      { face: "😠", emotion: { en: "Angry", ru: "Злой" }, options: { en: ["Happy", "Sad", "Angry", "Tired"], ru: ["Счастливый", "Грустный", "Злой", "Уставший"] } },
+      { face: "😴", emotion: { en: "Tired", ru: "Уставший" }, options: { en: ["Happy", "Tired", "Angry", "Scared"], ru: ["Счастливый", "Уставший", "Злой", "Испуганный"] } },
+    ],
+    // Group 2
+    [
+      { face: "🥰", emotion: { en: "Loved", ru: "Любимый" }, options: { en: ["Loved", "Sad", "Angry", "Scared"], ru: ["Любимый", "Грустный", "Злой", "Испуганный"] } },
+      { face: "😮", emotion: { en: "Surprised", ru: "Удивлённый" }, options: { en: ["Happy", "Surprised", "Angry", "Tired"], ru: ["Счастливый", "Удивлённый", "Злой", "Уставший"] } },
+      { face: "😌", emotion: { en: "Peaceful", ru: "Спокойный" }, options: { en: ["Peaceful", "Sad", "Angry", "Tired"], ru: ["Спокойный", "Грустный", "Злой", "Уставший"] } },
+      { face: "😨", emotion: { en: "Scared", ru: "Испуганный" }, options: { en: ["Excited", "Sad", "Scared", "Happy"], ru: ["Взволнованный", "Грустный", "Испуганный", "Счастливый"] } },
+    ],
   ],
   medium: [
-    { face: "😨", emotion: { en: "Scared", ru: "Испуганный" }, options: { en: ["Excited", "Sad", "Scared", "Happy"], ru: ["Взволнованный", "Грустный", "Испуганный", "Счастливый"] } },
-    { face: "😮", emotion: { en: "Surprised", ru: "Удивлённый" }, options: { en: ["Surprised", "Sad", "Angry", "Tired"], ru: ["Удивлённый", "Грустный", "Злой", "Уставший"] } },
-    { face: "😴", emotion: { en: "Tired", ru: "Уставший" }, options: { en: ["Happy", "Tired", "Angry", "Scared"], ru: ["Счастливый", "Уставший", "Злой", "Испуганный"] } },
-    { face: "🤗", emotion: { en: "Loving", ru: "Любящий" }, options: { en: ["Loving", "Sad", "Angry", "Tired"], ru: ["Любящий", "Грустный", "Злой", "Уставший"] } },
+    // Group 1
+    [
+      { face: "😨", emotion: { en: "Scared", ru: "Испуганный" }, options: { en: ["Excited", "Sad", "Scared", "Happy"], ru: ["Взволнованный", "Грустный", "Испуганный", "Счастливый"] } },
+      { face: "😮", emotion: { en: "Surprised", ru: "Удивлённый" }, options: { en: ["Surprised", "Sad", "Angry", "Tired"], ru: ["Удивлённый", "Грустный", "Злой", "Уставший"] } },
+      { face: "😴", emotion: { en: "Tired", ru: "Уставший" }, options: { en: ["Happy", "Tired", "Angry", "Scared"], ru: ["Счастливый", "Уставший", "Злой", "Испуганный"] } },
+      { face: "🤗", emotion: { en: "Loving", ru: "Любящий" }, options: { en: ["Loving", "Sad", "Angry", "Tired"], ru: ["Любящий", "Грустный", "Злой", "Уставший"] } },
+      { face: "😇", emotion: { en: "Proud", ru: "Гордый" }, options: { en: ["Proud", "Sad", "Angry", "Scared"], ru: ["Гордый", "Грустный", "Злой", "Испуганный"] } },
+    ],
+    // Group 2
+    [
+      { face: "🥺", emotion: { en: "Pleading", ru: "Умоляющий" }, options: { en: ["Happy", "Pleading", "Angry", "Tired"], ru: ["Счастливый", "Умоляющий", "Злой", "Уставший"] } },
+      { face: "😔", emotion: { en: "Disappointed", ru: "Разочарованный" }, options: { en: ["Happy", "Disappointed", "Angry", "Excited"], ru: ["Счастливый", "Разочарованный", "Злой", "Взволнованный"] } },
+      { face: "🤔", emotion: { en: "Curious", ru: "Любопытный" }, options: { en: ["Curious", "Sad", "Angry", "Scared"], ru: ["Любопытный", "Грустный", "Злой", "Испуганный"] } },
+      { face: "😌", emotion: { en: "Peaceful", ru: "Спокойный" }, options: { en: ["Happy", "Peaceful", "Angry", "Tired"], ru: ["Счастливый", "Спокойный", "Злой", "Уставший"] } },
+    ],
   ],
   hard: [
-    { face: "😤", emotion: { en: "Frustrated", ru: "Раздосадованный" }, options: { en: ["Happy", "Frustrated", "Scared", "Tired"], ru: ["Счастливый", "Раздосадованный", "Испуганный", "Уставший"] } },
-    { face: "🥳", emotion: { en: "Excited", ru: "Взволнованный" }, options: { en: ["Excited", "Sad", "Angry", "Scared"], ru: ["Взволнованный", "Грустный", "Злой", "Испуганный"] } },
-    { face: "😔", emotion: { en: "Disappointed", ru: "Разочарованный" }, options: { en: ["Happy", "Disappointed", "Angry", "Excited"], ru: ["Счастливый", "Разочарованный", "Злой", "Взволнованный"] } },
-    { face: "🤔", emotion: { en: "Curious", ru: "Любопытный" }, options: { en: ["Curious", "Sad", "Angry", "Scared"], ru: ["Любопытный", "Грустный", "Злой", "Испуганный"] } },
-    { face: "😳", emotion: { en: "Embarrassed", ru: "Смущённый" }, options: { en: ["Embarrassed", "Sad", "Happy", "Scared"], ru: ["Смущённый", "Грустный", "Счастливый", "Испуганный"] } },
+    // Group 1
+    [
+      { face: "😤", emotion: { en: "Frustrated", ru: "Раздосадованный" }, options: { en: ["Happy", "Frustrated", "Scared", "Tired"], ru: ["Счастливый", "Раздосадованный", "Испуганный", "Уставший"] } },
+      { face: "🥳", emotion: { en: "Excited", ru: "Взволнованный" }, options: { en: ["Excited", "Sad", "Angry", "Scared"], ru: ["Взволнованный", "Грустный", "Злой", "Испуганный"] } },
+      { face: "😔", emotion: { en: "Disappointed", ru: "Разочарованный" }, options: { en: ["Happy", "Disappointed", "Angry", "Excited"], ru: ["Счастливый", "Разочарованный", "Злой", "Взволнованный"] } },
+      { face: "🤔", emotion: { en: "Curious", ru: "Любопытный" }, options: { en: ["Curious", "Sad", "Angry", "Scared"], ru: ["Любопытный", "Грустный", "Злой", "Испуганный"] } },
+      { face: "😳", emotion: { en: "Embarrassed", ru: "Смущённый" }, options: { en: ["Embarrassed", "Sad", "Happy", "Scared"], ru: ["Смущённый", "Грустный", "Счастливый", "Испуганный"] } },
+    ],
+    // Group 2
+    [
+      { face: "🤯", emotion: { en: "Mind-blown", ru: "Ошеломлённый" }, options: { en: ["Mind-blown", "Sad", "Angry", "Tired"], ru: ["Ошеломлённый", "Грустный", "Злой", "Уставший"] } },
+      { face: "😶", emotion: { en: "Speechless", ru: "Безмолвный" }, options: { en: ["Happy", "Speechless", "Angry", "Scared"], ru: ["Счастливый", "Безмолвный", "Злой", "Испуганный"] } },
+      { face: "🥱", emotion: { en: "Bored", ru: "Скучающий" }, options: { en: ["Bored", "Sad", "Happy", "Scared"], ru: ["Скучающий", "Грустный", "Счастливый", "Испуганный"] } },
+      { face: "😣", emotion: { en: "Distressed", ru: "Расстроенный" }, options: { en: ["Happy", "Distressed", "Angry", "Excited"], ru: ["Счастливый", "Расстроенный", "Злой", "Взволнованный"] } },
+    ],
   ],
+};
+
+export const emotionsFeelingsTasks = {
+  easy: emotionsFeelingsTaskGroups.easy[0],
+  medium: emotionsFeelingsTaskGroups.medium[0],
+  hard: emotionsFeelingsTaskGroups.hard[0],
 };
 
 export const emotionsCalmingActivities = [
@@ -626,69 +749,55 @@ export const emotionsCalmingActivities = [
   },
 ];
 
-export const emotionsScenarioTasks = {
+export const emotionsScenarioTaskGroups = {
   easy: [
-    {
-      scenario: { en: "Your friend shared their toy with you", ru: "Друг поделился с тобой игрушкой" },
-      question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" },
-      options: ["😊", "😢", "😠", "😨"],
-      answer: "😊",
-      explanation: { en: "Happy! It feels nice when friends share", ru: "Счастливый! Приятно когда друзья делятся" },
-    },
-    {
-      scenario: { en: "You lost your favorite toy", ru: "Ты потерял любимую игрушку" },
-      question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" },
-      options: ["😊", "😢", "😠", "😴"],
-      answer: "😢",
-      explanation: { en: "Sad. It's okay to feel sad when we lose something", ru: "Грустный. Нормально грустить когда что-то теряешь" },
-    },
+    // Group 1
+    [
+      { scenario: { en: "Your friend shared their toy with you", ru: "Друг поделился с тобой игрушкой" }, question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" }, options: ["😊", "😢", "😠", "😨"], answer: "😊", explanation: { en: "Happy! It feels nice when friends share", ru: "Счастливый! Приятно когда друзья делятся" } },
+      { scenario: { en: "You lost your favorite toy", ru: "Ты потерял любимую игрушку" }, question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" }, options: ["😊", "😢", "😠", "😴"], answer: "😢", explanation: { en: "Sad. It's okay to feel sad when we lose something", ru: "Грустный. Нормально грустить когда что-то теряешь" } },
+      { scenario: { en: "Your mom made your favorite dinner", ru: "Мама приготовила твой любимый ужин" }, question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" }, options: ["😊", "😢", "😠", "😨"], answer: "😊", explanation: { en: "Happy! It's lovely when someone does something nice for us", ru: "Счастливый! Приятно когда кто-то делает что-то хорошее для нас" } },
+    ],
+    // Group 2
+    [
+      { scenario: { en: "You got a new pet", ru: "У тебя появился новый питомец" }, question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" }, options: ["😊", "😢", "😠", "😨"], answer: "😊", explanation: { en: "Excited and happy! Pets are wonderful companions", ru: "Взволнованный и счастливый! Питомцы — прекрасные друзья" } },
+      { scenario: { en: "It's raining and you can't play outside", ru: "Идёт дождь и нельзя играть на улице" }, question: { en: "How might you feel?", ru: "Что бы ты мог почувствовать?" }, options: ["😊", "😢", "😠", "😴"], answer: "😢", explanation: { en: "Disappointed. It's okay to feel sad when plans change", ru: "Разочарованный. Нормально грустить когда планы меняются" } },
+      { scenario: { en: "Your grandparents came to visit", ru: "Бабушка и дедушка приехали в гости" }, question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" }, options: ["😊", "😢", "😠", "😨"], answer: "😊", explanation: { en: "Happy! Family visits are special", ru: "Счастливый! Семейные визиты особенные" } },
+    ],
   ],
   medium: [
-    {
-      scenario: { en: "Someone took your turn in line", ru: "Кто-то занял твою очередь" },
-      question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" },
-      options: ["😊", "😢", "😠", "😨"],
-      answer: "😠",
-      explanation: { en: "Angry. It's normal to feel upset, but we can talk about it calmly", ru: "Злой. Нормально расстроиться, но можно поговорить спокойно" },
-    },
-    {
-      scenario: { en: "You're about to go on your first plane ride", ru: "Ты собираешься полететь на самолёте впервые" },
-      question: { en: "How might you feel?", ru: "Что бы ты мог почувствовать?" },
-      options: ["😊", "😢", "😨", "😴"],
-      answer: "😨",
-      explanation: { en: "Nervous or scared. New experiences can be scary but also exciting!", ru: "Нервничать или бояться. Новый опыт может быть страшным, но и волнующим!" },
-    },
-    {
-      scenario: { en: "You won a game with your friends", ru: "Ты выиграл в игре с друзьями" },
-      question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" },
-      options: ["🥳", "😢", "😠", "😨"],
-      answer: "🥳",
-      explanation: { en: "Excited and proud! Winning feels great, but remember to be kind to others", ru: "Взволнованный и гордый! Выигрывать приятно, но помни быть добрым к другим" },
-    },
+    // Group 1
+    [
+      { scenario: { en: "Someone took your turn in line", ru: "Кто-то занял твою очередь" }, question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" }, options: ["😊", "😢", "😠", "😨"], answer: "😠", explanation: { en: "Angry. It's normal to feel upset, but we can talk about it calmly", ru: "Злой. Нормально расстроиться, но можно поговорить спокойно" } },
+      { scenario: { en: "You're about to go on your first plane ride", ru: "Ты собираешься полететь на самолёте впервые" }, question: { en: "How might you feel?", ru: "Что бы ты мог почувствовать?" }, options: ["😊", "😢", "😨", "😴"], answer: "😨", explanation: { en: "Nervous or scared. New experiences can be scary but also exciting!", ru: "Нервничать или бояться. Новый опыт может быть страшным, но и волнующим!" } },
+      { scenario: { en: "You won a game with your friends", ru: "Ты выиграл в игре с друзьями" }, question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" }, options: ["🥳", "😢", "😠", "😨"], answer: "🥳", explanation: { en: "Excited and proud! Winning feels great, but remember to be kind to others", ru: "Взволнованный и гордый! Выигрывать приятно, но помни быть добрым к другим" } },
+    ],
+    // Group 2
+    [
+      { scenario: { en: "Your pet is sick", ru: "Твой питомец заболел" }, question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" }, options: ["😊", "😢", "😠", "🥳"], answer: "😢", explanation: { en: "Sad or worried. It's natural to feel sad when someone we love is not well", ru: "Грустный или обеспокоенный. Естественно грустить когда тот, кого мы любим, нездоров" } },
+      { scenario: { en: "You have to go to bed early", ru: "Тебе нужно рано лечь спать" }, question: { en: "How might you feel?", ru: "Что бы ты мог почувствовать?" }, options: ["😊", "😢", "😠", "😴"], answer: "😠", explanation: { en: "Frustrated. It's okay to feel upset, but rest is important for our bodies", ru: "Раздосадованный. Нормально расстроиться, но отдых важен для нашего тела" } },
+      { scenario: { en: "You learned to ride a bike", ru: "Ты научился кататься на велосипеде" }, question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" }, options: ["😊", "😢", "😠", "😨"], answer: "😊", explanation: { en: "Proud and happy! Learning new skills is amazing", ru: "Гордый и счастливый! Учиться новому — это замечательно" } },
+    ],
   ],
   hard: [
-    {
-      scenario: { en: "Your best friend moved to a new city", ru: "Твой лучший друг переехал в другой город" },
-      question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" },
-      options: ["😊", "😢", "😠", "🥳"],
-      answer: "😢",
-      explanation: { en: "Sad. It's hard when friends move away, but you can still stay in touch", ru: "Грустный. Тяжело когда друзья уезжают, но вы можете оставаться на связи" },
-    },
-    {
-      scenario: { en: "Someone said something mean to you", ru: "Кто-то сказал тебе что-то обидное" },
-      question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" },
-      options: ["😊", "😢", "😠", "🥳"],
-      answer: "😢",
-      explanation: { en: "Sad or hurt. It's okay to feel this way, and you can talk to a trusted adult", ru: "Грустный или обиженный. Нормально так себя чувствовать, и можно поговорить с взрослым" },
-    },
-    {
-      scenario: { en: "You have to give a presentation in front of the class", ru: "Тебе нужно выступить перед классом" },
-      question: { en: "How might you feel?", ru: "Что бы ты мог почувствовать?" },
-      options: ["😊", "😨", "😠", "😴"],
-      answer: "😨",
-      explanation: { en: "Nervous or scared. It's normal to feel this way, and practice helps!", ru: "Нервничать или бояться. Это нормально, и практика помогает!" },
-    },
+    // Group 1
+    [
+      { scenario: { en: "Your best friend moved to a new city", ru: "Твой лучший друг переехал в другой город" }, question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" }, options: ["😊", "😢", "😠", "🥳"], answer: "😢", explanation: { en: "Sad. It's hard when friends move away, but you can still stay in touch", ru: "Грустный. Тяжело когда друзья уезжают, но вы можете оставаться на связи" } },
+      { scenario: { en: "Someone said something mean to you", ru: "Кто-то сказал тебе что-то обидное" }, question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" }, options: ["😊", "😢", "😠", "🥳"], answer: "😢", explanation: { en: "Sad or hurt. It's okay to feel this way, and you can talk to a trusted adult", ru: "Грустный или обиженный. Нормально так себя чувствовать, и можно поговорить с взрослым" } },
+      { scenario: { en: "You have to give a presentation in front of the class", ru: "Тебе нужно выступить перед классом" }, question: { en: "How might you feel?", ru: "Что бы ты мог почувствовать?" }, options: ["😊", "😨", "😠", "😴"], answer: "😨", explanation: { en: "Nervous or scared. It's normal to feel this way, and practice helps!", ru: "Нервничать или бояться. Это нормально, и практика помогает!" } },
+    ],
+    // Group 2
+    [
+      { scenario: { en: "A thunder storm is happening outside", ru: "На улице гроза" }, question: { en: "How might you feel?", ru: "Что бы ты мог почувствовать?" }, options: ["😊", "😢", "😨", "🥳"], answer: "😨", explanation: { en: "Scared. Thunder can be loud and scary, but you're safe inside", ru: "Испуганный. Гром может быть громким и страшным, но ты в безопасности внутри" } },
+      { scenario: { en: "You helped your little sibling with homework", ru: "Ты помог младшему брату/сестре с домашним заданием" }, question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" }, options: ["😊", "😢", "😠", "😨"], answer: "😊", explanation: { en: "Proud and happy! Helping others feels wonderful", ru: "Гордый и счастливый! Помогать другим — это замечательно" } },
+      { scenario: { en: "You got a gold star at school", ru: "Ты получил золотую звёздочку в школе" }, question: { en: "How would you feel?", ru: "Что бы ты почувствовал?" }, options: ["😊", "😢", "😠", "😨"], answer: "😊", explanation: { en: "Proud and happy! Your hard work was recognized", ru: "Гордый и счастливый! Твоя тяжёлая работа была замечена" } },
+    ],
   ],
+};
+
+export const emotionsScenarioTasks = {
+  easy: emotionsScenarioTaskGroups.easy[0],
+  medium: emotionsScenarioTaskGroups.medium[0],
+  hard: emotionsScenarioTaskGroups.hard[0],
 };
 
 // NEW: Empathy task - what would help?

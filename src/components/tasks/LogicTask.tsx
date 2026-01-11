@@ -1,211 +1,56 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { CheckCircle2, XCircle, RotateCcw, Star } from "lucide-react";
+import { CheckCircle2, XCircle, RotateCcw, Star, PlayCircle } from "lucide-react";
+import DifficultySelector from "@/components/DifficultySelector";
+import { DifficultyLevel, logicPatternTaskGroups, logicSortingTaskGroups, logicSequenceTaskGroups, logicOddOneOutTasks } from "@/data/taskData";
+import { selectRandomTasks, getRandomElement } from "@/lib/taskUtils";
+import YouTubeVideo from "@/components/YouTubeVideo";
+import { logicVideos, getRandomVideos } from "@/data/educationalVideos";
+import { useSoundEffects } from "@/hooks/useSoundEffects";
 
 interface LogicTaskProps {
   activityIndex: number;
   onComplete: (correct: boolean) => void;
 }
 
-const patternTasks = [
-  { pattern: ["🔴", "🔵", "🔴", "🔵", "?"], options: ["🔴", "🔵", "🟢", "🟡"], answer: "🔴" },
-  { pattern: ["⭐", "⭐", "🌙", "⭐", "⭐", "?"], options: ["⭐", "🌙", "☀️", "🌈"], answer: "🌙" },
-  { pattern: ["🍎", "🍌", "🍎", "🍌", "?"], options: ["🍇", "🍎", "🍌", "🍊"], answer: "🍎" },
-  { pattern: ["🔺", "🔺", "⬛", "🔺", "🔺", "?"], options: ["🔺", "⬛", "🔵", "🔷"], answer: "⬛" },
-  { pattern: ["🐱", "🐶", "🐱", "🐶", "?"], options: ["🐱", "🐶", "🐟", "🐦"], answer: "🐱" },
-  { pattern: ["🟢", "🟢", "🟡", "🟢", "🟢", "?"], options: ["🟢", "🟡", "🔴", "🔵"], answer: "🟡" },
-  { pattern: ["🌸", "🌻", "🌸", "🌻", "?"], options: ["🌸", "🌻", "🌹", "🌺"], answer: "🌸" },
-  { pattern: ["1️⃣", "2️⃣", "1️⃣", "2️⃣", "?"], options: ["1️⃣", "2️⃣", "3️⃣", "4️⃣"], answer: "1️⃣" },
-  { pattern: ["🔵", "🔵", "🔴", "🔵", "🔵", "?"], options: ["🔵", "🔴", "🟢", "🟡"], answer: "🔴" },
-  { pattern: ["🚗", "🚌", "🚗", "🚌", "?"], options: ["🚗", "🚌", "✈️", "🚂"], answer: "🚗" },
-  { pattern: ["⬜", "⬛", "⬜", "⬛", "?"], options: ["⬜", "⬛", "🔲", "🔳"], answer: "⬜" },
-  { pattern: ["🌈", "☀️", "🌈", "☀️", "?"], options: ["🌈", "☀️", "🌙", "⭐"], answer: "🌈" },
-  { pattern: ["🎈", "🎈", "🎁", "🎈", "🎈", "?"], options: ["🎈", "🎁", "🎂", "🎉"], answer: "🎁" },
-  { pattern: ["🦋", "🐛", "🦋", "🐛", "?"], options: ["🦋", "🐛", "🐜", "🐝"], answer: "🦋" },
-  { pattern: ["❤️", "💛", "❤️", "💛", "?"], options: ["❤️", "💛", "💚", "💙"], answer: "❤️" },
-];
-
-const sortingTasks = [
-  {
-    title: { en: "Sort by size: Small to Big", ru: "Сортировка по размеру: от маленького к большому" },
-    items: ["🐘", "🐱", "🐭"],
-    correctOrder: ["🐭", "🐱", "🐘"],
-  },
-  {
-    title: { en: "Sort by color: Light to Dark", ru: "Сортировка по цвету: от светлого к тёмному" },
-    items: ["⬛", "⬜", "🔲"],
-    correctOrder: ["⬜", "🔲", "⬛"],
-  },
-  {
-    title: { en: "Sort by speed: Slow to Fast", ru: "Сортировка по скорости: от медленного к быстрому" },
-    items: ["🚀", "🐌", "🚗"],
-    correctOrder: ["🐌", "🚗", "🚀"],
-  },
-  {
-    title: { en: "Sort by size: Small to Big", ru: "Сортировка по размеру: от маленького к большому" },
-    items: ["🏠", "🏰", "🏚️"],
-    correctOrder: ["🏚️", "🏠", "🏰"],
-  },
-  {
-    title: { en: "Sort by age: Young to Old", ru: "Сортировка по возрасту: от молодого к старому" },
-    items: ["👴", "👶", "👦"],
-    correctOrder: ["👶", "👦", "👴"],
-  },
-  {
-    title: { en: "Sort by temperature: Cold to Hot", ru: "Сортировка по температуре: от холодного к горячему" },
-    items: ["☀️", "❄️", "🌤️"],
-    correctOrder: ["❄️", "🌤️", "☀️"],
-  },
-  {
-    title: { en: "Sort by size: Small to Big", ru: "Сортировка по размеру: от маленького к большому" },
-    items: ["🐋", "🐟", "🦐"],
-    correctOrder: ["🦐", "🐟", "🐋"],
-  },
-  {
-    title: { en: "Sort by time: Morning to Night", ru: "Сортировка по времени: от утра к ночи" },
-    items: ["🌙", "🌅", "☀️"],
-    correctOrder: ["🌅", "☀️", "🌙"],
-  },
-  {
-    title: { en: "Sort by height: Short to Tall", ru: "Сортировка по высоте: от низкого к высокому" },
-    items: ["🌲", "🌱", "🌿"],
-    correctOrder: ["🌱", "🌿", "🌲"],
-  },
-  {
-    title: { en: "Sort by weight: Light to Heavy", ru: "Сортировка по весу: от лёгкого к тяжёлому" },
-    items: ["🪨", "🪶", "📦"],
-    correctOrder: ["🪶", "📦", "🪨"],
-  },
-  {
-    title: { en: "Sort by size: Small to Big", ru: "Сортировка по размеру: от маленького к большому" },
-    items: ["🍇", "🍉", "🍓"],
-    correctOrder: ["🍓", "🍇", "🍉"],
-  },
-  {
-    title: { en: "Sort by loudness: Quiet to Loud", ru: "Сортировка по громкости: от тихого к громкому" },
-    items: ["📢", "🔔", "🔇"],
-    correctOrder: ["🔇", "🔔", "📢"],
-  },
-  {
-    title: { en: "Sort by sweetness: Less to More", ru: "Сортировка по сладости: от менее к более" },
-    items: ["🍬", "🥒", "🍎"],
-    correctOrder: ["🥒", "🍎", "🍬"],
-  },
-  {
-    title: { en: "Sort by distance: Near to Far", ru: "Сортировка по расстоянию: от ближнего к дальнему" },
-    items: ["🌍", "🏠", "🌙"],
-    correctOrder: ["🏠", "🌍", "🌙"],
-  },
-  {
-    title: { en: "Sort by age: New to Old", ru: "Сортировка по возрасту: от нового к старому" },
-    items: ["🏛️", "🏗️", "🏠"],
-    correctOrder: ["🏗️", "🏠", "🏛️"],
-  },
-];
-
-const sequenceTasks = [
-  { 
-    sequence: ["🥚", "🐣", "🐥", "?"], 
-    question: { en: "What comes next?", ru: "Что дальше?" },
-    options: ["🐔", "🥚", "🐣", "🦆"], 
-    answer: "🐔" 
-  },
-  { 
-    sequence: ["🌱", "🌿", "🌳", "?"], 
-    question: { en: "What comes next?", ru: "Что дальше?" },
-    options: ["🌱", "🍎", "🌸", "🍂"], 
-    answer: "🍂" 
-  },
-  { 
-    sequence: ["☀️", "🌅", "🌙", "?"], 
-    question: { en: "What comes next?", ru: "Что дальше?" },
-    options: ["⭐", "☀️", "🌧️", "🌈"], 
-    answer: "⭐" 
-  },
-  { 
-    sequence: ["🐛", "🐚", "🦋", "?"], 
-    question: { en: "What comes after the butterfly?", ru: "Что после бабочки?" },
-    options: ["🐛", "🥚", "🌸", "💀"], 
-    answer: "🌸" 
-  },
-  { 
-    sequence: ["❄️", "🌸", "☀️", "?"], 
-    question: { en: "What season comes next?", ru: "Какое время года следующее?" },
-    options: ["🍂", "❄️", "🌸", "☀️"], 
-    answer: "🍂" 
-  },
-  { 
-    sequence: ["👶", "👦", "👨", "?"], 
-    question: { en: "What comes next?", ru: "Что дальше?" },
-    options: ["👴", "👶", "👦", "🧒"], 
-    answer: "👴" 
-  },
-  { 
-    sequence: ["🌑", "🌓", "🌕", "?"], 
-    question: { en: "Moon phase: What comes next?", ru: "Фаза луны: Что дальше?" },
-    options: ["🌗", "🌑", "🌓", "☀️"], 
-    answer: "🌗" 
-  },
-  { 
-    sequence: ["1️⃣", "2️⃣", "3️⃣", "?"], 
-    question: { en: "What number comes next?", ru: "Какое число следующее?" },
-    options: ["4️⃣", "1️⃣", "5️⃣", "0️⃣"], 
-    answer: "4️⃣" 
-  },
-  { 
-    sequence: ["🚶", "🏃", "🚴", "?"], 
-    question: { en: "What comes next (faster)?", ru: "Что дальше (быстрее)?" },
-    options: ["🚗", "🚶", "🐌", "🦥"], 
-    answer: "🚗" 
-  },
-  { 
-    sequence: ["📕", "📗", "📘", "?"], 
-    question: { en: "What color book comes next?", ru: "Какого цвета книга следующая?" },
-    options: ["📙", "📕", "📗", "📓"], 
-    answer: "📙" 
-  },
-  { 
-    sequence: ["🌧️", "🌈", "☀️", "?"], 
-    question: { en: "Weather sequence: What next?", ru: "Последовательность погоды: Что дальше?" },
-    options: ["🌤️", "🌧️", "⛈️", "❄️"], 
-    answer: "🌤️" 
-  },
-  { 
-    sequence: ["🥛", "🧀", "🐄", "?"], 
-    question: { en: "Reverse process: What started it?", ru: "Обратный процесс: Что началo?" },
-    options: ["🌾", "🥛", "🧈", "🍦"], 
-    answer: "🌾" 
-  },
-  { 
-    sequence: ["🍞", "🥪", "😋", "?"], 
-    question: { en: "What happens after eating?", ru: "Что происходит после еды?" },
-    options: ["😴", "🍞", "🥪", "😢"], 
-    answer: "😴" 
-  },
-  { 
-    sequence: ["🧵", "👕", "👔", "?"], 
-    question: { en: "Clothing evolution: What next?", ru: "Эволюция одежды: Что дальше?" },
-    options: ["🎩", "🧵", "👗", "🩳"], 
-    answer: "🎩" 
-  },
-  { 
-    sequence: ["🌍", "🚀", "🌙", "?"], 
-    question: { en: "Space journey: What comes next?", ru: "Космическое путешествие: Что дальше?" },
-    options: ["⭐", "🌍", "🌞", "🛸"], 
-    answer: "⭐" 
-  },
-];
-
 const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
   const { language } = useLanguage();
+  const [difficulty, setDifficulty] = useState<DifficultyLevel>('easy');
   const [currentTask, setCurrentTask] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<string[]>([]);
   const [showResult, setShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [completed, setCompleted] = useState(false);
+  const [showVideos, setShowVideos] = useState(false);
+  const { playCorrect, playIncorrect, playComplete, playClick } = useSoundEffects();
+
+  // Get random tasks based on activity and difficulty
+  const patternTasks = useMemo(() => {
+    const groups = logicPatternTaskGroups[difficulty];
+    const randomGroup = getRandomElement(groups);
+    return selectRandomTasks(randomGroup, 5);
+  }, [difficulty]);
+
+  const sortingTasks = useMemo(() => {
+    const groups = logicSortingTaskGroups[difficulty];
+    const randomGroup = getRandomElement(groups);
+    return selectRandomTasks(randomGroup, 3);
+  }, [difficulty]);
+
+  const sequenceTasks = useMemo(() => {
+    const groups = logicSequenceTaskGroups[difficulty];
+    const randomGroup = getRandomElement(groups);
+    return selectRandomTasks(randomGroup, 4);
+  }, [difficulty]);
+
+  const oddOneOutTasksList = useMemo(() => {
+    return selectRandomTasks(logicOddOneOutTasks[difficulty], 3);
+  }, [difficulty]);
+
+  const randomVideos = useMemo(() => getRandomVideos(logicVideos, 2), []);
 
   const t = {
     findPattern: { en: "Find the Pattern", ru: "Найди паттерн" },
@@ -213,6 +58,8 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
     sortIt: { en: "Sort It Out", ru: "Рассортируй" },
     tapToSort: { en: "Tap items in order", ru: "Нажимай по порядку" },
     sequence: { en: "What Comes Next?", ru: "Что дальше?" },
+    oddOneOut: { en: "Odd One Out", ru: "Найди лишнее" },
+    findOdd: { en: "Find the one that doesn't belong", ru: "Найди то, что не подходит" },
     correct: { en: "Correct! 🎉", ru: "Правильно! 🎉" },
     tryAgain: { en: "Try again!", ru: "Попробуй ещё!" },
     next: { en: "Next", ru: "Дальше" },
@@ -221,36 +68,49 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
     score: { en: "Score", ru: "Счёт" },
     reset: { en: "Reset", ru: "Сброс" },
     check: { en: "Check", ru: "Проверить" },
+    watchVideos: { en: "Watch Learning Videos", ru: "Смотреть обучающие видео" },
+    hideVideos: { en: "Hide Videos", ru: "Скрыть видео" },
+    reason: { en: "Because:", ru: "Потому что:" },
   };
 
   const handleSelect = (value: string) => {
     if (showResult) return;
+    playClick();
     setSelected(value);
     setShowResult(true);
 
     let isCorrect = false;
     if (activityIndex === 0) {
-      isCorrect = value === patternTasks[currentTask].answer;
+      isCorrect = value === patternTasks[currentTask]?.answer;
     } else if (activityIndex === 2) {
-      isCorrect = value === sequenceTasks[currentTask].answer;
+      isCorrect = value === sequenceTasks[currentTask]?.answer;
+    } else if (activityIndex === 3) {
+      isCorrect = value === oddOneOutTasksList[currentTask]?.answer;
     }
 
     if (isCorrect) {
       setScore(score + 1);
+      playCorrect();
+    } else {
+      playIncorrect();
     }
   };
 
   const handleSortSelect = (item: string) => {
     if (showResult || sortOrder.includes(item)) return;
+    playClick();
     setSortOrder([...sortOrder, item]);
   };
 
   const handleCheckSort = () => {
     const task = sortingTasks[currentTask];
-    const isCorrect = JSON.stringify(sortOrder) === JSON.stringify(task.correctOrder);
+    const isCorrect = JSON.stringify(sortOrder) === JSON.stringify(task?.correctOrder);
     setShowResult(true);
     if (isCorrect) {
       setScore(score + 1);
+      playCorrect();
+    } else {
+      playIncorrect();
     }
   };
 
@@ -259,7 +119,7 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
   };
 
   const handleNext = () => {
-    const tasks = activityIndex === 0 ? patternTasks : activityIndex === 1 ? sortingTasks : sequenceTasks;
+    const tasks = activityIndex === 0 ? patternTasks : activityIndex === 1 ? sortingTasks : activityIndex === 2 ? sequenceTasks : oddOneOutTasksList;
     if (currentTask < tasks.length - 1) {
       setCurrentTask(currentTask + 1);
       setSelected(null);
@@ -267,6 +127,7 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
       setShowResult(false);
     } else {
       setCompleted(true);
+      playComplete();
       onComplete(score >= Math.floor(tasks.length / 2));
     }
   };
@@ -278,10 +139,16 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
     setShowResult(false);
     setScore(0);
     setCompleted(false);
+    setShowVideos(false);
+  };
+
+  const handleDifficultyChange = (newDifficulty: DifficultyLevel) => {
+    setDifficulty(newDifficulty);
+    handleRestart();
   };
 
   if (completed) {
-    const tasks = activityIndex === 0 ? patternTasks : activityIndex === 1 ? sortingTasks : sequenceTasks;
+    const tasks = activityIndex === 0 ? patternTasks : activityIndex === 1 ? sortingTasks : activityIndex === 2 ? sequenceTasks : oddOneOutTasksList;
     return (
       <Card className="bg-gradient-to-br from-accent-light to-primary-light border-accent/20">
         <CardContent className="p-8 text-center">
@@ -294,10 +161,30 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
           <p className="text-lg text-muted-foreground mb-6">
             {t.score[language]}: {score}/{tasks.length}
           </p>
-          <Button onClick={handleRestart} className="gap-2">
-            <RotateCcw className="w-4 h-4" />
-            {t.restart[language]}
-          </Button>
+          
+          <div className="flex flex-col gap-3">
+            <Button onClick={handleRestart} className="gap-2">
+              <RotateCcw className="w-4 h-4" />
+              {t.restart[language]}
+            </Button>
+            
+            <Button
+              variant="outline"
+              onClick={() => setShowVideos(!showVideos)}
+              className="gap-2"
+            >
+              <PlayCircle className="w-4 h-4" />
+              {showVideos ? t.hideVideos[language] : t.watchVideos[language]}
+            </Button>
+          </div>
+
+          {showVideos && (
+            <div className="mt-6 grid gap-4">
+              {randomVideos.map((video) => (
+                <YouTubeVideo key={video.id} video={video} />
+              ))}
+            </div>
+          )}
         </CardContent>
       </Card>
     );
@@ -306,9 +193,13 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
   // Pattern Task
   if (activityIndex === 0) {
     const task = patternTasks[currentTask];
+    if (!task) return null;
+    
     return (
       <Card className="bg-card border-accent/20">
         <CardContent className="p-6">
+          <DifficultySelector difficulty={difficulty} onDifficultyChange={handleDifficultyChange} />
+          
           <div className="text-center mb-6">
             <h3 className="text-lg font-semibold text-foreground mb-2">{t.findPattern[language]}</h3>
             <p className="text-sm text-muted-foreground">{t.whatNext[language]}</p>
@@ -362,12 +253,16 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
   // Sorting Task
   if (activityIndex === 1) {
     const task = sortingTasks[currentTask];
+    if (!task) return null;
+    
     const availableItems = task.items.filter(item => !sortOrder.includes(item));
     const isCorrect = JSON.stringify(sortOrder) === JSON.stringify(task.correctOrder);
 
     return (
       <Card className="bg-card border-accent/20">
         <CardContent className="p-6">
+          <DifficultySelector difficulty={difficulty} onDifficultyChange={handleDifficultyChange} />
+          
           <div className="text-center mb-6">
             <h3 className="text-lg font-semibold text-foreground mb-2">{t.sortIt[language]}</h3>
             <p className="text-sm text-muted-foreground">{task.title[language]}</p>
@@ -439,53 +334,114 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
   }
 
   // Sequence Task
-  const task = sequenceTasks[currentTask];
+  if (activityIndex === 2) {
+    const task = sequenceTasks[currentTask];
+    if (!task) return null;
+
+    return (
+      <Card className="bg-card border-accent/20">
+        <CardContent className="p-6">
+          <DifficultySelector difficulty={difficulty} onDifficultyChange={handleDifficultyChange} />
+          
+          <div className="text-center mb-6">
+            <h3 className="text-lg font-semibold text-foreground mb-2">{t.sequence[language]}</h3>
+            <p className="text-sm text-muted-foreground">{task.question[language]}</p>
+            <p className="text-xs text-muted-foreground mt-1">{currentTask + 1} / {sequenceTasks.length}</p>
+          </div>
+
+          <div className="flex justify-center gap-3 mb-8 py-4 bg-accent-light/50 rounded-2xl flex-wrap">
+            {task.sequence.map((item, i) => (
+              <span key={i} className={`text-4xl ${item === "?" ? "animate-pulse text-muted-foreground" : ""}`}>
+                {item}
+              </span>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            {task.options.map((option) => (
+              <Button
+                key={option}
+                variant={selected === option ? (option === task.answer ? "default" : "destructive") : "outline"}
+                className={`h-16 text-3xl transition-all ${
+                  showResult && option === task.answer ? "ring-2 ring-green-500 bg-green-100" : ""
+                }`}
+                onClick={() => handleSelect(option)}
+                disabled={showResult}
+              >
+                {option}
+              </Button>
+            ))}
+          </div>
+
+          {showResult && (
+            <div className="flex items-center justify-between">
+              <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
+                {selected === task.answer ? (
+                  <CheckCircle2 className="w-5 h-5" />
+                ) : (
+                  <XCircle className="w-5 h-5" />
+                )}
+                <span className="font-medium">
+                  {selected === task.answer ? t.correct[language] : t.tryAgain[language]}
+                </span>
+              </div>
+              <Button onClick={handleNext}>{t.next[language]}</Button>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // Odd One Out Task (activityIndex === 3)
+  const oddTask = oddOneOutTasksList[currentTask];
+  if (!oddTask) return null;
+
   return (
     <Card className="bg-card border-accent/20">
       <CardContent className="p-6">
+        <DifficultySelector difficulty={difficulty} onDifficultyChange={handleDifficultyChange} />
+        
         <div className="text-center mb-6">
-          <h3 className="text-lg font-semibold text-foreground mb-2">{t.sequence[language]}</h3>
-          <p className="text-sm text-muted-foreground">{task.question[language]}</p>
-          <p className="text-xs text-muted-foreground mt-1">{currentTask + 1} / {sequenceTasks.length}</p>
-        </div>
-
-        <div className="flex justify-center gap-4 mb-8 py-4 bg-accent-light/50 rounded-2xl flex-wrap">
-          {task.sequence.map((item, i) => (
-            <span key={i} className={`text-4xl ${item === "?" ? "animate-pulse text-muted-foreground" : ""}`}>
-              {item}
-            </span>
-          ))}
+          <h3 className="text-lg font-semibold text-foreground mb-2">{t.oddOneOut[language]}</h3>
+          <p className="text-sm text-muted-foreground">{t.findOdd[language]}</p>
+          <p className="text-xs text-muted-foreground mt-1">{currentTask + 1} / {oddOneOutTasksList.length}</p>
         </div>
 
         <div className="grid grid-cols-2 gap-4 mb-6">
-          {task.options.map((option) => (
+          {oddTask.items.map((item) => (
             <Button
-              key={option}
-              variant={selected === option ? (option === task.answer ? "default" : "destructive") : "outline"}
-              className={`h-16 text-3xl transition-all ${
-                showResult && option === task.answer ? "ring-2 ring-green-500 bg-green-100" : ""
+              key={item}
+              variant={selected === item ? (item === oddTask.answer ? "default" : "destructive") : "outline"}
+              className={`h-20 text-4xl transition-all ${
+                showResult && item === oddTask.answer ? "ring-2 ring-green-500 bg-green-100" : ""
               }`}
-              onClick={() => handleSelect(option)}
+              onClick={() => handleSelect(item)}
               disabled={showResult}
             >
-              {option}
+              {item}
             </Button>
           ))}
         </div>
 
         {showResult && (
-          <div className="flex items-center justify-between">
-            <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
-              {selected === task.answer ? (
+          <div className="space-y-3">
+            <div className={`flex items-center gap-2 ${selected === oddTask.answer ? "text-green-600" : "text-destructive"}`}>
+              {selected === oddTask.answer ? (
                 <CheckCircle2 className="w-5 h-5" />
               ) : (
                 <XCircle className="w-5 h-5" />
               )}
               <span className="font-medium">
-                {selected === task.answer ? t.correct[language] : t.tryAgain[language]}
+                {selected === oddTask.answer ? t.correct[language] : t.tryAgain[language]}
               </span>
             </div>
-            <Button onClick={handleNext}>{t.next[language]}</Button>
+            <p className="text-sm text-muted-foreground">
+              {t.reason[language]} {oddTask.reason[language]}
+            </p>
+            <div className="flex justify-end">
+              <Button onClick={handleNext}>{t.next[language]}</Button>
+            </div>
           </div>
         )}
       </CardContent>
