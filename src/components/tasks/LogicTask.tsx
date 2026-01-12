@@ -198,7 +198,7 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
     return (
       <Card className="bg-card border-accent/20">
         <CardContent className="p-6">
-          <DifficultySelector difficulty={difficulty} onDifficultyChange={handleDifficultyChange} />
+          <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultyChange} />
           
           <div className="text-center mb-6">
             <h3 className="text-lg font-semibold text-foreground mb-2">{t.findPattern[language]}</h3>
@@ -261,7 +261,7 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
     return (
       <Card className="bg-card border-accent/20">
         <CardContent className="p-6">
-          <DifficultySelector difficulty={difficulty} onDifficultyChange={handleDifficultyChange} />
+          <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultyChange} />
           
           <div className="text-center mb-6">
             <h3 className="text-lg font-semibold text-foreground mb-2">{t.sortIt[language]}</h3>
@@ -341,7 +341,7 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
     return (
       <Card className="bg-card border-accent/20">
         <CardContent className="p-6">
-          <DifficultySelector difficulty={difficulty} onDifficultyChange={handleDifficultyChange} />
+          <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultyChange} />
           
           <div className="text-center mb-6">
             <h3 className="text-lg font-semibold text-foreground mb-2">{t.sequence[language]}</h3>
@@ -400,7 +400,7 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
   return (
     <Card className="bg-card border-accent/20">
       <CardContent className="p-6">
-        <DifficultySelector difficulty={difficulty} onDifficultyChange={handleDifficultyChange} />
+        <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultyChange} />
         
         <div className="text-center mb-6">
           <h3 className="text-lg font-semibold text-foreground mb-2">{t.oddOneOut[language]}</h3>
