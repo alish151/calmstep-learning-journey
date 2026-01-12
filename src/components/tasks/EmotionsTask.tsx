@@ -195,7 +195,7 @@ const EmotionsTask = ({ activityIndex, onComplete }: EmotionsTaskProps) => {
     return (
       <Card className="bg-card border-warm/20">
         <CardContent className="p-6">
-          <DifficultySelector difficulty={difficulty} onDifficultyChange={handleDifficultyChange} />
+          <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultyChange} />
           
           <div className="text-center mb-6">
             <h3 className="text-lg font-semibold text-foreground mb-2">{t.howFeel[language]}</h3>
@@ -347,7 +347,7 @@ const EmotionsTask = ({ activityIndex, onComplete }: EmotionsTaskProps) => {
     return (
       <Card className="bg-card border-warm/20">
         <CardContent className="p-6">
-          <DifficultySelector difficulty={difficulty} onDifficultyChange={handleDifficultyChange} />
+          <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultyChange} />
           
           <div className="text-center mb-6">
             <h3 className="text-lg font-semibold text-foreground mb-2">{t.emotionCards[language]}</h3>
@@ -407,7 +407,7 @@ const EmotionsTask = ({ activityIndex, onComplete }: EmotionsTaskProps) => {
   return (
     <Card className="bg-card border-warm/20">
       <CardContent className="p-6">
-        <DifficultySelector difficulty={difficulty} onDifficultyChange={handleDifficultyChange} />
+        <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultyChange} />
         
         <div className="text-center mb-6">
           <h3 className="text-lg font-semibold text-foreground mb-2">{t.empathy[language]}</h3>

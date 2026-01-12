@@ -95,6 +95,30 @@ export const emotionsVideos: VideoData[] = [
   },
 ];
 
+// Social scenarios videos - real-life situations, communication, asking for help
+export const socialVideos: VideoData[] = [
+  {
+    id: "x4a4Hu_WHDQ",
+    title: { en: "Making Friends at School", ru: "Заводить друзей в школе" },
+  },
+  {
+    id: "VJJOShtj_Os",
+    title: { en: "Being a Good Friend", ru: "Быть хорошим другом" },
+  },
+  {
+    id: "jS1YDFFdHKw",
+    title: { en: "Asking for Help", ru: "Просить о помощи" },
+  },
+  {
+    id: "zy0Yb8fYqCA",
+    title: { en: "Good Manners for Kids", ru: "Хорошие манеры для детей" },
+  },
+  {
+    id: "mQTUQqLFa5M",
+    title: { en: "Sharing and Taking Turns", ru: "Делиться и ждать очереди" },
+  },
+];
+
 // Helper function to get random videos for a module
 export function getRandomVideos(videos: VideoData[], count: number = 2): VideoData[] {
   const shuffled = [...videos].sort(() => Math.random() - 0.5);
