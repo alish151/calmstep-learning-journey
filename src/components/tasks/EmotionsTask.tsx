@@ -9,6 +9,7 @@ import { selectRandomTasks, getRandomElement } from "@/lib/taskUtils";
 import YouTubeVideo from "@/components/YouTubeVideo";
 import { emotionsVideos, getRandomVideos } from "@/data/educationalVideos";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
+import CelebrationAnimation from "@/components/CelebrationAnimation";
 
 interface EmotionsTaskProps {
   activityIndex: number;
@@ -17,7 +18,7 @@ interface EmotionsTaskProps {
 
 const EmotionsTask = ({ activityIndex, onComplete }: EmotionsTaskProps) => {
   const { language } = useLanguage();
-  const [difficulty, setDifficulty] = useState<DifficultyLevel>('easy');
+  const [difficulty, setDifficulty] = useState<DifficultyLevel | null>(null);
   const [currentTask, setCurrentTask] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
@@ -26,22 +27,26 @@ const EmotionsTask = ({ activityIndex, onComplete }: EmotionsTaskProps) => {
   const [calmingStep, setCalmingStep] = useState(0);
   const [calmingComplete, setCalmingComplete] = useState(false);
   const [showVideos, setShowVideos] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
   const { playCorrect, playIncorrect, playComplete, playClick } = useSoundEffects();
 
   // Get random tasks based on difficulty
   const feelingsTasks = useMemo(() => {
+    if (!difficulty) return [];
     const groups = emotionsFeelingsTaskGroups[difficulty];
     const randomGroup = getRandomElement(groups);
     return selectRandomTasks(randomGroup, 4);
   }, [difficulty]);
 
   const scenarioTasks = useMemo(() => {
+    if (!difficulty) return [];
     const groups = emotionsScenarioTaskGroups[difficulty];
     const randomGroup = getRandomElement(groups);
     return selectRandomTasks(randomGroup, 3);
   }, [difficulty]);
 
   const empathyTasksList = useMemo(() => {
+    if (!difficulty) return [];
     return selectRandomTasks(emotionsEmpathyTasks[difficulty], 3);
   }, [difficulty]);
 
@@ -101,6 +106,7 @@ const EmotionsTask = ({ activityIndex, onComplete }: EmotionsTaskProps) => {
       setShowResult(false);
     } else {
       setCompleted(true);
+      setShowCelebration(true);
       playComplete();
       onComplete(score >= Math.floor(tasks.length / 2));
     }
@@ -113,11 +119,17 @@ const EmotionsTask = ({ activityIndex, onComplete }: EmotionsTaskProps) => {
     setScore(0);
     setCompleted(false);
     setShowVideos(false);
+    setDifficulty(null);
   };
 
-  const handleDifficultyChange = (newDifficulty: DifficultyLevel) => {
+  const handleDifficultySelect = (newDifficulty: DifficultyLevel) => {
+    playClick();
     setDifficulty(newDifficulty);
-    handleRestart();
+    setCurrentTask(0);
+    setSelected(null);
+    setShowResult(false);
+    setScore(0);
+    setCompleted(false);
   };
 
   const handleCalmingNext = () => {
@@ -127,6 +139,7 @@ const EmotionsTask = ({ activityIndex, onComplete }: EmotionsTaskProps) => {
       playClick();
     } else {
       setCalmingComplete(true);
+      setShowCelebration(true);
       playComplete();
     }
   };
@@ -144,46 +157,60 @@ const EmotionsTask = ({ activityIndex, onComplete }: EmotionsTaskProps) => {
     playClick();
   };
 
+  // Show difficulty selector first (except for calming activities)
+  if (!difficulty && activityIndex !== 1) {
+    return (
+      <Card className="bg-card border-warm/20">
+        <CardContent className="p-6">
+          <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultySelect} />
+        </CardContent>
+      </Card>
+    );
+  }
+
   if (completed && activityIndex !== 1) {
     const tasks = activityIndex === 0 ? feelingsTasks : activityIndex === 2 ? scenarioTasks : empathyTasksList;
     return (
-      <Card className="bg-gradient-to-br from-warm-light to-calm-light border-warm/20">
-        <CardContent className="p-8 text-center">
-          <div className="flex justify-center gap-1 mb-4">
-            {Array.from({ length: Math.min(score, 10) }).map((_, i) => (
-              <Star key={i} className="w-8 h-8 text-yellow-500 fill-yellow-500" />
-            ))}
-          </div>
-          <h3 className="text-2xl font-bold text-foreground mb-2">{t.completed[language]}</h3>
-          <p className="text-lg text-muted-foreground mb-6">
-            {t.score[language]}: {score}/{tasks.length}
-          </p>
-          
-          <div className="flex flex-col gap-3">
-            <Button onClick={handleRestart} className="gap-2">
-              <RotateCcw className="w-4 h-4" />
-              {t.restart[language]}
-            </Button>
-            
-            <Button
-              variant="outline"
-              onClick={() => setShowVideos(!showVideos)}
-              className="gap-2"
-            >
-              <PlayCircle className="w-4 h-4" />
-              {showVideos ? t.hideVideos[language] : t.watchVideos[language]}
-            </Button>
-          </div>
-
-          {showVideos && (
-            <div className="mt-6 grid gap-4">
-              {randomVideos.map((video) => (
-                <YouTubeVideo key={video.id} video={video} />
+      <>
+        <CelebrationAnimation show={showCelebration} onComplete={() => setShowCelebration(false)} />
+        <Card className="bg-gradient-to-br from-warm-light to-calm-light border-warm/20">
+          <CardContent className="p-8 text-center">
+            <div className="flex justify-center gap-1 mb-4">
+              {Array.from({ length: Math.min(score, 10) }).map((_, i) => (
+                <Star key={i} className="w-8 h-8 text-yellow-500 fill-yellow-500" />
               ))}
             </div>
-          )}
-        </CardContent>
-      </Card>
+            <h3 className="text-2xl font-bold text-foreground mb-2">{t.completed[language]}</h3>
+            <p className="text-lg text-muted-foreground mb-6">
+              {t.score[language]}: {score}/{tasks.length}
+            </p>
+            
+            <div className="flex flex-col gap-3">
+              <Button onClick={handleRestart} className="gap-2">
+                <RotateCcw className="w-4 h-4" />
+                {t.restart[language]}
+              </Button>
+              
+              <Button
+                variant="outline"
+                onClick={() => setShowVideos(!showVideos)}
+                className="gap-2"
+              >
+                <PlayCircle className="w-4 h-4" />
+                {showVideos ? t.hideVideos[language] : t.watchVideos[language]}
+              </Button>
+            </div>
+
+            {showVideos && (
+              <div className="mt-6 grid gap-4">
+                {randomVideos.map((video) => (
+                  <YouTubeVideo key={video.id} video={video} />
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </>
     );
   }
 
@@ -195,8 +222,6 @@ const EmotionsTask = ({ activityIndex, onComplete }: EmotionsTaskProps) => {
     return (
       <Card className="bg-card border-warm/20">
         <CardContent className="p-6">
-          <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultyChange} />
-          
           <div className="text-center mb-6">
             <h3 className="text-lg font-semibold text-foreground mb-2">{t.howFeel[language]}</h3>
             <p className="text-sm text-muted-foreground">{t.whatEmotion[language]}</p>
@@ -277,40 +302,43 @@ const EmotionsTask = ({ activityIndex, onComplete }: EmotionsTaskProps) => {
 
     if (calmingComplete) {
       return (
-        <Card className="bg-gradient-to-br from-calm-light to-white border-calm/20">
-          <CardContent className="p-8 text-center">
-            <div className="flex justify-center mb-4">
-              <Heart className="w-16 h-16 text-pink-500 fill-pink-500 animate-pulse" />
-            </div>
-            <h3 className="text-2xl font-bold text-foreground mb-2">{t.wellDone[language]}</h3>
-            <div className="flex flex-col gap-3 mt-6">
-              <Button onClick={handleCalmingRestart} variant="outline" className="gap-2">
-                <RotateCcw className="w-4 h-4" />
-                {t.tryAnother[language]}
-              </Button>
-              <Button onClick={() => onComplete(true)}>
-                {t.done[language]}
-              </Button>
-              
-              <Button
-                variant="outline"
-                onClick={() => setShowVideos(!showVideos)}
-                className="gap-2"
-              >
-                <PlayCircle className="w-4 h-4" />
-                {showVideos ? t.hideVideos[language] : t.watchVideos[language]}
-              </Button>
-            </div>
-
-            {showVideos && (
-              <div className="mt-6 grid gap-4">
-                {randomVideos.map((video) => (
-                  <YouTubeVideo key={video.id} video={video} />
-                ))}
+        <>
+          <CelebrationAnimation show={showCelebration} onComplete={() => setShowCelebration(false)} />
+          <Card className="bg-gradient-to-br from-calm-light to-white border-calm/20">
+            <CardContent className="p-8 text-center">
+              <div className="flex justify-center mb-4">
+                <Heart className="w-16 h-16 text-pink-500 fill-pink-500 animate-pulse" />
               </div>
-            )}
-          </CardContent>
-        </Card>
+              <h3 className="text-2xl font-bold text-foreground mb-2">{t.wellDone[language]}</h3>
+              <div className="flex flex-col gap-3 mt-6">
+                <Button onClick={handleCalmingRestart} variant="outline" className="gap-2">
+                  <RotateCcw className="w-4 h-4" />
+                  {t.tryAnother[language]}
+                </Button>
+                <Button onClick={() => onComplete(true)}>
+                  {t.done[language]}
+                </Button>
+                
+                <Button
+                  variant="outline"
+                  onClick={() => setShowVideos(!showVideos)}
+                  className="gap-2"
+                >
+                  <PlayCircle className="w-4 h-4" />
+                  {showVideos ? t.hideVideos[language] : t.watchVideos[language]}
+                </Button>
+              </div>
+
+              {showVideos && (
+                <div className="mt-6 grid gap-4">
+                  {randomVideos.map((video) => (
+                    <YouTubeVideo key={video.id} video={video} />
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </>
       );
     }
 
@@ -347,8 +375,6 @@ const EmotionsTask = ({ activityIndex, onComplete }: EmotionsTaskProps) => {
     return (
       <Card className="bg-card border-warm/20">
         <CardContent className="p-6">
-          <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultyChange} />
-          
           <div className="text-center mb-6">
             <h3 className="text-lg font-semibold text-foreground mb-2">{t.emotionCards[language]}</h3>
             <p className="text-xs text-muted-foreground">{currentTask + 1} / {scenarioTasks.length}</p>
@@ -407,8 +433,6 @@ const EmotionsTask = ({ activityIndex, onComplete }: EmotionsTaskProps) => {
   return (
     <Card className="bg-card border-warm/20">
       <CardContent className="p-6">
-        <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultyChange} />
-        
         <div className="text-center mb-6">
           <h3 className="text-lg font-semibold text-foreground mb-2">{t.empathy[language]}</h3>
           <p className="text-xs text-muted-foreground">{currentTask + 1} / {empathyTasksList.length}</p>
