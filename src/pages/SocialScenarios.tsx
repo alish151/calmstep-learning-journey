@@ -13,6 +13,8 @@ import { getRandomElement, selectRandomTasks } from "@/lib/taskUtils";
 import YouTubeVideo from "@/components/YouTubeVideo";
 import { socialVideos, getRandomVideos } from "@/data/educationalVideos";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
+import CelebrationAnimation from "@/components/CelebrationAnimation";
+import { saveScrollPosition } from "@/hooks/useScrollPosition";
 
 interface Scenario {
   situation: { en: string; ru: string };
@@ -861,7 +863,7 @@ const socialScenarioData: CategoryData[] = [
 const SocialScenarios = () => {
   const navigate = useNavigate();
   const { language } = useLanguage();
-  const [difficulty, setDifficulty] = useState<DifficultyLevel>('easy');
+  const [difficulty, setDifficulty] = useState<DifficultyLevel | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [currentScenario, setCurrentScenario] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
@@ -869,11 +871,12 @@ const SocialScenarios = () => {
   const [score, setScore] = useState(0);
   const [completed, setCompleted] = useState(false);
   const [showVideos, setShowVideos] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
   const { playCorrect, playIncorrect, playComplete, playClick } = useSoundEffects();
 
   // Get random scenarios based on difficulty and category
   const currentScenarios = useMemo(() => {
-    if (selectedCategory === null) return [];
+    if (selectedCategory === null || !difficulty) return [];
     const categoryData = socialScenarioData[selectedCategory];
     const groups = categoryData.scenarios[difficulty];
     const randomGroup = getRandomElement(groups);
@@ -896,6 +899,7 @@ const SocialScenarios = () => {
     scenarios: { en: "scenarios", ru: "сценариев" },
     watchVideos: { en: "Watch Learning Videos", ru: "Смотреть обучающие видео" },
     hideVideos: { en: "Hide Videos", ru: "Скрыть видео" },
+    back: { en: "Back", ru: "Назад" },
   };
 
   const handleSelect = (index: number) => {
@@ -920,6 +924,7 @@ const SocialScenarios = () => {
       setShowResult(false);
     } else {
       setCompleted(true);
+      setShowCelebration(true);
       playComplete();
     }
   };
@@ -931,6 +936,8 @@ const SocialScenarios = () => {
     setScore(0);
     setCompleted(false);
     setShowVideos(false);
+    setDifficulty(null);
+    setSelectedCategory(null);
   };
 
   const handleBackToCategories = () => {
@@ -943,13 +950,19 @@ const SocialScenarios = () => {
     setShowVideos(false);
   };
 
-  const handleDifficultyChange = (newDifficulty: DifficultyLevel) => {
+  const handleDifficultySelect = (newDifficulty: DifficultyLevel) => {
+    playClick();
     setDifficulty(newDifficulty);
-    handleRestart();
+  };
+
+  const handleBack = () => {
+    saveScrollPosition('/');
+    navigate(-1);
   };
 
   return (
     <>
+      <CelebrationAnimation show={showCelebration} onComplete={() => setShowCelebration(false)} />
       <Helmet>
         <title>{texts.title[language]} - CalmStep</title>
         <meta name="description" content="Practice real-life social scenarios including school situations, making friends, and asking for help." />
@@ -960,6 +973,12 @@ const SocialScenarios = () => {
         
         <main className="container mx-auto px-4 sm:px-6 py-8 pt-24">
           <div className="max-w-4xl mx-auto">
+            {/* Back button */}
+            <Button variant="ghost" className="mb-4" onClick={handleBack}>
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              {texts.back[language]}
+            </Button>
+
             {/* Header */}
             <div className="text-center mb-8">
               <span className="text-6xl block mb-4">🤝</span>
@@ -967,13 +986,20 @@ const SocialScenarios = () => {
               <p className="text-muted-foreground">{texts.subtitle[language]}</p>
             </div>
 
-            {selectedCategory === null ? (
+            {/* Show difficulty selector first if not selected */}
+            {!difficulty ? (
+              <Card className="bg-card border-calm/20">
+                <CardContent className="p-6">
+                  <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultySelect} />
+                </CardContent>
+              </Card>
+            ) : selectedCategory === null ? (
               // Category selection
               <div>
                 <h2 className="text-lg font-semibold text-foreground mb-4 text-center">{texts.chooseCategory[language]}</h2>
                 
                 <div className="mb-6">
-                  <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultyChange} />
+                  <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultySelect} />
                 </div>
                 
                 <div className="grid sm:grid-cols-2 gap-4">
@@ -1054,7 +1080,7 @@ const SocialScenarios = () => {
 
                 <Card className="bg-card border-calm/20">
                   <CardContent className="p-6">
-                    <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultyChange} />
+                    
                     
                     {(() => {
                       const category = socialScenarioData[selectedCategory];

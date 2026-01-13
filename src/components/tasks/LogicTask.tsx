@@ -9,6 +9,7 @@ import { selectRandomTasks, getRandomElement } from "@/lib/taskUtils";
 import YouTubeVideo from "@/components/YouTubeVideo";
 import { logicVideos, getRandomVideos } from "@/data/educationalVideos";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
+import CelebrationAnimation from "@/components/CelebrationAnimation";
 
 interface LogicTaskProps {
   activityIndex: number;
@@ -17,7 +18,7 @@ interface LogicTaskProps {
 
 const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
   const { language } = useLanguage();
-  const [difficulty, setDifficulty] = useState<DifficultyLevel>('easy');
+  const [difficulty, setDifficulty] = useState<DifficultyLevel | null>(null);
   const [currentTask, setCurrentTask] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<string[]>([]);
@@ -25,28 +26,33 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
   const [score, setScore] = useState(0);
   const [completed, setCompleted] = useState(false);
   const [showVideos, setShowVideos] = useState(false);
+  const [showCelebration, setShowCelebration] = useState(false);
   const { playCorrect, playIncorrect, playComplete, playClick } = useSoundEffects();
 
   // Get random tasks based on activity and difficulty
   const patternTasks = useMemo(() => {
+    if (!difficulty) return [];
     const groups = logicPatternTaskGroups[difficulty];
     const randomGroup = getRandomElement(groups);
     return selectRandomTasks(randomGroup, 5);
   }, [difficulty]);
 
   const sortingTasks = useMemo(() => {
+    if (!difficulty) return [];
     const groups = logicSortingTaskGroups[difficulty];
     const randomGroup = getRandomElement(groups);
     return selectRandomTasks(randomGroup, 3);
   }, [difficulty]);
 
   const sequenceTasks = useMemo(() => {
+    if (!difficulty) return [];
     const groups = logicSequenceTaskGroups[difficulty];
     const randomGroup = getRandomElement(groups);
     return selectRandomTasks(randomGroup, 4);
   }, [difficulty]);
 
   const oddOneOutTasksList = useMemo(() => {
+    if (!difficulty) return [];
     return selectRandomTasks(logicOddOneOutTasks[difficulty], 3);
   }, [difficulty]);
 
@@ -127,6 +133,7 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
       setShowResult(false);
     } else {
       setCompleted(true);
+      setShowCelebration(true);
       playComplete();
       onComplete(score >= Math.floor(tasks.length / 2));
     }
@@ -140,53 +147,74 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
     setScore(0);
     setCompleted(false);
     setShowVideos(false);
+    setDifficulty(null);
   };
 
-  const handleDifficultyChange = (newDifficulty: DifficultyLevel) => {
+  const handleDifficultySelect = (newDifficulty: DifficultyLevel) => {
+    playClick();
     setDifficulty(newDifficulty);
-    handleRestart();
+    setCurrentTask(0);
+    setSelected(null);
+    setSortOrder([]);
+    setShowResult(false);
+    setScore(0);
+    setCompleted(false);
   };
+
+  // Show difficulty selector first
+  if (!difficulty) {
+    return (
+      <Card className="bg-card border-accent/20">
+        <CardContent className="p-6">
+          <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultySelect} />
+        </CardContent>
+      </Card>
+    );
+  }
 
   if (completed) {
     const tasks = activityIndex === 0 ? patternTasks : activityIndex === 1 ? sortingTasks : activityIndex === 2 ? sequenceTasks : oddOneOutTasksList;
     return (
-      <Card className="bg-gradient-to-br from-accent-light to-primary-light border-accent/20">
-        <CardContent className="p-8 text-center">
-          <div className="flex justify-center gap-1 mb-4">
-            {Array.from({ length: Math.min(score, 10) }).map((_, i) => (
-              <Star key={i} className="w-8 h-8 text-yellow-500 fill-yellow-500" />
-            ))}
-          </div>
-          <h3 className="text-2xl font-bold text-foreground mb-2">{t.completed[language]}</h3>
-          <p className="text-lg text-muted-foreground mb-6">
-            {t.score[language]}: {score}/{tasks.length}
-          </p>
-          
-          <div className="flex flex-col gap-3">
-            <Button onClick={handleRestart} className="gap-2">
-              <RotateCcw className="w-4 h-4" />
-              {t.restart[language]}
-            </Button>
-            
-            <Button
-              variant="outline"
-              onClick={() => setShowVideos(!showVideos)}
-              className="gap-2"
-            >
-              <PlayCircle className="w-4 h-4" />
-              {showVideos ? t.hideVideos[language] : t.watchVideos[language]}
-            </Button>
-          </div>
-
-          {showVideos && (
-            <div className="mt-6 grid gap-4">
-              {randomVideos.map((video) => (
-                <YouTubeVideo key={video.id} video={video} />
+      <>
+        <CelebrationAnimation show={showCelebration} onComplete={() => setShowCelebration(false)} />
+        <Card className="bg-gradient-to-br from-accent-light to-primary-light border-accent/20">
+          <CardContent className="p-8 text-center">
+            <div className="flex justify-center gap-1 mb-4">
+              {Array.from({ length: Math.min(score, 10) }).map((_, i) => (
+                <Star key={i} className="w-8 h-8 text-yellow-500 fill-yellow-500" />
               ))}
             </div>
-          )}
-        </CardContent>
-      </Card>
+            <h3 className="text-2xl font-bold text-foreground mb-2">{t.completed[language]}</h3>
+            <p className="text-lg text-muted-foreground mb-6">
+              {t.score[language]}: {score}/{tasks.length}
+            </p>
+            
+            <div className="flex flex-col gap-3">
+              <Button onClick={handleRestart} className="gap-2">
+                <RotateCcw className="w-4 h-4" />
+                {t.restart[language]}
+              </Button>
+              
+              <Button
+                variant="outline"
+                onClick={() => setShowVideos(!showVideos)}
+                className="gap-2"
+              >
+                <PlayCircle className="w-4 h-4" />
+                {showVideos ? t.hideVideos[language] : t.watchVideos[language]}
+              </Button>
+            </div>
+
+            {showVideos && (
+              <div className="mt-6 grid gap-4">
+                {randomVideos.map((video) => (
+                  <YouTubeVideo key={video.id} video={video} />
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </>
     );
   }
 
@@ -198,8 +226,6 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
     return (
       <Card className="bg-card border-accent/20">
         <CardContent className="p-6">
-          <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultyChange} />
-          
           <div className="text-center mb-6">
             <h3 className="text-lg font-semibold text-foreground mb-2">{t.findPattern[language]}</h3>
             <p className="text-sm text-muted-foreground">{t.whatNext[language]}</p>
@@ -261,8 +287,6 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
     return (
       <Card className="bg-card border-accent/20">
         <CardContent className="p-6">
-          <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultyChange} />
-          
           <div className="text-center mb-6">
             <h3 className="text-lg font-semibold text-foreground mb-2">{t.sortIt[language]}</h3>
             <p className="text-sm text-muted-foreground">{task.title[language]}</p>
@@ -341,8 +365,6 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
     return (
       <Card className="bg-card border-accent/20">
         <CardContent className="p-6">
-          <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultyChange} />
-          
           <div className="text-center mb-6">
             <h3 className="text-lg font-semibold text-foreground mb-2">{t.sequence[language]}</h3>
             <p className="text-sm text-muted-foreground">{task.question[language]}</p>
@@ -400,8 +422,6 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
   return (
     <Card className="bg-card border-accent/20">
       <CardContent className="p-6">
-        <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultyChange} />
-        
         <div className="text-center mb-6">
           <h3 className="text-lg font-semibold text-foreground mb-2">{t.oddOneOut[language]}</h3>
           <p className="text-sm text-muted-foreground">{t.findOdd[language]}</p>
