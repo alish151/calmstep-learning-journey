@@ -248,6 +248,55 @@ export const translations: Translations = {
   "toast.welcome": { en: "Welcome to CalmStep! 🌟", ru: "Добро пожаловать в CalmStep! 🌟" },
   "toast.welcomeDesc": { en: "Learning modules coming soon. Take your time exploring!", ru: "Модули обучения скоро появятся. Изучайте не торопясь!" },
   "toast.apiKeyMissing": { en: "Please add your OpenAI API key in src/lib/ai-config.ts", ru: "Пожалуйста, добавьте ваш API-ключ OpenAI в src/lib/ai-config.ts" },
+  
+  // Common
+  "common.back": { en: "Back", ru: "Назад" },
+  
+  // Modules
+  "modules.math": { en: "Math", ru: "Математика" },
+  "modules.reading": { en: "Reading", ru: "Чтение" },
+  "modules.logic": { en: "Logic", ru: "Логика" },
+  "modules.emotions": { en: "Emotions", ru: "Эмоции" },
+  "modules.social": { en: "Social", ru: "Социальные навыки" },
+  
+  // Progress Dashboard
+  "progress.pageTitle": { en: "Progress Dashboard", ru: "Панель прогресса" },
+  "progress.pageDescription": { en: "View your child's learning progress and achievements", ru: "Просмотр прогресса и достижений вашего ребёнка" },
+  "progress.title": { en: "Learning Journey", ru: "Путь обучения" },
+  "progress.subtitle": { en: "Celebrate every step of your child's unique learning adventure — no pressure, just progress.", ru: "Празднуйте каждый шаг уникального пути обучения вашего ребёнка — без давления, только прогресс." },
+  "progress.tasksCompleted": { en: "Tasks Completed", ru: "Выполнено заданий" },
+  "progress.totalSessions": { en: "Total Sessions", ru: "Всего сессий" },
+  "progress.achievementsUnlocked": { en: "Achievements", ru: "Достижения" },
+  "progress.moduleProgress": { en: "Progress by Module", ru: "Прогресс по модулям" },
+  "progress.notYet": { en: "Not started yet", ru: "Ещё не начато" },
+  "progress.today": { en: "Today", ru: "Сегодня" },
+  "progress.yesterday": { en: "Yesterday", ru: "Вчера" },
+  "progress.daysAgo": { en: "days ago", ru: "дней назад" },
+  "progress.completed": { en: "Completed", ru: "Выполнено" },
+  "progress.tasks": { en: "tasks", ru: "заданий" },
+  "progress.continue": { en: "Continue Learning", ru: "Продолжить обучение" },
+  "progress.achievements": { en: "Achievements", ru: "Достижения" },
+  "progress.unlocked": { en: "Unlocked!", ru: "Получено!" },
+  "progress.resetInfo": { en: "Want to start fresh? You can reset all progress here.", ru: "Хотите начать заново? Вы можете сбросить весь прогресс здесь." },
+  "progress.resetButton": { en: "Reset Progress", ru: "Сбросить прогресс" },
+  "progress.resetConfirm": { en: "Are you sure you want to reset all progress? This cannot be undone.", ru: "Вы уверены, что хотите сбросить весь прогресс? Это действие нельзя отменить." },
+  
+  // Achievements
+  "achievements.firstStep": { en: "First Step", ru: "Первый шаг" },
+  "achievements.firstStepDesc": { en: "Complete your first activity", ru: "Выполните первое задание" },
+  "achievements.explorer": { en: "Explorer", ru: "Исследователь" },
+  "achievements.explorerDesc": { en: "Try activities in 3 different modules", ru: "Попробуйте задания в 3 разных модулях" },
+  "achievements.consistent": { en: "Steady Pace", ru: "Стабильный темп" },
+  "achievements.consistentDesc": { en: "Complete 5 activities", ru: "Выполните 5 заданий" },
+  "achievements.dedicated": { en: "Dedicated Learner", ru: "Преданный ученик" },
+  "achievements.dedicatedDesc": { en: "Complete 10 activities", ru: "Выполните 10 заданий" },
+  "achievements.champion": { en: "Learning Champion", ru: "Чемпион обучения" },
+  "achievements.championDesc": { en: "Complete 25 activities", ru: "Выполните 25 заданий" },
+  "achievements.master": { en: "Well-Rounded", ru: "Всесторонний" },
+  "achievements.masterDesc": { en: "Complete 5 activities in each module", ru: "Выполните по 5 заданий в каждом модуле" },
+  
+  // Parent Dashboard link
+  "parents.viewProgress": { en: "View Full Progress Dashboard", ru: "Открыть полную панель прогресса" },
 };
 
 interface LanguageContextType {

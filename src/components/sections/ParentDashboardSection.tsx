@@ -2,8 +2,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { TrendingUp, Eye, Lightbulb, Shield, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useNavigate } from "react-router-dom";
 
 const ParentDashboardSection = () => {
+  const navigate = useNavigate();
   const { t } = useLanguage();
 
   const features = [
@@ -82,7 +84,11 @@ const ParentDashboardSection = () => {
                     <p className="text-sm text-muted-foreground">{t("parents.weekSummary")}</p>
                   </div>
                 </div>
-                <Button variant="outline" size="sm">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => navigate("/progress")}
+                >
                   {t("parents.viewDetails")}
                   <ArrowRight className="w-4 h-4" />
                 </Button>
@@ -128,6 +134,18 @@ const ParentDashboardSection = () => {
               </div>
             </CardContent>
           </Card>
+          
+          {/* Link to full progress dashboard */}
+          <div className="text-center mt-8">
+            <Button 
+              size="lg" 
+              onClick={() => navigate("/progress")}
+              className="gap-2"
+            >
+              {t("parents.viewProgress")}
+              <ArrowRight className="w-5 h-5" />
+            </Button>
+          </div>
         </div>
       </div>
     </section>

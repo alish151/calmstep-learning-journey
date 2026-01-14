@@ -10,6 +10,7 @@ import LearningModule from "./pages/LearningModule";
 import LearningModules from "./pages/LearningModules";
 import HowItWorks from "./pages/HowItWorks";
 import SocialScenarios from "./pages/SocialScenarios";
+import ProgressDashboard from "./pages/ProgressDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
               <Route path="/learning" element={<LearningModules />} />
               <Route path="/learn/:moduleId" element={<LearningModule />} />
               <Route path="/social-scenarios" element={<SocialScenarios />} />
+              <Route path="/progress" element={<ProgressDashboard />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
