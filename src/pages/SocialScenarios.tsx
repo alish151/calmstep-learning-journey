@@ -15,6 +15,7 @@ import { socialVideos, getRandomVideos } from "@/data/educationalVideos";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
 import CelebrationAnimation from "@/components/CelebrationAnimation";
 import { saveScrollPosition } from "@/hooks/useScrollPosition";
+import { useProgressTracking } from "@/hooks/useProgressTracking";
 
 interface Scenario {
   situation: { en: string; ru: string };
@@ -873,7 +874,7 @@ const SocialScenarios = () => {
   const [showVideos, setShowVideos] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const { playCorrect, playIncorrect, playComplete, playClick } = useSoundEffects();
-
+  const { updateProgress } = useProgressTracking();
   // Get random scenarios based on difficulty and category
   const currentScenarios = useMemo(() => {
     if (selectedCategory === null || !difficulty) return [];
@@ -926,6 +927,10 @@ const SocialScenarios = () => {
       setCompleted(true);
       setShowCelebration(true);
       playComplete();
+      
+      // Update progress for social scenarios
+      const wasSuccessful = score >= Math.floor(currentScenarios.length / 2);
+      updateProgress('social', selectedCategory || 0, score, currentScenarios.length, wasSuccessful);
     }
   };
 
