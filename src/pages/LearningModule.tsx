@@ -5,12 +5,14 @@ import { Input } from "@/components/ui/input";
 import { ArrowLeft, Send, Calculator, BookOpen, Puzzle, Heart, MessageCircle, Loader2, X } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAIChat } from "@/hooks/useAIChat";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Helmet } from "react-helmet-async";
 import MathTask from "@/components/tasks/MathTask";
 import ReadingTask from "@/components/tasks/ReadingTask";
 import LogicTask from "@/components/tasks/LogicTask";
 import EmotionsTask from "@/components/tasks/EmotionsTask";
+import { useProgressTracking } from "@/hooks/useProgressTracking";
+import CelebrationAnimation from "@/components/CelebrationAnimation";
 
 import { mathActivities, readingActivities, logicActivities, emotionsActivities } from "@/data/taskData";
 
@@ -51,6 +53,8 @@ const LearningModule = () => {
   const { language, t } = useLanguage();
   const [inputValue, setInputValue] = useState("");
   const [activeActivity, setActiveActivity] = useState<number | null>(null);
+  const [showCelebration, setShowCelebration] = useState(false);
+  const { updateProgress } = useProgressTracking();
 
   const module = moduleData[moduleId as keyof typeof moduleData];
   
@@ -85,6 +89,23 @@ const LearningModule = () => {
       handleSend();
     }
   };
+
+  const handleTaskComplete = useCallback((wasSuccessful: boolean) => {
+    if (moduleId && activeActivity !== null) {
+      // Update progress in the tracking system
+      updateProgress(
+        moduleId as 'math' | 'reading' | 'logic' | 'emotions',
+        activeActivity,
+        wasSuccessful ? 1 : 0,
+        1,
+        wasSuccessful
+      );
+      
+      if (wasSuccessful) {
+        setShowCelebration(true);
+      }
+    }
+  }, [moduleId, activeActivity, updateProgress]);
 
   return (
     <>
@@ -135,28 +156,30 @@ const LearningModule = () => {
                     </Button>
                   </div>
                   
+                  <CelebrationAnimation show={showCelebration} onComplete={() => setShowCelebration(false)} />
+                  
                   {moduleId === "math" && (
                     <MathTask 
                       activityIndex={activeActivity} 
-                      onComplete={() => {}} 
+                      onComplete={handleTaskComplete} 
                     />
                   )}
                   {moduleId === "reading" && (
                     <ReadingTask 
                       activityIndex={activeActivity} 
-                      onComplete={() => {}} 
+                      onComplete={handleTaskComplete} 
                     />
                   )}
                   {moduleId === "logic" && (
                     <LogicTask 
                       activityIndex={activeActivity} 
-                      onComplete={() => {}} 
+                      onComplete={handleTaskComplete} 
                     />
                   )}
                   {moduleId === "emotions" && (
                     <EmotionsTask 
                       activityIndex={activeActivity} 
-                      onComplete={() => {}} 
+                      onComplete={handleTaskComplete} 
                     />
                   )}
                 </div>

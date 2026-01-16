@@ -14,7 +14,15 @@ import {
   Sparkles,
   Target,
   Calendar,
-  TrendingUp
+  TrendingUp,
+  Crown,
+  Medal,
+  Gem,
+  Gift,
+  Rocket,
+  Brain,
+  MessageCircle,
+  Award
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useProgressTracking } from "@/hooks/useProgressTracking";
@@ -24,7 +32,7 @@ import { Helmet } from "react-helmet-async";
 
 const ProgressDashboard = () => {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { progress, getTotalProgress, resetProgress } = useProgressTracking();
 
   const totalStats = getTotalProgress();
@@ -72,7 +80,7 @@ const ProgressDashboard = () => {
     },
   ];
 
-  // Define achievements based on progress
+  // Define achievements based on progress - expanded with more milestones
   const achievements = [
     {
       id: "first_step",
@@ -80,7 +88,8 @@ const ProgressDashboard = () => {
       title: t("achievements.firstStep"),
       description: t("achievements.firstStepDesc"),
       unlocked: totalStats.totalCompleted >= 1,
-      color: "bg-primary",
+      color: "bg-yellow-500",
+      requiredTasks: 1,
     },
     {
       id: "explorer",
@@ -88,7 +97,8 @@ const ProgressDashboard = () => {
       title: t("achievements.explorer"),
       description: t("achievements.explorerDesc"),
       unlocked: Object.values(progress).filter(m => m.completedTasks > 0).length >= 3,
-      color: "bg-secondary",
+      color: "bg-blue-500",
+      requiredTasks: null,
     },
     {
       id: "consistent",
@@ -96,7 +106,8 @@ const ProgressDashboard = () => {
       title: t("achievements.consistent"),
       description: t("achievements.consistentDesc"),
       unlocked: totalStats.totalCompleted >= 5,
-      color: "bg-calm",
+      color: "bg-green-500",
+      requiredTasks: 5,
     },
     {
       id: "dedicated",
@@ -104,7 +115,26 @@ const ProgressDashboard = () => {
       title: t("achievements.dedicated"),
       description: t("achievements.dedicatedDesc"),
       unlocked: totalStats.totalCompleted >= 10,
-      color: "bg-warm",
+      color: "bg-purple-500",
+      requiredTasks: 10,
+    },
+    {
+      id: "super_star",
+      icon: Sparkles,
+      title: t("achievements.superStar"),
+      description: t("achievements.superStarDesc"),
+      unlocked: totalStats.totalCompleted >= 15,
+      color: "bg-pink-500",
+      requiredTasks: 15,
+    },
+    {
+      id: "achiever",
+      icon: Award,
+      title: t("achievements.achiever"),
+      description: t("achievements.achieverDesc"),
+      unlocked: totalStats.totalCompleted >= 20,
+      color: "bg-orange-500",
+      requiredTasks: 20,
     },
     {
       id: "champion",
@@ -112,16 +142,91 @@ const ProgressDashboard = () => {
       title: t("achievements.champion"),
       description: t("achievements.championDesc"),
       unlocked: totalStats.totalCompleted >= 25,
-      color: "bg-accent",
+      color: "bg-amber-500",
+      requiredTasks: 25,
+    },
+    {
+      id: "legend",
+      icon: Crown,
+      title: t("achievements.legend"),
+      description: t("achievements.legendDesc"),
+      unlocked: totalStats.totalCompleted >= 50,
+      color: "bg-indigo-500",
+      requiredTasks: 50,
     },
     {
       id: "master",
-      icon: Sparkles,
+      icon: Gem,
       title: t("achievements.master"),
       description: t("achievements.masterDesc"),
-      unlocked: Object.values(progress).every(m => m.completedTasks >= 5),
-      color: "bg-primary",
+      unlocked: totalStats.totalCompleted >= 100,
+      color: "bg-rose-500",
+      requiredTasks: 100,
     },
+    {
+      id: "all_rounder",
+      icon: Rocket,
+      title: t("achievements.allRounder"),
+      description: t("achievements.allRounderDesc"),
+      unlocked: Object.values(progress).every(m => m.completedTasks >= 5),
+      color: "bg-teal-500",
+      requiredTasks: null,
+    },
+    // Module-specific achievements
+    {
+      id: "math_whiz",
+      icon: Calculator,
+      title: t("achievements.mathWhiz"),
+      description: t("achievements.mathWhizDesc"),
+      unlocked: progress.math.completedTasks >= 10,
+      color: "bg-primary",
+      requiredTasks: null,
+    },
+    {
+      id: "bookworm",
+      icon: BookOpen,
+      title: t("achievements.bookworm"),
+      description: t("achievements.bookwormDesc"),
+      unlocked: progress.reading.completedTasks >= 10,
+      color: "bg-secondary",
+      requiredTasks: null,
+    },
+    {
+      id: "puzzle_pro",
+      icon: Brain,
+      title: t("achievements.puzzlePro"),
+      description: t("achievements.puzzleProDesc"),
+      unlocked: progress.logic.completedTasks >= 10,
+      color: "bg-calm",
+      requiredTasks: null,
+    },
+    {
+      id: "empath",
+      icon: Heart,
+      title: t("achievements.empath"),
+      description: t("achievements.empathDesc"),
+      unlocked: progress.emotions.completedTasks >= 10,
+      color: "bg-warm",
+      requiredTasks: null,
+    },
+    {
+      id: "social_butterfly",
+      icon: MessageCircle,
+      title: t("achievements.socialButterfly"),
+      description: t("achievements.socialButterflyDesc"),
+      unlocked: progress.social.completedTasks >= 10,
+      color: "bg-accent",
+      requiredTasks: null,
+    },
+  ];
+
+  // Prizes - special rewards for milestones
+  const prizes = [
+    { tasks: 10, emoji: "🌟", name: { en: "Golden Star", ru: "Золотая звезда" } },
+    { tasks: 25, emoji: "🏆", name: { en: "Champion Trophy", ru: "Кубок чемпиона" } },
+    { tasks: 50, emoji: "👑", name: { en: "Royal Crown", ru: "Королевская корона" } },
+    { tasks: 75, emoji: "💎", name: { en: "Diamond Gem", ru: "Бриллиант" } },
+    { tasks: 100, emoji: "🚀", name: { en: "Space Rocket", ru: "Космическая ракета" } },
   ];
 
   const unlockedAchievements = achievements.filter(a => a.unlocked);
@@ -243,6 +348,46 @@ const ProgressDashboard = () => {
                     >
                       {t("progress.continue")}
                     </Button>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+
+          {/* Prizes Section */}
+          <h2 className="text-xl font-semibold text-foreground mb-4">{t("prizes.title")}</h2>
+          <p className="text-muted-foreground mb-4">{t("prizes.subtitle")}</p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-12">
+            {prizes.map((prize) => {
+              const unlocked = totalStats.totalCompleted >= prize.tasks;
+              const remaining = Math.max(0, prize.tasks - totalStats.totalCompleted);
+              
+              return (
+                <Card 
+                  key={prize.tasks} 
+                  className={`text-center transition-all ${
+                    unlocked 
+                      ? "bg-gradient-to-br from-yellow-50 to-amber-50 border-yellow-200 hover:shadow-lg" 
+                      : "bg-muted/30 opacity-70"
+                  }`}
+                >
+                  <CardContent className="p-6">
+                    <div className={`text-5xl mb-3 ${unlocked ? "animate-bounce" : "grayscale"}`}>
+                      {prize.emoji}
+                    </div>
+                    <h3 className={`font-semibold text-sm ${unlocked ? "text-foreground" : "text-muted-foreground"}`}>
+                      {prize.name[language]}
+                    </h3>
+                    {unlocked ? (
+                      <span className="inline-flex items-center gap-1 text-xs text-yellow-600 mt-2">
+                        <Star className="w-3 h-3 fill-yellow-500" />
+                        {t("prizes.unlocked")}
+                      </span>
+                    ) : (
+                      <span className="text-xs text-muted-foreground mt-2 block">
+                        {remaining} {t("prizes.tasksNeeded")}
+                      </span>
+                    )}
                   </CardContent>
                 </Card>
               );
