@@ -22,7 +22,9 @@ import {
   Rocket,
   Brain,
   MessageCircle,
-  Award
+  Award,
+  Flame,
+  Zap
 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useProgressTracking } from "@/hooks/useProgressTracking";
@@ -33,9 +35,10 @@ import { Helmet } from "react-helmet-async";
 const ProgressDashboard = () => {
   const navigate = useNavigate();
   const { t, language } = useLanguage();
-  const { progress, getTotalProgress, resetProgress } = useProgressTracking();
+  const { progress, getTotalProgress, getStreakData, resetProgress } = useProgressTracking();
 
   const totalStats = getTotalProgress();
+  const streakData = getStreakData();
 
   const modules = [
     {
@@ -96,7 +99,7 @@ const ProgressDashboard = () => {
       icon: Target,
       title: t("achievements.explorer"),
       description: t("achievements.explorerDesc"),
-      unlocked: Object.values(progress).filter(m => m.completedTasks > 0).length >= 3,
+      unlocked: Object.entries(progress).filter(([key, m]) => key !== 'streak' && (m as any).completedTasks > 0).length >= 3,
       color: "bg-blue-500",
       requiredTasks: null,
     },
@@ -168,8 +171,45 @@ const ProgressDashboard = () => {
       icon: Rocket,
       title: t("achievements.allRounder"),
       description: t("achievements.allRounderDesc"),
-      unlocked: Object.values(progress).every(m => m.completedTasks >= 5),
+      unlocked: Object.entries(progress).filter(([key]) => key !== 'streak').every(([, m]) => (m as any).completedTasks >= 5),
       color: "bg-teal-500",
+      requiredTasks: null,
+    },
+    // Streak achievements
+    {
+      id: "streak_3",
+      icon: Flame,
+      title: t("achievements.streak3"),
+      description: t("achievements.streak3Desc"),
+      unlocked: streakData.longestStreak >= 3,
+      color: "bg-orange-400",
+      requiredTasks: null,
+    },
+    {
+      id: "streak_7",
+      icon: Flame,
+      title: t("achievements.streak7"),
+      description: t("achievements.streak7Desc"),
+      unlocked: streakData.longestStreak >= 7,
+      color: "bg-orange-500",
+      requiredTasks: null,
+    },
+    {
+      id: "streak_14",
+      icon: Zap,
+      title: t("achievements.streak14"),
+      description: t("achievements.streak14Desc"),
+      unlocked: streakData.longestStreak >= 14,
+      color: "bg-yellow-500",
+      requiredTasks: null,
+    },
+    {
+      id: "streak_30",
+      icon: Crown,
+      title: t("achievements.streak30"),
+      description: t("achievements.streak30Desc"),
+      unlocked: streakData.longestStreak >= 30,
+      color: "bg-gradient-to-br from-yellow-400 to-orange-500",
       requiredTasks: null,
     },
     // Module-specific achievements
@@ -276,13 +316,20 @@ const ProgressDashboard = () => {
           {/* Overall progress summary */}
           <Card className="mb-8 bg-gradient-to-br from-primary-light to-secondary-light border-none">
             <CardContent className="p-8">
-              <div className="grid sm:grid-cols-3 gap-8 text-center">
+              <div className="grid sm:grid-cols-4 gap-8 text-center">
                 <div>
                   <div className="w-16 h-16 mx-auto bg-card rounded-2xl flex items-center justify-center mb-3 shadow-soft">
                     <Target className="w-8 h-8 text-primary" />
                   </div>
                   <p className="text-3xl font-bold text-foreground">{totalStats.totalCompleted}</p>
                   <p className="text-sm text-muted-foreground">{t("progress.tasksCompleted")}</p>
+                </div>
+                <div>
+                  <div className="w-16 h-16 mx-auto bg-card rounded-2xl flex items-center justify-center mb-3 shadow-soft">
+                    <Flame className="w-8 h-8 text-orange-500" />
+                  </div>
+                  <p className="text-3xl font-bold text-foreground">{streakData.currentStreak}</p>
+                  <p className="text-sm text-muted-foreground">{t("streak.currentStreak")}</p>
                 </div>
                 <div>
                   <div className="w-16 h-16 mx-auto bg-card rounded-2xl flex items-center justify-center mb-3 shadow-soft">
@@ -297,6 +344,51 @@ const ProgressDashboard = () => {
                   </div>
                   <p className="text-3xl font-bold text-foreground">{unlockedAchievements.length}</p>
                   <p className="text-sm text-muted-foreground">{t("progress.achievementsUnlocked")}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Streak Section */}
+          <h2 className="text-xl font-semibold text-foreground mb-4">{t("streak.title")}</h2>
+          <Card className="mb-12 overflow-hidden">
+            <CardContent className="p-0">
+              <div className="bg-gradient-to-r from-orange-400 via-orange-500 to-red-500 p-6 text-white">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="w-16 h-16 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center">
+                      <Flame className="w-10 h-10 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-4xl font-bold">
+                        {streakData.currentStreak} {streakData.currentStreak === 1 ? t("streak.day") : t("streak.days")}
+                      </p>
+                      <p className="text-white/80">
+                        {streakData.currentStreak > 0 ? t("streak.keepItUp") : t("streak.startStreak")}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm text-white/80">{t("streak.longestStreak")}</p>
+                    <p className="text-2xl font-bold">
+                      {streakData.longestStreak} {streakData.longestStreak === 1 ? t("streak.day") : t("streak.days")}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="p-4 bg-card">
+                <div className="flex items-center justify-center gap-2 text-sm">
+                  {progress.streak.lastActivityDate && 
+                   progress.streak.lastActivityDate === new Date().toISOString().split('T')[0] ? (
+                    <span className="flex items-center gap-1 text-green-600">
+                      <Star className="w-4 h-4 fill-green-500" />
+                      {t("streak.practicedToday")}
+                    </span>
+                  ) : (
+                    <span className="text-muted-foreground">
+                      {t("streak.practiceToday")}
+                    </span>
+                  )}
                 </div>
               </div>
             </CardContent>

@@ -320,6 +320,29 @@ export const translations: Translations = {
   "prizes.unlocked": { en: "Unlocked!", ru: "Получено!" },
   "prizes.tasksNeeded": { en: "tasks needed", ru: "заданий нужно" },
   
+  // Streak section
+  "streak.title": { en: "Learning Streak", ru: "Серия обучения" },
+  "streak.subtitle": { en: "Keep learning every day to build your streak!", ru: "Учитесь каждый день, чтобы продлить серию!" },
+  "streak.currentStreak": { en: "Current Streak", ru: "Текущая серия" },
+  "streak.longestStreak": { en: "Best Streak", ru: "Лучшая серия" },
+  "streak.days": { en: "days", ru: "дней" },
+  "streak.day": { en: "day", ru: "день" },
+  "streak.keepItUp": { en: "Keep it up!", ru: "Так держать!" },
+  "streak.startStreak": { en: "Start your streak today!", ru: "Начни серию сегодня!" },
+  "streak.streakLost": { en: "Start a new streak!", ru: "Начни новую серию!" },
+  "streak.practicedToday": { en: "Practiced today ✓", ru: "Сегодня занимались ✓" },
+  "streak.practiceToday": { en: "Practice today to continue!", ru: "Позанимайтесь сегодня!" },
+  
+  // Streak achievements
+  "achievements.streak3": { en: "3-Day Streak", ru: "Серия 3 дня" },
+  "achievements.streak3Desc": { en: "Learn 3 days in a row", ru: "Учитесь 3 дня подряд" },
+  "achievements.streak7": { en: "Week Warrior", ru: "Воин недели" },
+  "achievements.streak7Desc": { en: "Learn 7 days in a row", ru: "Учитесь 7 дней подряд" },
+  "achievements.streak14": { en: "Two-Week Champion", ru: "Чемпион двух недель" },
+  "achievements.streak14Desc": { en: "Learn 14 days in a row", ru: "Учитесь 14 дней подряд" },
+  "achievements.streak30": { en: "Monthly Master", ru: "Мастер месяца" },
+  "achievements.streak30Desc": { en: "Learn 30 days in a row", ru: "Учитесь 30 дней подряд" },
+  
   // Parent Dashboard link
   "parents.viewProgress": { en: "View Full Progress Dashboard", ru: "Открыть полную панель прогресса" },
 };
