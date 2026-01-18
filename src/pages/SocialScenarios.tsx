@@ -14,7 +14,7 @@ import YouTubeVideo from "@/components/YouTubeVideo";
 import { socialVideos, getRandomVideos } from "@/data/educationalVideos";
 import { useSoundEffects } from "@/hooks/useSoundEffects";
 import CelebrationAnimation from "@/components/CelebrationAnimation";
-import { saveScrollPosition } from "@/hooks/useScrollPosition";
+import { saveScrollPosition, getScrollPosition } from "@/hooks/useScrollPosition";
 import { useProgressTracking } from "@/hooks/useProgressTracking";
 
 interface Scenario {
@@ -953,6 +953,7 @@ const SocialScenarios = () => {
     setScore(0);
     setCompleted(false);
     setShowVideos(false);
+    setDifficulty(null); // Reset difficulty when going back to categories
   };
 
   const handleDifficultySelect = (newDifficulty: DifficultyLevel) => {
@@ -961,8 +962,14 @@ const SocialScenarios = () => {
   };
 
   const handleBack = () => {
-    saveScrollPosition('/');
     navigate(-1);
+    // Restore scroll position after navigation
+    setTimeout(() => {
+      const savedPosition = getScrollPosition('/');
+      if (savedPosition > 0) {
+        window.scrollTo(0, savedPosition);
+      }
+    }, 50);
   };
 
   return (

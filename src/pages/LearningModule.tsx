@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { ArrowLeft, Send, Calculator, BookOpen, Puzzle, Heart, MessageCircle, Loader2, X } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAIChat } from "@/hooks/useAIChat";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import MathTask from "@/components/tasks/MathTask";
 import ReadingTask from "@/components/tasks/ReadingTask";
@@ -13,6 +13,7 @@ import LogicTask from "@/components/tasks/LogicTask";
 import EmotionsTask from "@/components/tasks/EmotionsTask";
 import { useProgressTracking } from "@/hooks/useProgressTracking";
 import CelebrationAnimation from "@/components/CelebrationAnimation";
+import { getScrollPosition } from "@/hooks/useScrollPosition";
 
 import { mathActivities, readingActivities, logicActivities, emotionsActivities } from "@/data/taskData";
 
@@ -107,6 +108,17 @@ const LearningModule = () => {
     }
   }, [moduleId, activeActivity, updateProgress]);
 
+  const handleBack = useCallback(() => {
+    // Navigate back and restore scroll position
+    navigate(-1);
+    setTimeout(() => {
+      const savedPosition = getScrollPosition('/');
+      if (savedPosition > 0) {
+        window.scrollTo(0, savedPosition);
+      }
+    }, 50);
+  }, [navigate]);
+
   return (
     <>
       <Helmet>
@@ -118,18 +130,36 @@ const LearningModule = () => {
         {/* Header */}
         <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/30">
           <div className="container mx-auto px-4 sm:px-6 py-4">
-            <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" onClick={() => navigate("/")}>
-                <ArrowLeft className="w-5 h-5" />
-              </Button>
-              <div className="flex items-center gap-3">
-                <div className={`w-12 h-12 rounded-xl ${module.bgColor} flex items-center justify-center`}>
-                  <span className="text-2xl">{module.emoji}</span>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Button variant="ghost" size="icon" onClick={handleBack}>
+                  <ArrowLeft className="w-5 h-5" />
+                </Button>
+                <div className="flex items-center gap-3">
+                  <div className={`w-12 h-12 rounded-xl ${module.bgColor} flex items-center justify-center`}>
+                    <span className="text-2xl">{module.emoji}</span>
+                  </div>
+                  <div>
+                    <h1 className="text-xl font-bold text-foreground">{moduleName}</h1>
+                    <p className="text-sm text-muted-foreground">{t("learning.module")}</p>
+                  </div>
                 </div>
-                <div>
-                  <h1 className="text-xl font-bold text-foreground">{moduleName}</h1>
-                  <p className="text-sm text-muted-foreground">{t("learning.module")}</p>
-                </div>
+              </div>
+              
+              {/* Quick Access Panel */}
+              <div className="hidden sm:flex items-center gap-2">
+                {Object.entries(moduleData).map(([id, data]) => (
+                  <Button
+                    key={id}
+                    variant={moduleId === id ? "default" : "ghost"}
+                    size="sm"
+                    className="flex items-center gap-2"
+                    onClick={() => navigate(`/learn/${id}`)}
+                  >
+                    <span className="text-lg">{data.emoji}</span>
+                    <span className="hidden md:inline">{t(`learning.${id}`)}</span>
+                  </Button>
+                ))}
               </div>
             </div>
           </div>

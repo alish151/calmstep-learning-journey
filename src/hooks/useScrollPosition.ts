@@ -38,10 +38,14 @@ export const useScrollPosition = () => {
   }, [location.pathname, navigationType]);
 };
 
-export const saveScrollPosition = (pathname: string) => {
-  scrollPositions.set(pathname, window.scrollY);
+export const saveScrollPosition = (pathname: string, position?: number) => {
+  scrollPositions.set(pathname, position ?? window.scrollY);
 };
 
 export const getScrollPosition = (pathname: string): number => {
   return scrollPositions.get(pathname) || 0;
+};
+
+export const clearScrollPosition = (pathname: string) => {
+  scrollPositions.delete(pathname);
 };
