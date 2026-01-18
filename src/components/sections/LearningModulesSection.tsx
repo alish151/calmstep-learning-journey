@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Calculator, BookOpen, Puzzle, Heart, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useNavigate } from "react-router-dom";
+import { saveScrollPosition } from "@/hooks/useScrollPosition";
 
 const LearningModulesSection = () => {
   const { t } = useLanguage();
@@ -116,7 +117,10 @@ const LearningModulesSection = () => {
                   variant="soft" 
                   size="sm" 
                   className="group/btn"
-                  onClick={() => navigate(`/learn/${module.id}`)}
+                  onClick={() => {
+                    saveScrollPosition(window.location.pathname, window.scrollY);
+                    navigate(`/learn/${module.id}`);
+                  }}
                 >
                   {t("learning.explore")}
                   <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
@@ -158,7 +162,10 @@ const LearningModulesSection = () => {
                     variant="soft" 
                     size="sm" 
                     className="group/btn"
-                    onClick={() => navigate("/social-scenarios")}
+                    onClick={() => {
+                      saveScrollPosition(window.location.pathname, window.scrollY);
+                      navigate("/social-scenarios");
+                    }}
                   >
                     {t("learning.explore")}
                     <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
