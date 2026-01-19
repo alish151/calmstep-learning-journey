@@ -16,6 +16,7 @@ import { useSoundEffects } from "@/hooks/useSoundEffects";
 import CelebrationAnimation from "@/components/CelebrationAnimation";
 import { saveScrollPosition, getScrollPosition } from "@/hooks/useScrollPosition";
 import { useProgressTracking } from "@/hooks/useProgressTracking";
+import MobileBottomNav from "@/components/MobileBottomNav";
 
 interface Scenario {
   situation: { en: string; ru: string };
@@ -1010,10 +1011,6 @@ const SocialScenarios = () => {
               <div>
                 <h2 className="text-lg font-semibold text-foreground mb-4 text-center">{texts.chooseCategory[language]}</h2>
                 
-                <div className="mb-6">
-                  <DifficultySelector selectedDifficulty={difficulty} onSelect={handleDifficultySelect} />
-                </div>
-                
                 <div className="grid sm:grid-cols-2 gap-4">
                   {socialScenarioData.map((category, index) => (
                     <Card 
@@ -1162,6 +1159,10 @@ const SocialScenarios = () => {
         </main>
 
         <Footer />
+        
+        {/* Mobile Bottom Navigation */}
+        <MobileBottomNav />
+        <div className="h-16 sm:hidden" /> {/* Spacer for mobile nav */}
       </div>
     </>
   );
