@@ -14,6 +14,7 @@ import EmotionsTask from "@/components/tasks/EmotionsTask";
 import { useProgressTracking } from "@/hooks/useProgressTracking";
 import CelebrationAnimation from "@/components/CelebrationAnimation";
 import { getScrollPosition } from "@/hooks/useScrollPosition";
+import MobileBottomNav from "@/components/MobileBottomNav";
 
 import { mathActivities, readingActivities, logicActivities, emotionsActivities } from "@/data/taskData";
 
@@ -313,6 +314,10 @@ const LearningModule = () => {
             </div>
           </div>
         </main>
+        
+        {/* Mobile Bottom Navigation */}
+        <MobileBottomNav />
+        <div className="h-16 sm:hidden" /> {/* Spacer for mobile nav */}
       </div>
     </>
   );
