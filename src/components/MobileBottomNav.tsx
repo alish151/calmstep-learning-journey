@@ -1,13 +1,12 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { Calculator, BookOpen, Puzzle, Heart, Users } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const navItems = [
-  { id: "math", icon: Calculator, emoji: "🔢", path: "/learn/math" },
-  { id: "reading", icon: BookOpen, emoji: "📖", path: "/learn/reading" },
-  { id: "logic", icon: Puzzle, emoji: "🧩", path: "/learn/logic" },
-  { id: "emotions", icon: Heart, emoji: "💭", path: "/learn/emotions" },
-  { id: "social", icon: Users, emoji: "🤝", path: "/social-scenarios" },
+  { id: "home", emoji: "🏠", path: "/", labelKey: "nav.home" },
+  { id: "math", emoji: "🔢", path: "/learn/math", labelKey: "learning.math" },
+  { id: "reading", emoji: "📖", path: "/learn/reading", labelKey: "learning.reading" },
+  { id: "logic", emoji: "🧩", path: "/learn/logic", labelKey: "learning.logic" },
+  { id: "progress", emoji: "📊", path: "/progress", labelKey: "nav.progress" },
 ];
 
 const MobileBottomNav = () => {
@@ -16,10 +15,21 @@ const MobileBottomNav = () => {
   const { t } = useLanguage();
 
   const isActive = (path: string) => {
-    if (path === "/social-scenarios") {
-      return location.pathname === path;
+    if (path === "/") {
+      return location.pathname === "/";
+    }
+    if (path === "/progress") {
+      return location.pathname === "/progress";
     }
     return location.pathname.includes(path.split("/")[2]);
+  };
+
+  const getLabel = (item: typeof navItems[0]) => {
+    const translated = t(item.labelKey);
+    // Shorten labels for mobile
+    if (item.id === "home") return translated || "Home";
+    if (item.id === "progress") return translated || "Progress";
+    return translated;
   };
 
   return (
@@ -31,17 +41,15 @@ const MobileBottomNav = () => {
             <button
               key={item.id}
               onClick={() => navigate(item.path)}
-              className={`flex flex-col items-center gap-0.5 py-2 px-3 rounded-lg transition-all ${
+              className={`flex flex-col items-center gap-0.5 py-2 px-2 rounded-lg transition-all ${
                 active 
                   ? "bg-primary/10 text-primary" 
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
               <span className="text-xl">{item.emoji}</span>
-              <span className="text-[10px] font-medium truncate max-w-[60px]">
-                {item.id === "social" 
-                  ? (t("nav.socialScenarios") || "Social").split(" ")[0]
-                  : t(`learning.${item.id}`)}
+              <span className="text-[10px] font-medium truncate max-w-[56px]">
+                {getLabel(item)}
               </span>
             </button>
           );

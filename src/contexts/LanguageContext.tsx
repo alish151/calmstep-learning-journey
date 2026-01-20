@@ -15,6 +15,7 @@ export const translations: Translations = {
   "nav.howItWorks": { en: "How It Works", ru: "Как это работает" },
   "nav.learning": { en: "Learning", ru: "Обучение" },
   "nav.forParents": { en: "For Parents", ru: "Для родителей" },
+  "nav.progress": { en: "Progress", ru: "Прогресс" },
   "btn.startLearning": { en: "Start Learning", ru: "Начать обучение" },
   
   // Hero Section
