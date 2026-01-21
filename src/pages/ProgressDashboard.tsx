@@ -30,6 +30,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useProgressTracking } from "@/hooks/useProgressTracking";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import MobileBottomNav from "@/components/MobileBottomNav";
 import { Helmet } from "react-helmet-async";
 
 const ProgressDashboard = () => {
@@ -551,6 +552,10 @@ const ProgressDashboard = () => {
         </main>
 
         <Footer />
+        <MobileBottomNav />
+        
+        {/* Spacer for mobile bottom nav */}
+        <div className="h-16 sm:hidden" />
       </div>
     </>
   );
