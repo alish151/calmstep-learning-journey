@@ -16,6 +16,9 @@ export const translations: Translations = {
   "nav.learning": { en: "Learning", ru: "Обучение" },
   "nav.forParents": { en: "For Parents", ru: "Для родителей" },
   "nav.progress": { en: "Progress", ru: "Прогресс" },
+  "nav.more": { en: "More", ru: "Ещё" },
+  "nav.moreModules": { en: "More Modules", ru: "Другие модули" },
+  "nav.socialScenarios": { en: "Social", ru: "Социальное" },
   "btn.startLearning": { en: "Start Learning", ru: "Начать обучение" },
   
   // Hero Section
