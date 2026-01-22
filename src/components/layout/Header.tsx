@@ -1,14 +1,17 @@
 import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Heart } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Menu, X, Heart, BarChart3 } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { toast } = useToast();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useLanguage();
+
+  const isOnHomePage = location.pathname === "/";
 
   const navLinks = [
     { label: t("nav.home"), href: "#home" },
@@ -19,15 +22,26 @@ const Header = () => {
 
   const handleNavClick = (href: string) => {
     setIsMenuOpen(false);
-    const element = document.querySelector(href);
-    element?.scrollIntoView({ behavior: "smooth" });
+    if (isOnHomePage) {
+      const element = document.querySelector(href);
+      element?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate("/");
+      setTimeout(() => {
+        const element = document.querySelector(href);
+        element?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
   };
 
   const handleStartLearning = () => {
-    toast({
-      title: t("toast.welcome"),
-      description: t("toast.welcomeDesc"),
-    });
+    setIsMenuOpen(false);
+    navigate("/learn/math");
+  };
+
+  const handleProgressClick = () => {
+    setIsMenuOpen(false);
+    navigate("/progress");
   };
 
   return (
@@ -96,7 +110,15 @@ const Header = () => {
                   {link.label}
                 </button>
               ))}
-              <div className="pt-4">
+              {/* Progress Link */}
+              <button
+                onClick={handleProgressClick}
+                className="px-4 py-3 text-muted-foreground hover:text-foreground hover:bg-primary-light rounded-xl transition-calm font-medium text-left flex items-center gap-2"
+              >
+                <BarChart3 className="w-4 h-4" />
+                {t("nav.progress")}
+              </button>
+              <div className="pt-4 flex flex-col gap-2">
                 <Button variant="hero" size="lg" className="w-full" onClick={handleStartLearning}>
                   {t("btn.startLearning")}
                 </Button>
