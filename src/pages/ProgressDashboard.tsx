@@ -293,7 +293,8 @@ const ProgressDashboard = () => {
       <div className="min-h-screen bg-background">
         <Header />
         
-        <main className="container mx-auto px-4 sm:px-6 py-8">
+        {/* Account for fixed header height so top controls (Back button) are not hidden behind it */}
+        <main className="container mx-auto px-4 sm:px-6 pt-24 pb-8">
           {/* Back button */}
           <Button
             variant="ghost"
