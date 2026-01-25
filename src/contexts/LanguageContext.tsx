@@ -349,6 +349,14 @@ export const translations: Translations = {
   
   // Parent Dashboard link
   "parents.viewProgress": { en: "View Full Progress Dashboard", ru: "Открыть полную панель прогресса" },
+  
+  // Subscription/Pricing
+  "nav.pricing": { en: "Pricing", ru: "Тарифы" },
+  "nav.signIn": { en: "Sign In", ru: "Войти" },
+  "nav.signOut": { en: "Sign Out", ru: "Выйти" },
+  "subscription.trial": { en: "Trial", ru: "Пробный" },
+  "subscription.daysLeft": { en: "days left", ru: "дней осталось" },
+  "subscription.upgrade": { en: "Upgrade", ru: "Улучшить" },
 };
 
 interface LanguageContextType {

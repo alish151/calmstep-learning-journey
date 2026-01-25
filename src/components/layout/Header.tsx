@@ -1,17 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Heart, BarChart3 } from "lucide-react";
+import { Menu, X, Heart, BarChart3, LogIn, LogOut, Crown } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { supabase } from "@/integrations/supabase/client";
+import { User } from "@supabase/supabase-js";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useLanguage();
 
   const isOnHomePage = location.pathname === "/";
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const navLinks = [
     { label: t("nav.home"), href: "#home" },
@@ -42,6 +57,17 @@ const Header = () => {
   const handleProgressClick = () => {
     setIsMenuOpen(false);
     navigate("/progress");
+  };
+
+  const handleSignOut = async () => {
+    setIsMenuOpen(false);
+    await supabase.auth.signOut();
+    navigate("/");
+  };
+
+  const handleSignIn = () => {
+    setIsMenuOpen(false);
+    navigate("/auth");
   };
 
   return (
@@ -75,6 +101,23 @@ const Header = () => {
           {/* CTA Button & Language Switcher */}
           <div className="hidden md:flex items-center gap-2">
             <LanguageSwitcher />
+            {user ? (
+              <>
+                <Button variant="outline" size="sm" onClick={() => navigate("/pricing")}>
+                  <Crown className="w-4 h-4" />
+                  {t("nav.pricing")}
+                </Button>
+                <Button variant="ghost" size="sm" onClick={handleSignOut}>
+                  <LogOut className="w-4 h-4" />
+                  {t("nav.signOut")}
+                </Button>
+              </>
+            ) : (
+              <Button variant="ghost" size="sm" onClick={handleSignIn}>
+                <LogIn className="w-4 h-4" />
+                {t("nav.signIn")}
+              </Button>
+            )}
             <Button variant="hero" size="default" onClick={handleStartLearning}>
               {t("btn.startLearning")}
             </Button>
@@ -122,6 +165,23 @@ const Header = () => {
                 <Button variant="hero" size="lg" className="w-full" onClick={handleStartLearning}>
                   {t("btn.startLearning")}
                 </Button>
+                {user ? (
+                  <>
+                    <Button variant="outline" size="lg" className="w-full" onClick={() => { setIsMenuOpen(false); navigate("/pricing"); }}>
+                      <Crown className="w-4 h-4" />
+                      {t("nav.pricing")}
+                    </Button>
+                    <Button variant="ghost" size="lg" className="w-full" onClick={handleSignOut}>
+                      <LogOut className="w-4 h-4" />
+                      {t("nav.signOut")}
+                    </Button>
+                  </>
+                ) : (
+                  <Button variant="outline" size="lg" className="w-full" onClick={handleSignIn}>
+                    <LogIn className="w-4 h-4" />
+                    {t("nav.signIn")}
+                  </Button>
+                )}
               </div>
             </nav>
           </div>
