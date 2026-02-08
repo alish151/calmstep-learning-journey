@@ -1,18 +1,25 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Heart, BarChart3, LogIn, LogOut, Crown } from "lucide-react";
+import { Menu, X, Heart, BarChart3, LogIn, BookOpen, Calculator, Brain, Smile, Users, Crown, CreditCard } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import UserProfileMenu from "@/components/UserProfileMenu";
 import { supabase } from "@/integrations/supabase/client";
 import { User } from "@supabase/supabase-js";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const isOnHomePage = location.pathname === "/";
 
@@ -96,22 +103,42 @@ const Header = () => {
                 {link.label}
               </button>
             ))}
+            {/* Modules Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="px-4 py-2 text-muted-foreground hover:text-foreground hover:bg-primary-light rounded-xl transition-calm font-medium">
+                  {t("nav.learning")}
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="center" className="w-48 bg-popover border border-border shadow-card z-50">
+                <DropdownMenuItem onClick={() => { navigate("/learn/math"); }} className="cursor-pointer gap-2">
+                  <Calculator className="w-4 h-4" /> {t("modules.math")}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => { navigate("/learn/reading"); }} className="cursor-pointer gap-2">
+                  <BookOpen className="w-4 h-4" /> {t("modules.reading")}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => { navigate("/learn/logic"); }} className="cursor-pointer gap-2">
+                  <Brain className="w-4 h-4" /> {t("modules.logic")}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => { navigate("/learn/emotions"); }} className="cursor-pointer gap-2">
+                  <Smile className="w-4 h-4" /> {t("modules.emotions")}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => { navigate("/social-scenarios"); }} className="cursor-pointer gap-2">
+                  <Users className="w-4 h-4" /> {t("modules.social")}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <Button variant="outline" size="sm" onClick={() => navigate("/pricing")} className="gap-1">
+              <Crown className="w-4 h-4" />
+              {t("nav.pricing")}
+            </Button>
           </nav>
 
-          {/* CTA Button & Language Switcher */}
+          {/* CTA Button & User Area */}
           <div className="hidden md:flex items-center gap-2">
             <LanguageSwitcher />
             {user ? (
-              <>
-                <Button variant="outline" size="sm" onClick={() => navigate("/pricing")}>
-                  <Crown className="w-4 h-4" />
-                  {t("nav.pricing")}
-                </Button>
-                <Button variant="ghost" size="sm" onClick={handleSignOut}>
-                  <LogOut className="w-4 h-4" />
-                  {t("nav.signOut")}
-                </Button>
-              </>
+              <UserProfileMenu />
             ) : (
               <Button variant="ghost" size="sm" onClick={handleSignIn}>
                 <LogIn className="w-4 h-4" />
@@ -161,18 +188,40 @@ const Header = () => {
                 <BarChart3 className="w-4 h-4" />
                 {t("nav.progress")}
               </button>
+              {/* Module links */}
+              <div className="border-t border-border/30 pt-2 mt-2">
+                <p className="px-4 py-1 text-xs font-semibold text-muted-foreground uppercase tracking-wide">{t("nav.learning")}</p>
+                <button onClick={() => { setIsMenuOpen(false); navigate("/learn/math"); }} className="px-4 py-2 text-muted-foreground hover:text-foreground hover:bg-primary-light rounded-xl transition-calm font-medium text-left flex items-center gap-2 w-full">
+                  <Calculator className="w-4 h-4" /> {t("modules.math")}
+                </button>
+                <button onClick={() => { setIsMenuOpen(false); navigate("/learn/reading"); }} className="px-4 py-2 text-muted-foreground hover:text-foreground hover:bg-primary-light rounded-xl transition-calm font-medium text-left flex items-center gap-2 w-full">
+                  <BookOpen className="w-4 h-4" /> {t("modules.reading")}
+                </button>
+                <button onClick={() => { setIsMenuOpen(false); navigate("/learn/logic"); }} className="px-4 py-2 text-muted-foreground hover:text-foreground hover:bg-primary-light rounded-xl transition-calm font-medium text-left flex items-center gap-2 w-full">
+                  <Brain className="w-4 h-4" /> {t("modules.logic")}
+                </button>
+                <button onClick={() => { setIsMenuOpen(false); navigate("/learn/emotions"); }} className="px-4 py-2 text-muted-foreground hover:text-foreground hover:bg-primary-light rounded-xl transition-calm font-medium text-left flex items-center gap-2 w-full">
+                  <Smile className="w-4 h-4" /> {t("modules.emotions")}
+                </button>
+                <button onClick={() => { setIsMenuOpen(false); navigate("/social-scenarios"); }} className="px-4 py-2 text-muted-foreground hover:text-foreground hover:bg-primary-light rounded-xl transition-calm font-medium text-left flex items-center gap-2 w-full">
+                  <Users className="w-4 h-4" /> {t("modules.social")}
+                </button>
+              </div>
               <div className="pt-4 flex flex-col gap-2">
                 <Button variant="hero" size="lg" className="w-full" onClick={handleStartLearning}>
                   {t("btn.startLearning")}
                 </Button>
+                <Button variant="outline" size="lg" className="w-full" onClick={() => { setIsMenuOpen(false); navigate("/pricing"); }}>
+                  <Crown className="w-4 h-4" />
+                  {t("nav.pricing")}
+                </Button>
                 {user ? (
                   <>
-                    <Button variant="outline" size="lg" className="w-full" onClick={() => { setIsMenuOpen(false); navigate("/pricing"); }}>
-                      <Crown className="w-4 h-4" />
-                      {t("nav.pricing")}
+                    <Button variant="outline" size="lg" className="w-full" onClick={() => { setIsMenuOpen(false); navigate("/subscription"); }}>
+                      <CreditCard className="w-4 h-4" />
+                      {language === "ru" ? "Подписка" : "Subscription"}
                     </Button>
                     <Button variant="ghost" size="lg" className="w-full" onClick={handleSignOut}>
-                      <LogOut className="w-4 h-4" />
                       {t("nav.signOut")}
                     </Button>
                   </>
