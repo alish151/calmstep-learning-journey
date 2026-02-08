@@ -13,6 +13,7 @@ import SocialScenarios from "./pages/SocialScenarios";
 import ProgressDashboard from "./pages/ProgressDashboard";
 import Auth from "./pages/Auth";
 import Pricing from "./pages/Pricing";
+import SubscriptionManagement from "./pages/SubscriptionManagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ const App = () => (
               <Route path="/progress" element={<ProgressDashboard />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/pricing" element={<Pricing />} />
+              <Route path="/subscription" element={<SubscriptionManagement />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
