@@ -1,11 +1,11 @@
 # Calm Step
 
-Calm Step is an educational web application designed to help users improve their learning, plan tasks, and access useful study materials across different school subjects.
+Calm Step is an educational web application designed to help children with autism improve their learning, plan tasks, and access useful study materials across different school subjects.
 
 ## Project Overview
 The project allows users to:  
 - Browse educational materials online  
-- Generate and solve problems in subjects like Mathematics, Physics, Chemistry, and more  
+- Generate and solve problems in sections like Mathematics, Logic, Reading, and more  
 - Track progress and completed tasks  
 - Use a clean and modern interface for easier learning
 
