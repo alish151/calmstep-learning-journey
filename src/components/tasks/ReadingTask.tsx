@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { CheckCircle2, XCircle, RotateCcw, Star, Volume2, Video } from "lucide-react";
+import TaskExplanation from "@/components/TaskExplanation";
 import { DifficultyLevel, readingPictureWordTasks, readingSoundMatchTasks, readingStoryTasks, readingRhymingTasks, difficultyLabels } from "@/data/taskData";
 import { shuffleArray } from "@/lib/taskUtils";
 import DifficultySelector from "@/components/DifficultySelector";
@@ -182,12 +183,21 @@ const ReadingTask = ({ activityIndex, onComplete }: ReadingTaskProps) => {
             ))}
           </div>
           {showResult && (
-            <div className="flex items-center justify-between">
-              <div className={`flex items-center gap-2 ${selected === task.word[language] ? "text-green-600" : "text-destructive"}`}>
-                {selected === task.word[language] ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
-                <span className="font-medium">{selected === task.word[language] ? t.correct[language] : t.tryAgain[language]}</span>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className={`flex items-center gap-2 ${selected === task.word[language] ? "text-green-600" : "text-destructive"}`}>
+                  {selected === task.word[language] ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+                  <span className="font-medium">{selected === task.word[language] ? t.correct[language] : t.tryAgain[language]}</span>
+                </div>
+                <Button onClick={handleNext}>{t.next[language]}</Button>
               </div>
-              <Button onClick={handleNext}>{t.next[language]}</Button>
+              <TaskExplanation
+                taskDescription={`${t.pictureWords[language]}: ${t.whatIs[language]} ${task.image}`}
+                wasCorrect={selected === task.word[language]}
+                correctAnswer={task.word[language]}
+                userAnswer={String(selected)}
+                module="reading"
+              />
             </div>
           )}
         </CardContent>
@@ -223,12 +233,21 @@ const ReadingTask = ({ activityIndex, onComplete }: ReadingTaskProps) => {
             ))}
           </div>
           {showResult && (
-            <div className="flex items-center justify-between">
-              <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
-                {selected === task.answer ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
-                <span className="font-medium">{selected === task.answer ? t.correct[language] : t.tryAgain[language]}</span>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
+                  {selected === task.answer ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+                  <span className="font-medium">{selected === task.answer ? t.correct[language] : t.tryAgain[language]}</span>
+                </div>
+                <Button onClick={handleNext}>{t.next[language]}</Button>
               </div>
-              <Button onClick={handleNext}>{t.next[language]}</Button>
+              <TaskExplanation
+                taskDescription={`${t.soundMatch[language]}: ${t.findSound[language]} "${task.letter}"`}
+                wasCorrect={selected === task.answer}
+                correctAnswer={task.answer}
+                userAnswer={String(selected)}
+                module="reading"
+              />
             </div>
           )}
         </CardContent>
@@ -259,12 +278,21 @@ const ReadingTask = ({ activityIndex, onComplete }: ReadingTaskProps) => {
             ))}
           </div>
           {showResult && (
-            <div className="flex items-center justify-between">
-              <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
-                {selected === task.answer ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
-                <span className="font-medium">{selected === task.answer ? t.correct[language] : t.tryAgain[language]}</span>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
+                  {selected === task.answer ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+                  <span className="font-medium">{selected === task.answer ? t.correct[language] : t.tryAgain[language]}</span>
+                </div>
+                <Button onClick={handleNext}>{t.next[language]}</Button>
               </div>
-              <Button onClick={handleNext}>{t.next[language]}</Button>
+              <TaskExplanation
+                taskDescription={`${t.storyTime[language]}: "${task.story[language]}" - ${task.question[language]}`}
+                wasCorrect={selected === task.answer}
+                correctAnswer={task.options[language][task.answer]}
+                userAnswer={selected !== null ? task.options[language][Number(selected)] : ""}
+                module="reading"
+              />
             </div>
           )}
         </CardContent>
@@ -292,12 +320,21 @@ const ReadingTask = ({ activityIndex, onComplete }: ReadingTaskProps) => {
             ))}
           </div>
           {showResult && (
-            <div className="flex items-center justify-between">
-              <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
-                {selected === task.answer ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
-                <span className="font-medium">{selected === task.answer ? t.correct[language] : t.tryAgain[language]}</span>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
+                  {selected === task.answer ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+                  <span className="font-medium">{selected === task.answer ? t.correct[language] : t.tryAgain[language]}</span>
+                </div>
+                <Button onClick={handleNext}>{t.next[language]}</Button>
               </div>
-              <Button onClick={handleNext}>{t.next[language]}</Button>
+              <TaskExplanation
+                taskDescription={`${t.rhyming[language]}: ${t.findRhyme[language]} "${task.word[language]}"`}
+                wasCorrect={Number(selected) === task.answer}
+                correctAnswer={task.options[language][task.answer]}
+                userAnswer={selected !== null ? task.options[language][Number(selected)] : ""}
+                module="reading"
+              />
             </div>
           )}
         </CardContent>

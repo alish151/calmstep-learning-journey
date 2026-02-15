@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { CheckCircle2, XCircle, RotateCcw, Star, Heart, PlayCircle } from "lucide-react";
+import TaskExplanation from "@/components/TaskExplanation";
 import DifficultySelector from "@/components/DifficultySelector";
 import { DifficultyLevel, emotionsFeelingsTaskGroups, emotionsCalmingActivities, emotionsScenarioTaskGroups, emotionsEmpathyTasks } from "@/data/taskData";
 import { selectRandomTasks, getRandomElement } from "@/lib/taskUtils";
@@ -249,18 +250,21 @@ const EmotionsTask = ({ activityIndex, onComplete }: EmotionsTaskProps) => {
           </div>
 
           {showResult && (
-            <div className="flex items-center justify-between">
-              <div className={`flex items-center gap-2 ${selected === task.emotion[language] ? "text-green-600" : "text-destructive"}`}>
-                {selected === task.emotion[language] ? (
-                  <CheckCircle2 className="w-5 h-5" />
-                ) : (
-                  <XCircle className="w-5 h-5" />
-                )}
-                <span className="font-medium">
-                  {selected === task.emotion[language] ? t.correct[language] : t.tryAgain[language]}
-                </span>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className={`flex items-center gap-2 ${selected === task.emotion[language] ? "text-green-600" : "text-destructive"}`}>
+                  {selected === task.emotion[language] ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+                  <span className="font-medium">{selected === task.emotion[language] ? t.correct[language] : t.tryAgain[language]}</span>
+                </div>
+                <Button onClick={handleNext}>{t.next[language]}</Button>
               </div>
-              <Button onClick={handleNext}>{t.next[language]}</Button>
+              <TaskExplanation
+                taskDescription={`${t.howFeel[language]}: ${task.face} - ${t.whatEmotion[language]}`}
+                wasCorrect={selected === task.emotion[language]}
+                correctAnswer={task.emotion[language]}
+                userAnswer={String(selected)}
+                module="emotions"
+              />
             </div>
           )}
         </CardContent>
@@ -404,18 +408,19 @@ const EmotionsTask = ({ activityIndex, onComplete }: EmotionsTaskProps) => {
           {showResult && (
             <div className="space-y-3">
               <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
-                {selected === task.answer ? (
-                  <CheckCircle2 className="w-5 h-5" />
-                ) : (
-                  <XCircle className="w-5 h-5" />
-                )}
-                <span className="font-medium">
-                  {selected === task.answer ? t.correct[language] : t.tryAgain[language]}
-                </span>
+                {selected === task.answer ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+                <span className="font-medium">{selected === task.answer ? t.correct[language] : t.tryAgain[language]}</span>
               </div>
               <p className="text-sm text-muted-foreground bg-green-50 p-3 rounded-lg">
                 {task.explanation[language]}
               </p>
+              <TaskExplanation
+                taskDescription={`${t.emotionCards[language]}: ${task.scenario[language]}`}
+                wasCorrect={selected === task.answer}
+                correctAnswer={task.answer}
+                userAnswer={String(selected)}
+                module="emotions"
+              />
               <div className="flex justify-end">
                 <Button onClick={handleNext}>{t.next[language]}</Button>
               </div>
@@ -460,18 +465,21 @@ const EmotionsTask = ({ activityIndex, onComplete }: EmotionsTaskProps) => {
         </div>
 
         {showResult && (
-          <div className="flex items-center justify-between">
-            <div className={`flex items-center gap-2 ${Number(selected) === empathyTask.answer ? "text-green-600" : "text-destructive"}`}>
-              {Number(selected) === empathyTask.answer ? (
-                <CheckCircle2 className="w-5 h-5" />
-              ) : (
-                <XCircle className="w-5 h-5" />
-              )}
-              <span className="font-medium">
-                {Number(selected) === empathyTask.answer ? t.correct[language] : t.tryAgain[language]}
-              </span>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <div className={`flex items-center gap-2 ${Number(selected) === empathyTask.answer ? "text-green-600" : "text-destructive"}`}>
+                {Number(selected) === empathyTask.answer ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+                <span className="font-medium">{Number(selected) === empathyTask.answer ? t.correct[language] : t.tryAgain[language]}</span>
+              </div>
+              <Button onClick={handleNext}>{t.next[language]}</Button>
             </div>
-            <Button onClick={handleNext}>{t.next[language]}</Button>
+            <TaskExplanation
+              taskDescription={`${t.empathy[language]}: ${empathyTask.scenario[language]} - ${empathyTask.question[language]}`}
+              wasCorrect={Number(selected) === empathyTask.answer}
+              correctAnswer={empathyTask.options[language][empathyTask.answer]}
+              userAnswer={selected !== null ? empathyTask.options[language][Number(selected)] : ""}
+              module="emotions"
+            />
           </div>
         )}
       </CardContent>

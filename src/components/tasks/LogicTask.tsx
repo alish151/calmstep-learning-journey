@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { CheckCircle2, XCircle, RotateCcw, Star, PlayCircle } from "lucide-react";
+import TaskExplanation from "@/components/TaskExplanation";
 import DifficultySelector from "@/components/DifficultySelector";
 import { DifficultyLevel, logicPatternTaskGroups, logicSortingTaskGroups, logicSequenceTaskGroups, logicOddOneOutTasks } from "@/data/taskData";
 import { selectRandomTasks, getRandomElement } from "@/lib/taskUtils";
@@ -257,18 +258,21 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
           </div>
 
           {showResult && (
-            <div className="flex items-center justify-between">
-              <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
-                {selected === task.answer ? (
-                  <CheckCircle2 className="w-5 h-5" />
-                ) : (
-                  <XCircle className="w-5 h-5" />
-                )}
-                <span className="font-medium">
-                  {selected === task.answer ? t.correct[language] : t.tryAgain[language]}
-                </span>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
+                  {selected === task.answer ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+                  <span className="font-medium">{selected === task.answer ? t.correct[language] : t.tryAgain[language]}</span>
+                </div>
+                <Button onClick={handleNext}>{t.next[language]}</Button>
               </div>
-              <Button onClick={handleNext}>{t.next[language]}</Button>
+              <TaskExplanation
+                taskDescription={`${t.findPattern[language]}: ${task.pattern.join(" ")}`}
+                wasCorrect={selected === task.answer}
+                correctAnswer={task.answer}
+                userAnswer={String(selected)}
+                module="logic"
+              />
             </div>
           )}
         </CardContent>
@@ -396,18 +400,21 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
           </div>
 
           {showResult && (
-            <div className="flex items-center justify-between">
-              <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
-                {selected === task.answer ? (
-                  <CheckCircle2 className="w-5 h-5" />
-                ) : (
-                  <XCircle className="w-5 h-5" />
-                )}
-                <span className="font-medium">
-                  {selected === task.answer ? t.correct[language] : t.tryAgain[language]}
-                </span>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
+                  {selected === task.answer ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+                  <span className="font-medium">{selected === task.answer ? t.correct[language] : t.tryAgain[language]}</span>
+                </div>
+                <Button onClick={handleNext}>{t.next[language]}</Button>
               </div>
-              <Button onClick={handleNext}>{t.next[language]}</Button>
+              <TaskExplanation
+                taskDescription={`${t.sequence[language]}: ${task.sequence.join(" ")}`}
+                wasCorrect={selected === task.answer}
+                correctAnswer={task.answer}
+                userAnswer={String(selected)}
+                module="logic"
+              />
             </div>
           )}
         </CardContent>
@@ -447,18 +454,17 @@ const LogicTask = ({ activityIndex, onComplete }: LogicTaskProps) => {
         {showResult && (
           <div className="space-y-3">
             <div className={`flex items-center gap-2 ${selected === oddTask.answer ? "text-green-600" : "text-destructive"}`}>
-              {selected === oddTask.answer ? (
-                <CheckCircle2 className="w-5 h-5" />
-              ) : (
-                <XCircle className="w-5 h-5" />
-              )}
-              <span className="font-medium">
-                {selected === oddTask.answer ? t.correct[language] : t.tryAgain[language]}
-              </span>
+              {selected === oddTask.answer ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+              <span className="font-medium">{selected === oddTask.answer ? t.correct[language] : t.tryAgain[language]}</span>
             </div>
-            <p className="text-sm text-muted-foreground">
-              {t.reason[language]} {oddTask.reason[language]}
-            </p>
+            <p className="text-sm text-muted-foreground">{t.reason[language]} {oddTask.reason[language]}</p>
+            <TaskExplanation
+              taskDescription={`${t.oddOneOut[language]}: ${oddTask.items.join(" ")}`}
+              wasCorrect={selected === oddTask.answer}
+              correctAnswer={oddTask.answer}
+              userAnswer={String(selected)}
+              module="logic"
+            />
             <div className="flex justify-end">
               <Button onClick={handleNext}>{t.next[language]}</Button>
             </div>
