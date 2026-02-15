@@ -7,6 +7,11 @@
 /* CalmStep Design System - Soft, Accessible, Calming */
 
 @layer base {
+
+  #lovable-badge {
+    display: none !important;
+  }
+
   :root {
     /* Soft cream background */
     --background: 40 33% 98%;
