@@ -388,7 +388,5 @@ export const useLanguage = () => {
   if (!context) {
     throw new Error("useLanguage must be used within a LanguageProvider");
   }
-  git config --global user.name "Alisher Ali"
-git config --global user.email "ali_alisher@icloud.com"
   return context;
 };
