@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { OPENAI_API_KEY, AI_MODEL, AI_MAX_TOKENS, AI_SYSTEM_PROMPT } from "@/lib/ai-config";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
 }
+
+const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-chat`;
 
 export const useAIChat = (moduleContext: string) => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -14,47 +15,77 @@ export const useAIChat = (moduleContext: string) => {
   const sendMessage = async (userMessage: string) => {
     if (!userMessage.trim()) return;
 
-    // Check if API key is configured
-    if (!OPENAI_API_KEY || OPENAI_API_KEY === "YOUR_OPENAI_API_KEY_HERE") {
-      setError("Please add your OpenAI API key in src/lib/ai-config.ts");
-      return;
-    }
-
     const newUserMessage: Message = { role: "user", content: userMessage };
     setMessages((prev) => [...prev, newUserMessage]);
     setIsLoading(true);
     setError(null);
 
+    let assistantSoFar = "";
+    const upsertAssistant = (chunk: string) => {
+      assistantSoFar += chunk;
+      setMessages((prev) => {
+        const last = prev[prev.length - 1];
+        if (last?.role === "assistant") {
+          return prev.map((m, i) => (i === prev.length - 1 ? { ...m, content: assistantSoFar } : m));
+        }
+        return [...prev, { role: "assistant", content: assistantSoFar }];
+      });
+    };
+
     try {
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      const resp = await fetch(CHAT_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${OPENAI_API_KEY}`,
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
         },
         body: JSON.stringify({
-          model: AI_MODEL,
-          messages: [
-            { role: "system", content: `${AI_SYSTEM_PROMPT}\n\nCurrent module context: ${moduleContext}` },
-            ...messages,
-            newUserMessage,
-          ],
-          max_tokens: AI_MAX_TOKENS,
-          temperature: 0.7,
+          mode: "chat",
+          taskContext: moduleContext,
+          messages: [...messages, newUserMessage],
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to get AI response");
+      if (!resp.ok || !resp.body) {
+        if (resp.status === 429) {
+          setError("Too many requests. Please wait a moment.");
+        } else if (resp.status === 402) {
+          setError("AI credits exhausted.");
+        } else {
+          setError("Something went wrong. Please try again.");
+        }
+        setIsLoading(false);
+        return;
       }
 
-      const data = await response.json();
-      const assistantMessage = data.choices[0]?.message?.content || "I'm here to help! 💙";
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let textBuffer = "";
 
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: assistantMessage },
-      ]);
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        textBuffer += decoder.decode(value, { stream: true });
+
+        let newlineIndex: number;
+        while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
+          let line = textBuffer.slice(0, newlineIndex);
+          textBuffer = textBuffer.slice(newlineIndex + 1);
+          if (line.endsWith("\r")) line = line.slice(0, -1);
+          if (line.startsWith(":") || line.trim() === "") continue;
+          if (!line.startsWith("data: ")) continue;
+          const jsonStr = line.slice(6).trim();
+          if (jsonStr === "[DONE]") break;
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const content = parsed.choices?.[0]?.delta?.content;
+            if (content) upsertAssistant(content);
+          } catch {
+            textBuffer = line + "\n" + textBuffer;
+            break;
+          }
+        }
+      }
     } catch (err) {
       setError("Something went wrong. Please try again.");
       console.error("AI Chat Error:", err);

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { CheckCircle2, XCircle, RotateCcw, Star, Video } from "lucide-react";
+import TaskExplanation from "@/components/TaskExplanation";
 import { 
   DifficultyLevel, 
   mathCountingTaskGroups,
@@ -241,18 +242,21 @@ const MathTask = ({ activityIndex, onComplete }: MathTaskProps) => {
           </div>
 
           {showResult && (
-            <div className="flex items-center justify-between">
-              <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
-                {selected === task.answer ? (
-                  <CheckCircle2 className="w-5 h-5" />
-                ) : (
-                  <XCircle className="w-5 h-5" />
-                )}
-                <span className="font-medium">
-                  {selected === task.answer ? t.correct[language] : t.tryAgain[language]}
-                </span>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
+                  {selected === task.answer ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+                  <span className="font-medium">{selected === task.answer ? t.correct[language] : t.tryAgain[language]}</span>
+                </div>
+                <Button onClick={handleNext}>{t.next[language]}</Button>
               </div>
-              <Button onClick={handleNext}>{t.next[language]}</Button>
+              <TaskExplanation
+                taskDescription={`${t.countStars[language]}: ${t.howMany[language]} (${task.items.length} items)`}
+                wasCorrect={selected === task.answer}
+                correctAnswer={String(task.answer)}
+                userAnswer={String(selected)}
+                module="math"
+              />
             </div>
           )}
         </CardContent>
@@ -296,18 +300,21 @@ const MathTask = ({ activityIndex, onComplete }: MathTaskProps) => {
           </div>
 
           {showResult && (
-            <div className="flex items-center justify-between">
-              <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
-                {selected === task.answer ? (
-                  <CheckCircle2 className="w-5 h-5" />
-                ) : (
-                  <XCircle className="w-5 h-5" />
-                )}
-                <span className="font-medium">
-                  {selected === task.answer ? t.correct[language] : t.tryAgain[language]}
-                </span>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
+                  {selected === task.answer ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+                  <span className="font-medium">{selected === task.answer ? t.correct[language] : t.tryAgain[language]}</span>
+                </div>
+                <Button onClick={handleNext}>{t.next[language]}</Button>
               </div>
-              <Button onClick={handleNext}>{t.next[language]}</Button>
+              <TaskExplanation
+                taskDescription={`${t.shapeMatch[language]}: ${t.findShape[language]} ${task.shapeName[language]}`}
+                wasCorrect={selected === task.answer}
+                correctAnswer={task.answer}
+                userAnswer={String(selected)}
+                module="math"
+              />
             </div>
           )}
         </CardContent>
@@ -351,18 +358,21 @@ const MathTask = ({ activityIndex, onComplete }: MathTaskProps) => {
           </div>
 
           {showResult && (
-            <div className="flex items-center justify-between">
-              <div className={`flex items-center gap-2 ${selected === task.target ? "text-green-600" : "text-destructive"}`}>
-                {selected === task.target ? (
-                  <CheckCircle2 className="w-5 h-5" />
-                ) : (
-                  <XCircle className="w-5 h-5" />
-                )}
-                <span className="font-medium">
-                  {selected === task.target ? t.correct[language] : t.tryAgain[language]}
-                </span>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className={`flex items-center gap-2 ${selected === task.target ? "text-green-600" : "text-destructive"}`}>
+                  {selected === task.target ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+                  <span className="font-medium">{selected === task.target ? t.correct[language] : t.tryAgain[language]}</span>
+                </div>
+                <Button onClick={handleNext}>{t.next[language]}</Button>
               </div>
-              <Button onClick={handleNext}>{t.next[language]}</Button>
+              <TaskExplanation
+                taskDescription={`${t.numberHunt[language]}: ${t.findNumber[language]} ${task.target}`}
+                wasCorrect={selected === task.target}
+                correctAnswer={String(task.target)}
+                userAnswer={String(selected)}
+                module="math"
+              />
             </div>
           )}
         </CardContent>
@@ -413,18 +423,21 @@ const MathTask = ({ activityIndex, onComplete }: MathTaskProps) => {
           </div>
 
           {showResult && (
-            <div className="flex items-center justify-between">
-              <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
-                {selected === task.answer ? (
-                  <CheckCircle2 className="w-5 h-5" />
-                ) : (
-                  <XCircle className="w-5 h-5" />
-                )}
-                <span className="font-medium">
-                  {selected === task.answer ? t.correct[language] : t.tryAgain[language]}
-                </span>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
+                  {selected === task.answer ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+                  <span className="font-medium">{selected === task.answer ? t.correct[language] : t.tryAgain[language]}</span>
+                </div>
+                <Button onClick={handleNext}>{t.next[language]}</Button>
               </div>
-              <Button onClick={handleNext}>{t.next[language]}</Button>
+              <TaskExplanation
+                taskDescription={`${t.addition[language]}: ${task.num1} + ${task.num2} = ?`}
+                wasCorrect={selected === task.answer}
+                correctAnswer={String(task.answer)}
+                userAnswer={String(selected)}
+                module="math"
+              />
             </div>
           )}
         </CardContent>
@@ -475,18 +488,21 @@ const MathTask = ({ activityIndex, onComplete }: MathTaskProps) => {
           </div>
 
           {showResult && (
-            <div className="flex items-center justify-between">
-              <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
-                {selected === task.answer ? (
-                  <CheckCircle2 className="w-5 h-5" />
-                ) : (
-                  <XCircle className="w-5 h-5" />
-                )}
-                <span className="font-medium">
-                  {selected === task.answer ? t.correct[language] : t.tryAgain[language]}
-                </span>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className={`flex items-center gap-2 ${selected === task.answer ? "text-green-600" : "text-destructive"}`}>
+                  {selected === task.answer ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+                  <span className="font-medium">{selected === task.answer ? t.correct[language] : t.tryAgain[language]}</span>
+                </div>
+                <Button onClick={handleNext}>{t.next[language]}</Button>
               </div>
-              <Button onClick={handleNext}>{t.next[language]}</Button>
+              <TaskExplanation
+                taskDescription={`${t.comparison[language]}: ${task.left} ? ${task.right}`}
+                wasCorrect={selected === task.answer}
+                correctAnswer={task.answer}
+                userAnswer={String(selected)}
+                module="math"
+              />
             </div>
           )}
         </CardContent>
