@@ -15,6 +15,7 @@ import { useProgressTracking } from "@/hooks/useProgressTracking";
 import CelebrationAnimation from "@/components/CelebrationAnimation";
 import { getScrollPosition } from "@/hooks/useScrollPosition";
 import MobileBottomNav from "@/components/MobileBottomNav";
+import SubscriptionGate from "@/components/SubscriptionGate";
 
 import { mathActivities, readingActivities, logicActivities, emotionsActivities } from "@/data/taskData";
 
@@ -172,71 +173,73 @@ const LearningModule = () => {
             <div>
               <h2 className="text-lg font-semibold text-foreground mb-4">{t("module.activities")}</h2>
               
-              {activeActivity !== null ? (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-medium text-foreground">
-                      {module.activities[activeActivity].title[language]}
-                    </h3>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => setActiveActivity(null)}
-                    >
-                      <X className="w-5 h-5" />
-                    </Button>
+              <SubscriptionGate>
+                {activeActivity !== null ? (
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-medium text-foreground">
+                        {module.activities[activeActivity].title[language]}
+                      </h3>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => setActiveActivity(null)}
+                      >
+                        <X className="w-5 h-5" />
+                      </Button>
+                    </div>
+                    
+                    <CelebrationAnimation show={showCelebration} onComplete={() => setShowCelebration(false)} />
+                    
+                    {moduleId === "math" && (
+                      <MathTask 
+                        activityIndex={activeActivity} 
+                        onComplete={handleTaskComplete} 
+                      />
+                    )}
+                    {moduleId === "reading" && (
+                      <ReadingTask 
+                        activityIndex={activeActivity} 
+                        onComplete={handleTaskComplete} 
+                      />
+                    )}
+                    {moduleId === "logic" && (
+                      <LogicTask 
+                        activityIndex={activeActivity} 
+                        onComplete={handleTaskComplete} 
+                      />
+                    )}
+                    {moduleId === "emotions" && (
+                      <EmotionsTask 
+                        activityIndex={activeActivity} 
+                        onComplete={handleTaskComplete} 
+                      />
+                    )}
                   </div>
-                  
-                  <CelebrationAnimation show={showCelebration} onComplete={() => setShowCelebration(false)} />
-                  
-                  {moduleId === "math" && (
-                    <MathTask 
-                      activityIndex={activeActivity} 
-                      onComplete={handleTaskComplete} 
-                    />
-                  )}
-                  {moduleId === "reading" && (
-                    <ReadingTask 
-                      activityIndex={activeActivity} 
-                      onComplete={handleTaskComplete} 
-                    />
-                  )}
-                  {moduleId === "logic" && (
-                    <LogicTask 
-                      activityIndex={activeActivity} 
-                      onComplete={handleTaskComplete} 
-                    />
-                  )}
-                  {moduleId === "emotions" && (
-                    <EmotionsTask 
-                      activityIndex={activeActivity} 
-                      onComplete={handleTaskComplete} 
-                    />
-                  )}
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  {module.activities.map((activity, index) => (
-                    <Card 
-                      key={index}
-                      className={`${module.bgColor} border-2 border-${module.color}/20 cursor-pointer hover:border-${module.color}/40 transition-calm`}
-                      onClick={() => setActiveActivity(index)}
-                    >
-                      <CardContent className="p-4 flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-xl bg-card flex items-center justify-center">
-                          <span className="text-2xl">{activity.emoji}</span>
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="font-medium text-foreground">
-                            {activity.title[language]}
-                          </h3>
-                          <p className="text-sm text-muted-foreground">{t("module.tryActivity")}</p>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              )}
+                ) : (
+                  <div className="space-y-3">
+                    {module.activities.map((activity, index) => (
+                      <Card 
+                        key={index}
+                        className={`${module.bgColor} border-2 border-${module.color}/20 cursor-pointer hover:border-${module.color}/40 transition-calm`}
+                        onClick={() => setActiveActivity(index)}
+                      >
+                        <CardContent className="p-4 flex items-center gap-4">
+                          <div className="w-12 h-12 rounded-xl bg-card flex items-center justify-center">
+                            <span className="text-2xl">{activity.emoji}</span>
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="font-medium text-foreground">
+                              {activity.title[language]}
+                            </h3>
+                            <p className="text-sm text-muted-foreground">{t("module.tryActivity")}</p>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </SubscriptionGate>
             </div>
 
             {/* AI Chat Section */}

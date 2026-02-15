@@ -74,23 +74,23 @@ export const SubscriptionGate = ({ children, fallback }: SubscriptionGateProps) 
   // Default locked state
   return (
     <Card className="border-2 border-dashed border-muted-foreground/30 bg-muted/30">
-      <CardContent className="p-8 text-center">
-        <div className="w-16 h-16 mx-auto bg-muted rounded-2xl flex items-center justify-center mb-4">
-          <Lock className="w-8 h-8 text-muted-foreground" />
+      <CardContent className="p-4 sm:p-8 text-center">
+        <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-muted rounded-2xl flex items-center justify-center mb-3 sm:mb-4">
+          <Lock className="w-6 h-6 sm:w-8 sm:h-8 text-muted-foreground" />
         </div>
         
-        <h3 className="text-xl font-bold text-foreground mb-2">
+        <h3 className="text-lg sm:text-xl font-bold text-foreground mb-1 sm:mb-2">
           {texts.locked}
         </h3>
         
-        <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+        <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 max-w-md mx-auto">
           {!user ? texts.signIn : texts.subscribe}
         </p>
 
         {!user && (
-          <div className="mb-4 inline-flex items-center gap-2 px-4 py-2 bg-accent-light rounded-full">
+          <div className="mb-3 sm:mb-4 inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-accent-light rounded-full">
             <Crown className="w-4 h-4 text-accent" />
-            <span className="text-sm font-medium text-accent-foreground">
+            <span className="text-xs sm:text-sm font-medium text-accent-foreground">
               {texts.trialInfo}
             </span>
           </div>
@@ -98,11 +98,11 @@ export const SubscriptionGate = ({ children, fallback }: SubscriptionGateProps) 
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           {!user ? (
-            <Button variant="hero" size="lg" onClick={() => navigate("/auth")}>
+            <Button variant="hero" size="lg" className="w-full sm:w-auto" onClick={() => navigate("/auth")}>
               {texts.signInBtn}
             </Button>
           ) : (
-            <Button variant="hero" size="lg" onClick={() => navigate("/pricing")}>
+            <Button variant="hero" size="lg" className="w-full sm:w-auto" onClick={() => navigate("/pricing")}>
               {texts.subscribeBtn}
             </Button>
           )}
